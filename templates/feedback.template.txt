@@ -1,0 +1,50 @@
+# feedback module
+# Template for feedback form
+#
+# Part of »Zugzwang Project«
+# http://www.zugzwang.org/modules/feedback
+#
+# @author Gustaf Mossakowski <gustaf@koenige.org>
+# @copyright Copyright © 2012-2014 Gustaf Mossakowski
+# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
+#
+<div class="feedback">
+%%% condition if mail_sent %%%
+<h2>%%% text "Thank you for your message." %%%</h2>
+<p><a href="./">%%% text "Send another message" %%%</a></p>
+
+%%% condition else %%%
+
+%%% condition if mail_error %%%
+<p>%%% text "An error occured. We could not send your message." %%%
+%%% text "Please try again soon." %%%</p>
+
+%%% condition elseif spam %%%
+<div class="error"><p>%%% text "Please do not use HTML or BBCode formatting!" %%% 
+<br>%%% text "Please complete the form." %%%</p></div>
+
+%%% condition elseif more_info_necessary %%%
+<div class="error"><p>%%% text "We still need some information from you." %%% 
+<br>%%% text "Please complete the form." %%%</p></div>
+
+%%% condition endif %%%
+<div><form method="POST" action="">
+<h2><label for="feedback">%%% text "Your Message" %%%</label></h2>
+%%% item error_message %%%
+<textarea name="feedback" rows="14" cols="42" id="feedback" required="required"%%% condition if more_info_necessary %%% autofocus="autofocus"
+%%% condition endif %%%>%%% item feedback wrap_html_escape %%%</textarea>
+
+<h2>%%% text "How can we get in touch with you?" %%%</h2>
+
+<p><label for="contact">%%% text "E-Mail or phone" %%%<br>
+<input type="text" name="contact" size="50" id="contact" required="required" value="%%% item contact wrap_html_escape %%%">
+</label></p>
+
+<p><label for="sender">%%% text "Your Name" %%%<br>
+<input type="text" name="sender" size="50" id="sender" required="required" value="%%% item sender wrap_html_escape %%%">
+</label></p>
+
+<p><input type="submit" name="submit" value="%%% text "Submit Message" %%%"></p>
+</form></div>
+%%% condition endif %%%
+</div>

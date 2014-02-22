@@ -1,0 +1,109 @@
+# feedback module
+# Translations
+#
+# Part of »Zugzwang Project«
+# http://www.zugzwang.org/modules/feedback
+#
+# @author Gustaf Mossakowski <gustaf@koenige.org>
+# @copyright Copyright © 2012-2014 Gustaf Mossakowski
+# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
+#
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: Zugzwang Project – Feedback Module\n"
+"POT-Creation-Date: \n"
+"Last-Translator: Gustaf Mossakowski <gustaf@koenige.org>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"PO-Revision-Date: \n"
+"X-Generator: Poedit 1.6.4\n"
+"Language: de\n"
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "Your Message"
+msgstr "Ihre Nachricht"
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "How can we get in touch with you?"
+msgstr "Wie können wir Sie erreichen?"
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "Your Name"
+msgstr "Ihr Name"
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "E-Mail or phone"
+msgstr "E-Mail oder Telefon"
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "Submit Message"
+msgstr "Nachricht abschicken"
+
+# ---  HTML: error responses
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "An error occured. We could not send your message."
+msgstr ""
+"Wir konnten Ihre Nachricht aufgrund eines Fehlers leider nicht versenden."
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "Please try again soon."
+msgstr "Bitte versuchen Sie es gleich noch einmal."
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "Please complete the form."
+msgstr "Bitte füllen Sie das Formular vollständig aus."
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "We still need some information from you."
+msgstr "Wir benötigen von Ihnen noch weitere Informationen."
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "Please do not use HTML or BBCode formatting!"
+msgstr "Bitte benutzen Sie zur Formatierung kein HTML oder BBCode!"
+
+# ---  HTML: successful responses
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "Thank you for your message."
+msgstr "Vielen Dank für Ihre Nachricht."
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "Send another message"
+msgstr "Eine weitere Nachricht senden"
+
+# --- Mail
+#: modules/feedback/zzbrick_request/feedback.inc.php
+#, php-format
+msgctxt "feedback"
+msgid "Feedback via %s"
+msgstr "Nachricht via %s"
+
+#: modules/feedback/templates/feedback-mail.template.txt
+msgctxt "feedback"
+msgid "Contact details:"
+msgstr "Kontaktdetails:"
+
+#: modules/feedback/templates/feedback-mail.template.txt
+msgctxt "feedback"
+msgid "Name:"
+msgstr "Name:"
+
+#: modules/feedback/templates/feedback-mail.template.txt
+msgctxt "feedback"
+msgid "You've got a message via your website:"
+msgstr "Sie haben eine Nachricht über Ihre Website erhalten:"
