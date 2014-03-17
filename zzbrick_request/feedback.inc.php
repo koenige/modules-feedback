@@ -46,7 +46,7 @@ function mod_feedback_feedback($vars) {
 		$mail['subject'] = sprintf(
 			wrap_text('Feedback via %s'), $zz_setting['hostname']
 		);
-		$mail['message'] = wrap_template('feedback-mail', $form);
+		$mail['message'] = wrap_template('feedback-mail', $form, 'ignore positions');
 		$mail['parameters'] = '-f '.$zz_setting['own_e_mail'];
 		$success = wrap_mail($mail);
 		if ($success) {
@@ -60,6 +60,6 @@ function mod_feedback_feedback($vars) {
 		if (!$form['spam']) $form['more_info_necessary'] = true;
 	}
 
-	$page['text'] = wrap_template('feedback', $form);
+	$page['text'] = wrap_template('feedback', $form, 'ignore positions');
 	return $page;
 }
