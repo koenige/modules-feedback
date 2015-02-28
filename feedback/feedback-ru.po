@@ -31,7 +31,7 @@ msgstr "Ваше cообщение"
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
 msgid "How can we get in touch with you?"
-msgstr "Как мы можем связаться с вами?"
+msgstr "Как мы можем связаться с Вами?"
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
@@ -41,7 +41,7 @@ msgstr "Ваше имя"
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
 msgid "E-Mail or phone"
-msgstr "E-Mail или Телефон"
+msgstr "Электронная почта или телефон"
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
@@ -52,12 +52,12 @@ msgstr "Отправить сообщение"
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
 msgid "An error occured. We could not send your message."
-msgstr "Произошла ошибка. Мы не могли бы отправить ваше сообщение."
+msgstr "Произошла ошибка. Мы не смогли отправить Ваше сообщение."
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
 msgid "Please try again soon."
-msgstr "Пожалуйста, попробуйте еще раз."
+msgstr "Пожалуйста, повторите попытку позже."
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
@@ -67,18 +67,18 @@ msgstr "Пожалуйста, заполните форму."
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
 msgid "We still need some information from you."
-msgstr "Нам все еще нужна информация от вас."
+msgstr "Некоторые поля не заполнены."
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
 msgid "Please do not use HTML or BBCode formatting!"
-msgstr "Пожалуйста, не используйте HTML или BBCode форматирование!"
+msgstr "Пожалуйста, не используйте форматирование HTML или BBCode!"
 
 # ---  HTML: successful responses
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
 msgid "Thank you for your message."
-msgstr "Спасибо за ваше сообщение."
+msgstr "Спасибо за Ваше сообщение."
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
@@ -90,7 +90,7 @@ msgstr "Отправить еще одно сообщение"
 #, php-format
 msgctxt "feedback"
 msgid "Feedback via %s"
-msgstr "Обратная связь через %s"
+msgstr "Обратная связь посредством %s"
 
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
