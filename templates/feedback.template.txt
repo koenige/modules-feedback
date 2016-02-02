@@ -49,7 +49,7 @@
 <input type="text" name="contact" size="50" id="contact" required="required" value="%%% item contact wrap_html_escape %%%">
 </label>
 %%% condition if mailcopy %%%
-<br><label for="mailcopy"><input type="checkbox" name="mailcopy" checked="%%% item mailcopy %%%" id="mailcopy"> %%% text Send me a copy of my message via e-mail %%%</label>
+<br><label for="mailcopy"><input type="checkbox" name="mailcopy" checked="%%% item send_copy "checked" %%%" id="mailcopy"> %%% text Send me a copy of my message via e-mail %%%</label>
 %%% condition endif %%%
 </p>
 

@@ -46,10 +46,10 @@ function mod_feedback_feedback($vars, $setting) {
 
 	$form['wrong_e_mail'] = false;
 	$e_mail_valid = false;
-	$send_copy = ($form['mailcopy'] AND !empty($_POST['mailcopy']) AND $_POST['mailcopy'] === 'on') ? true : false;
+	$form['send_copy'] = ($form['mailcopy'] AND !empty($_POST['mailcopy']) AND $_POST['mailcopy'] === 'on') ? true : false;
 	if (wrap_mail_valid($form['contact'])) {
 		$e_mail_valid = true;
-	} elseif ($form['mailonly'] OR $send_copy) {
+	} elseif ($form['mailonly'] OR $form['send_copy']) {
 		$form['wrong_e_mail'] = true;
 	}
 
@@ -71,7 +71,7 @@ function mod_feedback_feedback($vars, $setting) {
 		$success = wrap_mail($mail);
 		if ($success) {
 			$form['mail_sent'] = true;
-			if ($send_copy) {
+			if ($form['send_copy']) {
 				$mail['headers']['From']['e_mail'] = $mail['to'];
 				$mail['headers']['From']['name'] = $zz_conf['project'];
 				$mail['to'] = array();
