@@ -8,12 +8,12 @@
  * http://www.zugzwang.org/modules/feedback
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2009-2014 Gustaf Mossakowski
+ * @copyright Copyright © 2009-2014, 2016 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
 
-function mod_feedback_feedback($vars) {
+function mod_feedback_feedback($vars, $setting) {
 	global $zz_conf;
 	global $zz_setting;
 
@@ -38,7 +38,7 @@ function mod_feedback_feedback($vars) {
 		AND !$form['spam']) {
 		
 		$page['replace_db_text'] = true;
-		$mail['to'] = $zz_setting['own_e_mail'];
+		$mail['to'] = !empty($setting['mailto']) ? $setting['mailto'] : $zz_setting['own_e_mail'];
 		if (wrap_mail_valid($form['contact'])) {
 			$mail['headers']['From']['e_mail'] = $form['contact'];
 			$mail['headers']['From']['name'] = $form['sender'];
