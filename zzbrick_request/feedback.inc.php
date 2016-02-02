@@ -13,12 +13,23 @@
  */
 
 
+/**
+ * Show a feedback form and send feedback via mail
+ *
+ * @param array $vars (-)
+ * @param array $setting (via webpages)
+ *		mailto=... send to a different e-mail address
+ *		mailcopy=1 show field to send a copy of e-mail to sender
+ *		mailonly=1 only allow e-mail address, no phone number
+ */
 function mod_feedback_feedback($vars, $setting) {
 	global $zz_conf;
 	global $zz_setting;
 
 	$form = array();
 	$form['spam'] = false;
+	$form['mailonly'] = !empty($setting['mailonly']) ? true : false;
+	$form['mailcopy'] = !empty($setting['mailcopy']) ? true : false;
 
 	// Read form data, test if spam
 	$fields = array('feedback', 'contact', 'sender');
@@ -33,13 +44,22 @@ function mod_feedback_feedback($vars, $setting) {
 		}
 	}
 
+	$form['wrong_e_mail'] = false;
+	$e_mail_valid = false;
+	$send_copy = ($form['mailcopy'] AND !empty($_POST['mailcopy']) AND $_POST['mailcopy'] === 'on') ? true : false;
+	if (wrap_mail_valid($form['contact'])) {
+		$e_mail_valid = true;
+	} elseif ($form['mailonly'] OR $send_copy) {
+		$form['wrong_e_mail'] = true;
+	}
+
 	// All form fields filled out? Send mail and say thank you
 	if ($form['sender'] AND $form['contact'] AND $form['feedback']
-		AND !$form['spam']) {
+		AND !$form['spam'] AND !$form['wrong_e_mail']) {
 		
 		$page['replace_db_text'] = true;
 		$mail['to'] = !empty($setting['mailto']) ? $setting['mailto'] : $zz_setting['own_e_mail'];
-		if (wrap_mail_valid($form['contact'])) {
+		if ($e_mail_valid) {
 			$mail['headers']['From']['e_mail'] = $form['contact'];
 			$mail['headers']['From']['name'] = $form['sender'];
 		}
@@ -51,6 +71,17 @@ function mod_feedback_feedback($vars, $setting) {
 		$success = wrap_mail($mail);
 		if ($success) {
 			$form['mail_sent'] = true;
+			if ($send_copy) {
+				$mail['headers']['From']['e_mail'] = $mail['to'];
+				$mail['headers']['From']['name'] = $zz_conf['project'];
+				$mail['to'] = array();
+				$mail['to']['e_mail'] = $form['contact'];
+				$mail['to']['name'] = $form['sender'];
+				$mail['subject'] .= ' '.wrap_text('(Your Copy)');
+				$form['copy'] = true;
+				$mail['message'] = wrap_template('feedback-mail', $form, 'ignore positions');
+				$success = wrap_mail($mail);
+			}
 		} else {
 			$form['mail_error'] = true;
 		}

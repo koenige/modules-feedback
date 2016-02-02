@@ -5,7 +5,7 @@
 # http://www.zugzwang.org/modules/feedback
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2012-2014 Gustaf Mossakowski
+# @copyright Copyright © 2012-2014, 2016 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 <div class="feedback">
@@ -25,7 +25,11 @@
 
 %%% condition elseif more_info_necessary %%%
 <div class="error"><p>%%% text "We still need some information from you." %%% 
-<br>%%% text "Please complete the form." %%%</p></div>
+<br>%%% text "Please complete the form." %%%
+%%% condition if wrong_e_mail %%%
+<br>%%% text The e-mail address is incorrect. %%%
+%%% condition endif %%%
+</p></div>
 
 %%% condition endif %%%
 <div><form method="POST" action="">
@@ -36,9 +40,18 @@
 
 <h2>%%% text "How can we get in touch with you?" %%%</h2>
 
-<p><label for="contact">%%% text "E-Mail or phone" %%%<br>
+<p><label for="contact">%%% condition if mailonly %%%
+%%% text "E-Mail" %%%
+%%% condition else %%%
+%%% text "E-Mail or phone" %%%
+%%% condition endif %%%
+<br>
 <input type="text" name="contact" size="50" id="contact" required="required" value="%%% item contact wrap_html_escape %%%">
-</label></p>
+</label>
+%%% condition if mailcopy %%%
+<br><label for="mailcopy"><input type="checkbox" name="mailcopy" checked="%%% item mailcopy %%%" id="mailcopy"> %%% text Send me a copy of my message via e-mail %%%</label>
+%%% condition endif %%%
+</p>
 
 <p><label for="sender">%%% text "Your Name" %%%<br>
 <input type="text" name="sender" size="50" id="sender" required="required" value="%%% item sender wrap_html_escape %%%">

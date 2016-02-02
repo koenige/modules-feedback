@@ -5,7 +5,7 @@
 # http://www.zugzwang.org/modules/feedback
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2012-2014 Gustaf Mossakowski
+# @copyright Copyright © 2012-2014, 2016 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 msgid ""
@@ -38,6 +38,21 @@ msgstr ""
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
 msgid "E-Mail or phone"
+msgstr ""
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "E-Mail"
+msgstr ""
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "Send me a copy of my message via e-mail"
+msgstr ""
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "The e-mail address is incorrect."
 msgstr ""
 
 #: modules/feedback/templates/feedback.template.txt
@@ -89,6 +104,10 @@ msgctxt "feedback"
 msgid "Feedback via %s"
 msgstr ""
 
+msgctxt "feedback"
+msgid "(Your Copy)"
+msgstr ""
+
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
 msgid "Contact details:"
@@ -102,4 +121,9 @@ msgstr ""
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
 msgid "You've got a message via your website:"
+msgstr ""
+
+#: modules/feedback/templates/feedback-mail.template.txt
+msgctxt "feedback"
+msgid "You've sent us a message via our website:"
 msgstr ""

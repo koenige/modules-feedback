@@ -10,18 +10,18 @@
 #
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
 "Project-Id-Version: Zugzwang Project – Feedback Module\n"
 "POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
 "Last-Translator: Gustaf Mossakowski <gustaf@koenige.org>\n"
 "Language-Team: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"PO-Revision-Date: \n"
-"X-Generator: Poedit 1.6.4\n"
-"Language: de\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
@@ -45,6 +45,21 @@ msgstr "E-Mail oder Telefon"
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
+msgid "E-Mail"
+msgstr "E-Mail"
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "Send me a copy of my message via e-mail"
+msgstr "Schicken Sie mir eine Kopie meiner Nachricht"
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "The e-mail address is incorrect."
+msgstr "Die E-Mail-Adresse ist fehlerhaft."
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
 msgid "Submit Message"
 msgstr "Nachricht abschicken"
 
@@ -52,8 +67,7 @@ msgstr "Nachricht abschicken"
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
 msgid "An error occured. We could not send your message."
-msgstr ""
-"Wir konnten Ihre Nachricht aufgrund eines Fehlers leider nicht versenden."
+msgstr "Wir konnten Ihre Nachricht aufgrund eines Fehlers leider nicht versenden."
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
@@ -93,6 +107,10 @@ msgctxt "feedback"
 msgid "Feedback via %s"
 msgstr "Nachricht via %s"
 
+msgctxt "feedback"
+msgid "(Your Copy)"
+msgstr "(Ihre Kopie)"
+
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
 msgid "Contact details:"
@@ -107,3 +125,12 @@ msgstr "Name:"
 msgctxt "feedback"
 msgid "You've got a message via your website:"
 msgstr "Sie haben eine Nachricht über Ihre Website erhalten:"
+
+#: modules/feedback/templates/feedback-mail.template.txt
+msgctxt "feedback"
+msgid "You've sent us a message via our website:"
+msgstr "Sie haben uns eine Nachricht über unsere Website gesendet:"
+
+#~ msgctxt "feedback"
+#~ msgid "The e-mail address you entered seems to be incorrect. Please check it."
+#~ msgstr "Die E-Mail-Adresse ist nicht korrekt."
