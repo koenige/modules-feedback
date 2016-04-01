@@ -140,7 +140,7 @@ msgstr ""
 
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
-msgid "Sender's IP address"
+msgid "Sender's IP address:"
 msgstr ""
 
 #: modules/feedback/templates/feedback-mail.template.txt
