@@ -34,7 +34,7 @@ function mod_feedback_feedback($vars, $setting) {
 	$form['mailcopy'] = !empty($setting['mailcopy']) ? true : false;
 
 	// Read form data, test if spam
-	$fields = array('feedback', 'contact', 'sender');
+	$fields = array('feedback', 'contact', 'sender', 'referer');
 	$rejected = array('<a href=', '[url=', '[link=');
 	foreach ($fields as $field) {
 		$form[$field] = (!empty($_POST[$field]) ? $_POST[$field] : '');
@@ -44,6 +44,9 @@ function mod_feedback_feedback($vars, $setting) {
 				if ($spam !== false) $form['spam'] = true;
 			}
 		}
+	}
+	if (empty($form['referer'])) {
+		$form['referer'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 	}
 
 	$form['wrong_e_mail'] = false;
@@ -59,7 +62,6 @@ function mod_feedback_feedback($vars, $setting) {
 	if ($form['sender'] AND $form['contact'] AND $form['feedback']
 		AND !$form['spam'] AND !$form['wrong_e_mail']) {
 
-		$form['referer'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 		$form['ip'] = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
 		$form['user_agent'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 		
