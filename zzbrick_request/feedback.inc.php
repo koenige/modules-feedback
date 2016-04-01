@@ -26,6 +26,8 @@ function mod_feedback_feedback($vars, $setting) {
 	global $zz_conf;
 	global $zz_setting;
 
+	$zz_setting['mail_with_signature'] = false;
+
 	$form = array();
 	$form['spam'] = false;
 	$form['mailonly'] = !empty($setting['mailonly']) ? true : false;
@@ -56,6 +58,10 @@ function mod_feedback_feedback($vars, $setting) {
 	// All form fields filled out? Send mail and say thank you
 	if ($form['sender'] AND $form['contact'] AND $form['feedback']
 		AND !$form['spam'] AND !$form['wrong_e_mail']) {
+
+		$form['referer'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+		$form['ip'] = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
+		$form['user_agent'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 		
 		$page['replace_db_text'] = true;
 		$mail['to'] = !empty($setting['mailto']) ? $setting['mailto'] : $zz_setting['own_e_mail'];

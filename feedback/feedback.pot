@@ -127,3 +127,24 @@ msgstr ""
 msgctxt "feedback"
 msgid "You've sent us a message via our website:"
 msgstr ""
+
+#: modules/feedback/templates/feedback-mail.template.txt
+msgctxt "feedback"
+msgid "Technical data:"
+msgstr ""
+
+#: modules/feedback/templates/feedback-mail.template.txt
+msgctxt "feedback"
+msgid "Referring URL:"
+msgstr ""
+
+#: modules/feedback/templates/feedback-mail.template.txt
+msgctxt "feedback"
+msgid "Sender's IP address"
+msgstr ""
+
+#: modules/feedback/templates/feedback-mail.template.txt
+msgctxt "feedback"
+msgid "Sender's browser:"
+msgstr ""
+

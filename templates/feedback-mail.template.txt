@@ -22,3 +22,13 @@
 ------------------------------------------------------------
 
 %%% item feedback %%%
+
+-- 
+%%% text Technical data: %%% 
+%%% condition if referer %%%
+%%% text Referring URL: %%% %%% item referer %%% 
+%%% condition endif %%%
+%%% text Sender's IP address: %%% %%% item ip %%% 
+%%% condition if user_agent %%%
+%%% text Sender's browser: %%% %%% item user_agent %%%
+%%% condition endif %%% 

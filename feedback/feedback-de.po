@@ -5,7 +5,7 @@
 # http://www.zugzwang.org/modules/feedback
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2012-2014 Gustaf Mossakowski
+# @copyright Copyright © 2012-2016 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 msgid ""
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.7\n"
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
@@ -131,6 +131,22 @@ msgctxt "feedback"
 msgid "You've sent us a message via our website:"
 msgstr "Sie haben uns eine Nachricht über unsere Website gesendet:"
 
-#~ msgctxt "feedback"
-#~ msgid "The e-mail address you entered seems to be incorrect. Please check it."
-#~ msgstr "Die E-Mail-Adresse ist nicht korrekt."
+#: modules/feedback/templates/feedback-mail.template.txt
+msgctxt "feedback"
+msgid "Technical data:"
+msgstr "Technische Daten:"
+
+#: modules/feedback/templates/feedback-mail.template.txt
+msgctxt "feedback"
+msgid "Referring URL:"
+msgstr "Verweisende URL:"
+
+#: modules/feedback/templates/feedback-mail.template.txt
+msgctxt "feedback"
+msgid "Sender's IP address"
+msgstr "IP-Adresse des Absenders:"
+
+#: modules/feedback/templates/feedback-mail.template.txt
+msgctxt "feedback"
+msgid "Sender's browser:"
+msgstr "Browser des Absenders:"
