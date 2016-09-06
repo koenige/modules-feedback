@@ -11,7 +11,7 @@
 #
 %%% condition if copy %%%
 %%% text "You've sent us a message via our website:" %%% 
-%%% page host_base %%%
+%%% setting host_base %%%
 %%% condition else %%%
 %%% text "You've got a message via your website:" %%%
 %%% condition endif %%%
