@@ -27,6 +27,8 @@ function mod_feedback_feedback($vars, $setting) {
 	global $zz_setting;
 
 	$zz_setting['mail_with_signature'] = false;
+	$zz_setting['extra_http_headers'][] = 'X-Frame-Options: Deny';
+	$zz_setting['extra_http_headers'][] = "Content-Security-Policy: frame-ancestors 'self'";
 
 	$form = array();
 	$form['spam'] = false;
