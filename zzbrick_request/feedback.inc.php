@@ -30,14 +30,14 @@ function mod_feedback_feedback($vars, $setting) {
 	$zz_setting['extra_http_headers'][] = 'X-Frame-Options: Deny';
 	$zz_setting['extra_http_headers'][] = "Content-Security-Policy: frame-ancestors 'self'";
 
-	$form = array();
+	$form = [];
 	$form['spam'] = false;
 	$form['mailonly'] = !empty($setting['mailonly']) ? true : false;
 	$form['mailcopy'] = !empty($setting['mailcopy']) ? true : false;
 
 	// Read form data, test if spam
-	$fields = array('feedback', 'contact', 'sender', 'referer');
-	$rejected = array('<a href=', '[url=', '[link=');
+	$fields = ['feedback', 'contact', 'sender', 'referer'];
+	$rejected = ['<a href=', '[url=', '[link=', '??????'];
 	foreach ($fields as $field) {
 		$form[$field] = (!empty($_POST[$field]) ? $_POST[$field] : '');
 		if ($form[$field] AND !$form['spam']) {
@@ -84,7 +84,7 @@ function mod_feedback_feedback($vars, $setting) {
 			if ($form['send_copy']) {
 				$mail['headers']['From']['e_mail'] = $mail['to'];
 				$mail['headers']['From']['name'] = $zz_conf['project'];
-				$mail['to'] = array();
+				$mail['to'] = [];
 				$mail['to']['e_mail'] = $form['contact'];
 				$mail['to']['name'] = $form['sender'];
 				$mail['subject'] .= ' '.wrap_text('(Your Copy)');
