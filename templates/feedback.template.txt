@@ -5,7 +5,7 @@
 # http://www.zugzwang.org/modules/feedback
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2012-2014, 2016 Gustaf Mossakowski
+# @copyright Copyright © 2012-2014, 2016-2017 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 <div class="feedback">
@@ -35,7 +35,8 @@
 <div><form method="POST" action="">
 <h2><label for="feedback">%%% text "Your Message" %%%</label></h2>
 %%% item error_message %%%
-<input type="hidden" name="referer" value="%%% item referer wrap_html_escape %%%">
+<input type="hidden" name="url" value="%%% item referer wrap_html_escape %%%">
+<input type="hidden" name="code" value="%%% item code %%%">
 <textarea name="feedback" rows="14" cols="42" id="feedback" required="required"%%% condition if more_info_necessary %%% autofocus="autofocus"
 %%% condition endif %%%>%%% item feedback wrap_html_escape %%%</textarea>
 

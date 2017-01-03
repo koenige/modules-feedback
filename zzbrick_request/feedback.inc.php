@@ -8,7 +8,7 @@
  * http://www.zugzwang.org/modules/feedback
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2009-2014, 2016 Gustaf Mossakowski
+ * @copyright Copyright © 2009-2014, 2016-2017 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -36,7 +36,7 @@ function mod_feedback_feedback($vars, $setting) {
 	$form['mailcopy'] = !empty($setting['mailcopy']) ? true : false;
 
 	// Read form data, test if spam
-	$fields = ['feedback', 'contact', 'sender', 'referer'];
+	$fields = ['feedback', 'contact', 'sender', 'url'];
 	$rejected = ['<a href=', '[url=', '[link=', '??????'];
 	foreach ($fields as $field) {
 		$form[$field] = (!empty($_POST[$field]) ? $_POST[$field] : '');
@@ -47,8 +47,17 @@ function mod_feedback_feedback($vars, $setting) {
 			}
 		}
 	}
-	if (empty($form['referer'])) {
-		$form['referer'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+	if (empty($form['url'])) {
+		$form['url'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+	}
+	if (!empty($form['url'])) {
+		// code to check if referer is set via HTTP_REFERER or sent from bot
+		if (!empty($_POST['code'])) {
+			if ($_POST['code'] !== mod_feedback_feedback_code($form['url'])) {
+				$form['spam'] = true;
+			}
+		}
+		$form['code'] = mod_feedback_feedback_code($form['url']);
 	}
 
 	$form['wrong_e_mail'] = false;
@@ -103,4 +112,8 @@ function mod_feedback_feedback($vars, $setting) {
 
 	$page['text'] = wrap_template('feedback', $form, 'ignore positions');
 	return $page;
+}
+
+function mod_feedback_feedback_code($str) {
+	return substr(md5(str_rot13($str)), 0, 12);
 }
