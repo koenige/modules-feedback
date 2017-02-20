@@ -35,7 +35,7 @@
 <div><form method="POST" action="">
 <h2><label for="feedback">%%% text "Your Message" %%%</label></h2>
 %%% item error_message %%%
-<input type="hidden" name="url" value="%%% item referer wrap_html_escape %%%">
+<input type="hidden" name="url" value="%%% item url wrap_html_escape %%%">
 <input type="hidden" name="code" value="%%% item code %%%">
 <textarea name="feedback" rows="14" cols="42" id="feedback" required="required"%%% condition if more_info_necessary %%% autofocus="autofocus"
 %%% condition endif %%%>%%% item feedback wrap_html_escape %%%</textarea>
