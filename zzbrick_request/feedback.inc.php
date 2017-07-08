@@ -38,6 +38,16 @@ function mod_feedback_feedback($vars, $setting) {
 	// Read form data, test if spam
 	$fields = ['feedback', 'contact', 'sender', 'url'];
 	$rejected = ['<a href=', '[url=', '[link=', '??????'];
+	if (file_exists($file = $zz_setting['custom_wrap_dir'].'/feedback-spam-phrases.txt')) {
+		// add local spam phrases, setting these globally could mark too many mails
+		// that are valid
+		$data = file($file);
+		foreach ($data as $line) {
+			if (substr($line, 0, 1) === '#') continue;
+			if (!trim($line)) continue;
+			$rejected[] = trim($line);
+		}
+	}
 	foreach ($fields as $field) {
 		$form[$field] = (!empty($_POST[$field]) ? $_POST[$field] : '');
 		if ($form[$field] AND !$form['spam']) {

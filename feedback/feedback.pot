@@ -5,7 +5,7 @@
 # http://www.zugzwang.org/modules/feedback
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2012-2014, 2016 Gustaf Mossakowski
+# @copyright Copyright © 2012-2014, 2016-2017 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 msgid ""
@@ -84,6 +84,11 @@ msgstr ""
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
 msgid "Please do not use HTML or BBCode formatting!"
+msgstr ""
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "Your message looks like bulk mail. We do not accept bulk mail via this form."
 msgstr ""
 
 # ---  HTML: successful responses
