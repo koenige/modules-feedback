@@ -8,7 +8,7 @@
  * http://www.zugzwang.org/modules/feedback
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2009-2014, 2016-2017 Gustaf Mossakowski
+ * @copyright Copyright © 2009-2014, 2016-2018 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -40,7 +40,7 @@ function mod_feedback_feedback($vars, $setting) {
 	if (!empty($setting['extra_fields'])) {
 		$fields = array_merge($fields, $setting['extra_fields']);
 	}
-	$rejected = ['<a href=', '[url=', '[link=', '??????'];
+	$rejected = ['<a href=', '[url=', '[link=', '??????', '<iframe'];
 	if (file_exists($file = $zz_setting['custom_wrap_dir'].'/feedback-spam-phrases.txt')) {
 		// add local spam phrases, setting these globally could mark too many mails
 		// that are valid
