@@ -86,7 +86,7 @@ function mod_feedback_feedback($vars, $setting) {
 	if ($form['sender'] AND $form['contact'] AND $form['feedback']
 		AND !$form['spam'] AND !$form['wrong_e_mail']) {
 
-		$form['ip'] = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
+		$form['ip'] = $zz_setting['remote_ip'];
 		$form['user_agent'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 		
 		$page['replace_db_text'] = true;
