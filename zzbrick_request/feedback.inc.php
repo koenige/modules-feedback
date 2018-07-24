@@ -60,6 +60,14 @@ function mod_feedback_feedback($vars, $setting) {
 			}
 		}
 	}
+	// check for some simple hidden fields
+	$hidden = ['feedback_domain', 'feedback_status'];
+	if (!empty($_POST)) {
+		if (empty($_POST['feedback_domain'])) $form['spam'] = true;
+		elseif ($_POST['feedback_domain'] !== $zz_setting['hostname']) $form['spam'] = true;
+		elseif (empty($_POST['feedback_status'])) $form['spam'] = true;
+		elseif ($_POST['feedback_status'] !== 'sent') $form['spam'] = true;
+	}
 	if (empty($form['url'])) {
 		$form['url'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 	}
