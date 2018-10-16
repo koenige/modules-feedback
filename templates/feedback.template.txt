@@ -11,7 +11,7 @@
 <div class="feedback">
 %%% condition if mail_sent %%%
 <h2>%%% text "Thank you for your message." %%%</h2>
-<p><a href="./">%%% text "Send another message" %%%</a></p>
+<p><a href="./?another">%%% text "Send another message" %%%</a></p>
 
 %%% condition else %%%
 
@@ -33,7 +33,7 @@
 </p></div>
 
 %%% condition endif %%%
-<div><form method="POST" action="">
+<div><form method="POST" action="%%% setting base %%%%%% page url_path %%%">
 <h2><label for="feedback">%%% text "Your Message" %%%</label></h2>
 %%% item error_message %%%
 <input type="hidden" name="url" value="%%% item url wrap_html_escape %%%">

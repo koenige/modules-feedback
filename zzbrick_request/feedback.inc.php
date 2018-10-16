@@ -60,6 +60,7 @@ function mod_feedback_feedback($vars, $setting) {
 			}
 		}
 	}
+	if (!empty($_POST['url']) AND $_POST['url'] === 'Hi!') $form['spam'] = true;
 	// check for some simple hidden fields
 	$hidden = ['feedback_domain', 'feedback_status'];
 	if (!empty($_POST)) {
@@ -77,6 +78,10 @@ function mod_feedback_feedback($vars, $setting) {
 			if ($_POST['code'] !== mod_feedback_feedback_code($form['url'])) {
 				$form['spam'] = true;
 			}
+		}
+		if ($form['url'] === $zz_setting['host_base'].$zz_setting['request_uri'] AND !array_key_exists('another', $_GET)) {
+			// page does not link itself, therefore referer = request is impossible
+			$form['url'] = 'Hi!';
 		}
 		$form['code'] = mod_feedback_feedback_code($form['url']);
 	}
@@ -132,6 +137,7 @@ function mod_feedback_feedback($vars, $setting) {
 		else wrap_error('Potential Spam Mail: '.json_encode($_POST, true));
 	}
 
+	$page['query_strings'] = ['another'];
 	$page['text'] = wrap_template('feedback', $form, 'ignore positions');
 	return $page;
 }
