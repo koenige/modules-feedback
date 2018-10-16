@@ -129,6 +129,7 @@ function mod_feedback_feedback($vars, $setting) {
 		// form incomplete or spam
 		$page['replace_db_text'] = true;
 		if (!$form['spam']) $form['more_info_necessary'] = true;
+		else wrap_error('Potential Spam Mail: '.json_encode($_POST, true));
 	}
 
 	$page['text'] = wrap_template('feedback', $form, 'ignore positions');
