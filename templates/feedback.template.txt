@@ -19,6 +19,10 @@
 <p>%%% text "An error occured. We could not send your message." %%%
 %%% text "Please try again soon." %%%</p>
 
+%%% condition elseif one_word_only %%%
+<div class="error"><p>%%% text "Your message looks like bulk mail. We do not accept bulk mail via this form." %%%</p>
+<p>%%% text "Please write more than one word." %%%</p></div>
+
 %%% condition elseif spam %%%
 <div class="error"><p>%%% text "Your message looks like bulk mail. We do not accept bulk mail via this form." %%% 
 %%% text "Please do not use HTML or BBCode formatting!" %%% 

@@ -67,7 +67,8 @@ msgstr "Nachricht abschicken"
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
 msgid "An error occured. We could not send your message."
-msgstr "Wir konnten Ihre Nachricht aufgrund eines Fehlers leider nicht versenden."
+msgstr ""
+"Wir konnten Ihre Nachricht aufgrund eines Fehlers leider nicht versenden."
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
@@ -91,8 +92,16 @@ msgstr "Bitte benutzen Sie zur Formatierung kein HTML oder BBCode!"
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
-msgid "Your message looks like bulk mail. We do not accept bulk mail via this form."
-msgstr "Ihre Nachricht sieht aus wie eine Massenmail. Wir möchten über dieses Formular keine Massenmails bekommen."
+msgid ""
+"Your message looks like bulk mail. We do not accept bulk mail via this form."
+msgstr ""
+"Ihre Nachricht sieht aus wie eine Massenmail. Wir möchten über dieses "
+"Formular keine Massenmails bekommen."
+
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "Please write more than one word."
+msgstr "Bitte schreiben Sie mehr als ein Wort."
 
 # ---  HTML: successful responses
 #: modules/feedback/templates/feedback.template.txt

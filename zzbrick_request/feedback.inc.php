@@ -60,6 +60,11 @@ function mod_feedback_feedback($vars, $setting) {
 			}
 		}
 	}
+	// message just one word? not enough
+	if (!empty($_POST) AND !strstr($form['feedback'], ' ')) {
+		$form['spam'] = true;
+		$form['one_word_only'] = true;
+	}
 	if (!empty($_POST['url']) AND $_POST['url'] === 'Hi!') $form['spam'] = true;
 	// check for some simple hidden fields
 	$hidden = ['feedback_domain', 'feedback_status'];

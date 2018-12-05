@@ -91,6 +91,11 @@ msgctxt "feedback"
 msgid "Your message looks like bulk mail. We do not accept bulk mail via this form."
 msgstr ""
 
+#: modules/feedback/templates/feedback.template.txt
+msgctxt "feedback"
+msgid "Please write more than one word."
+msgstr ""
+
 # ---  HTML: successful responses
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
