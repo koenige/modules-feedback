@@ -1,12 +1,12 @@
 # feedback module
 # Template for feedback mail
-# Template für Feedback-Mail
+# Template fÃ¼r Feedback-Mail
 #
-# Part of »Zugzwang Project«
+# Part of Â»Zugzwang ProjectÂ«
 # http://www.zugzwang.org/modules/feedback
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2012-2014, 2016-2017 Gustaf Mossakowski
+# @copyright Copyright Â© 2012-2014, 2016-2017 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 %%% condition if copy %%%

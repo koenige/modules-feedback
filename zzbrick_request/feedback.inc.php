@@ -4,11 +4,11 @@
  * feedback module
  * Feedback form
  *
- * Part of »Zugzwang Project«
+ * Part of Â»Zugzwang ProjectÂ«
  * http://www.zugzwang.org/modules/feedback
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2009-2014, 2016-2018 Gustaf Mossakowski
+ * @copyright Copyright Â© 2009-2014, 2016-2018 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -101,6 +101,7 @@ function mod_feedback_feedback($vars, $setting) {
 
 		$form['ip'] = $zz_setting['remote_ip'];
 		$form['user_agent'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+		if ($form['url'] === 'Hi!') $form['url'] = ''; // remove spam marker
 		
 		$page['replace_db_text'] = true;
 		$mail['to'] = !empty($setting['mailto']) ? $setting['mailto'] : $zz_setting['own_e_mail'];
