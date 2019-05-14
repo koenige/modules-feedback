@@ -21,6 +21,7 @@
  *		mailto=... send to a different e-mail address
  *		mailcopy=1 show field to send a copy of e-mail to sender
  *		mailonly=1 only allow e-mail address, no phone number
+ *		reply_to=1 set sender of mail not as From but as Reply-To
  */
 function mod_feedback_feedback($vars, $setting) {
 	global $zz_conf;
@@ -111,8 +112,9 @@ function mod_feedback_feedback($vars, $setting) {
 		$page['replace_db_text'] = true;
 		$mail['to'] = !empty($setting['mailto']) ? $setting['mailto'] : $zz_setting['own_e_mail'];
 		if ($e_mail_valid) {
-			$mail['headers']['From']['e_mail'] = $form['contact'];
-			$mail['headers']['From']['name'] = $form['sender'];
+			$header = empty($setting['reply_to']) ? 'From' : 'Reply-To';
+			$mail['headers'][$header]['e_mail'] = $form['contact'];
+			$mail['headers'][$header]['name'] = $form['sender'];
 		}
 		$mail['subject'] = sprintf(
 			wrap_text('Feedback via %s'), $zz_setting['hostname']
