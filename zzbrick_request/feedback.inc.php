@@ -8,7 +8,7 @@
  * http://www.zugzwang.org/modules/feedback
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2009-2014, 2016-2018 Gustaf Mossakowski
+ * @copyright Copyright © 2009-2014, 2016-2019 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -85,9 +85,31 @@ function mod_feedback_feedback($vars, $setting) {
 				$form['spam'] = true;
 			}
 		}
-		if ($form['url'] === $zz_setting['host_base'].$zz_setting['request_uri'] AND !array_key_exists('another', $_GET)) {
+		if (empty($_POST) AND $form['url'] === $zz_setting['host_base'].$zz_setting['request_uri'] AND !array_key_exists('another', $_GET)) {
 			// page does not link itself, therefore referer = request is impossible
 			$form['url'] = 'Hi!';
+		} elseif ($form['url'] !== 'Hi!')  {
+			$referer = parse_url($form['url']);
+			$request = parse_url($zz_setting['request_uri']);
+
+			if ($form['url'] === sprintf('%s://%s', $referer['scheme'], $referer['host'])) {
+				// missing trailing slash
+				$form['url'] = 'Hi!';
+			} elseif (!empty($zz_setting['canonical_hostname'])
+				AND in_array('/', $zz_setting['https_urls'])
+				AND !empty($referer['path'])
+				AND $referer['path'] !== $request['path']) // no https redirect
+			{
+				// missing https, although it's required for the site?
+				if ($referer['scheme'] === 'http' AND $referer['host'] === $zz_setting['canonical_hostname']) {
+					$form['url'] = 'Hi!';
+				} elseif (substr($zz_setting['canonical_hostname'], 0, 4) === 'www.'
+					AND $referer['scheme'] === 'http'
+					AND $referer['host'] === substr($zz_setting['canonical_hostname'], 4))
+				{
+					$form['url'] = 'Hi!';
+				}
+			}
 		}
 		$form['code'] = mod_feedback_feedback_code($form['url']);
 	}
