@@ -132,7 +132,14 @@ function mod_feedback_feedback($vars, $setting) {
 		if ($form['url'] === 'Hi!') $form['url'] = ''; // remove spam marker
 		
 		$page['replace_db_text'] = true;
-		$mail['to'] = !empty($setting['mailto']) ? $setting['mailto'] : $zz_setting['own_e_mail'];
+		if (!empty($setting['mailto'])) {
+			$mail['to'] = $setting['mailto'];
+		} elseif (!empty($zz_setting['own_name'])) {
+			$mail['to']['e_mail'] = $zz_setting['own_e_mail'];
+			$mail['to']['name'] = $zz_setting['own_name'];
+		} else {
+			$mail['to'] = $zz_setting['own_e_mail'];
+		}
 		if ($e_mail_valid) {
 			$header = empty($setting['reply_to']) ? 'From' : 'Reply-To';
 			$mail['headers'][$header]['e_mail'] = $form['contact'];
