@@ -44,6 +44,7 @@
 <input type="hidden" name="feedback_domain" value="%%% setting hostname %%%">
 <input type="hidden" name="feedback_status" value="sent">
 <input type="hidden" name="code" value="%%% item code %%%">
+<input type="hidden" name="status" value="%%% item status %%%">
 <textarea name="feedback" rows="14" cols="42" id="feedback" required="required"%%% condition if more_info_necessary %%% autofocus="autofocus"
 %%% condition endif %%%>%%% item feedback wrap_html_escape %%%</textarea>
 

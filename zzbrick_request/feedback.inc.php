@@ -67,13 +67,20 @@ function mod_feedback_feedback($vars, $setting) {
 		$form['one_word_only'] = true;
 	}
 	if (!empty($_POST['url']) AND $_POST['url'] === 'Hi!') $form['spam'] = true;
-	// check for some simple hidden fields
-	$hidden = ['feedback_domain', 'feedback_status'];
 	if (!empty($_POST)) {
+		// check for some simple hidden fields
 		if (empty($_POST['feedback_domain'])) $form['spam'] = true;
 		elseif ($_POST['feedback_domain'] !== $zz_setting['hostname']) $form['spam'] = true;
 		elseif (empty($_POST['feedback_status'])) $form['spam'] = true;
 		elseif ($_POST['feedback_status'] !== 'sent') $form['spam'] = true;
+		if (empty($_POST['status'])) $form['spam'] = true;
+		else {
+			$form['status'] = $_POST['status'];
+			$check = mod_feedback_feedback_checktime($form['status']);
+			if (!$check) $form['spam'] = true;
+		}
+	} else {
+		$form['status'] = mod_feedback_feedback_settime();
 	}
 	if (empty($form['url'])) {
 		$form['url'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
@@ -181,4 +188,41 @@ function mod_feedback_feedback($vars, $setting) {
 
 function mod_feedback_feedback_code($str) {
 	return substr(md5(str_rot13($str)), 0, 12);
+}
+
+/**
+ * set timestamp for feedback form, with super cheap encryption
+ *
+ * @return string
+ * @todo use real encryption if necessary
+ */
+function mod_feedback_feedback_settime() {
+	$time = time();
+	$time = str_split($time);
+	for ($i = 0; $i < count($time); $i++) {
+		$chars[] = chr(100+$time[$i]);
+	}
+	$time = implode('', $chars);
+	return $time;
+}
+
+/**
+ * feedback messages written in below 5 seconds are probably spam
+ * show form again to resubmit
+ *
+ * @param string $time (encrypted)
+ * @return bool true = everything ok
+ */
+function mod_feedback_feedback_checktime($time) {
+	$time = str_split($time);
+	for ($i = 0; $i < count($time); $i++) {
+		$chars[] = ord($time[$i])-100;
+	}
+	$time = implode('', $chars);
+	$min_time = wrap_get_setting('feedback_write_min_seconds');
+	if (!$min_time) $min_time = 5;
+	if (time() - $time < $min_time) {
+		return false;
+	}
+	return true;
 }
