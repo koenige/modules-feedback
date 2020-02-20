@@ -8,7 +8,7 @@
  * http://www.zugzwang.org/modules/feedback
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2009-2014, 2016-2019 Gustaf Mossakowski
+ * @copyright Copyright © 2009-2014, 2016-2020 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -130,12 +130,16 @@ function mod_feedback_feedback($vars, $setting) {
 		$form['wrong_e_mail'] = true;
 	}
 
+	// get user agent for mail
+	$form['user_agent'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+	// no normal user agent has " in it, some spammers have
+	if (strstr($form['user_agent'], '"')) $form['spam'] = true;
+
 	// All form fields filled out? Send mail and say thank you
 	if ($form['sender'] AND $form['contact'] AND $form['feedback']
 		AND !$form['spam'] AND !$form['wrong_e_mail']) {
 
 		$form['ip'] = $zz_setting['remote_ip'];
-		$form['user_agent'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 		if ($form['url'] === 'Hi!') $form['url'] = ''; // remove spam marker
 		
 		$page['replace_db_text'] = true;
