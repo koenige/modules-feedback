@@ -145,11 +145,11 @@ function mod_feedback_feedback($vars, $setting) {
 		$page['replace_db_text'] = true;
 		if (!empty($setting['mailto'])) {
 			$mail['to'] = $setting['mailto'];
-		} elseif (!empty($zz_setting['own_name'])) {
-			$mail['to']['e_mail'] = $zz_setting['own_e_mail'];
-			$mail['to']['name'] = $zz_setting['own_name'];
+		} elseif ($from_name = wrap_get_setting('own_name')) {
+			$mail['to']['e_mail'] = wrap_get_setting('own_e_mail');
+			$mail['to']['name'] = $from_name;
 		} else {
-			$mail['to'] = $zz_setting['own_e_mail'];
+			$mail['to'] = wrap_get_setting('own_e_mail');
 		}
 		if ($e_mail_valid) {
 			$header = empty($setting['reply_to']) ? 'From' : 'Reply-To';
@@ -160,7 +160,7 @@ function mod_feedback_feedback($vars, $setting) {
 			wrap_text('Feedback via %s'), $zz_setting['hostname']
 		);
 		$mail['message'] = wrap_template('feedback-mail', $form, 'ignore positions');
-		$mail['parameters'] = '-f '.$zz_setting['own_e_mail'];
+		$mail['parameters'] = '-f '.wrap_get_setting('own_e_mail');
 		$success = wrap_mail($mail);
 		if ($success) {
 			$form['mail_sent'] = true;
