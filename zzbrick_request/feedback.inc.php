@@ -24,7 +24,6 @@
  *		reply_to=1 set sender of mail not as From but as Reply-To
  */
 function mod_feedback_feedback($vars, $setting) {
-	global $zz_conf;
 	global $zz_setting;
 
 	$zz_setting['mail_with_signature'] = false;
@@ -166,7 +165,7 @@ function mod_feedback_feedback($vars, $setting) {
 			$form['mail_sent'] = true;
 			if ($form['send_copy']) {
 				$mail['headers']['From']['e_mail'] = $mail['to'];
-				$mail['headers']['From']['name'] = $zz_conf['project'];
+				$mail['headers']['From']['name'] = wrap_get_setting('project');
 				$mail['to'] = [];
 				$mail['to']['e_mail'] = $form['contact'];
 				$mail['to']['name'] = $form['sender'];
