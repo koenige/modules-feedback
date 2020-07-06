@@ -75,9 +75,10 @@ function mod_feedback_feedback($vars, $setting) {
 		if (empty($_POST['status'])) $form['spam'] = true;
 		else {
 			$form['status'] = $_POST['status'];
-			$check = mod_feedback_feedback_checktime($form['status']);
+			$check = mod_feedback_feedback_checktime($form['status'], mb_strlen($form['feedback']));
 			if (!$check) $form['spam'] = true;
 		}
+		$form['repost'] = mod_feedback_feedback_settime();
 	} else {
 		$form['status'] = mod_feedback_feedback_settime();
 	}
@@ -214,16 +215,26 @@ function mod_feedback_feedback_settime() {
  * show form again to resubmit
  *
  * @param string $time (encrypted)
+ * @param int $characters
  * @return bool true = everything ok
  */
-function mod_feedback_feedback_checktime($time) {
+function mod_feedback_feedback_checktime($time, $characters) {
 	$time = str_split($time);
 	for ($i = 0; $i < count($time); $i++) {
 		$chars[] = ord($time[$i])-100;
 	}
 	$time = implode('', $chars);
 	$min_time = wrap_get_setting('feedback_write_min_seconds');
-	if (!$min_time) $min_time = 5;
+	if (!$min_time) {
+		$min_time = 5;
+		if (empty($_POST['repost'])) {
+			// just for first POSTing, check if text was copied/pasted
+			// or really written
+			$time_to_write = floor($characters / 20);
+			if ($time_to_write > $min_time)
+				$min_time = $time_to_write;
+		}
+	}
 	if (time() - $time < $min_time) {
 		return false;
 	}
