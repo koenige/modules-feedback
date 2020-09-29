@@ -52,7 +52,7 @@ function mod_feedback_feedback($vars, $setting) {
 		}
 	}
 	foreach ($fields as $field) {
-		$form[$field] = (!empty($_POST[$field]) ? $_POST[$field] : '');
+		$form[$field] = (!empty($_POST[$field]) ? trim($_POST[$field]) : '');
 		if ($form[$field] AND !$form['spam']) {
 			foreach ($rejected as $word) {
 				$spam = strpos($form[$field], $word);
