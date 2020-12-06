@@ -31,7 +31,7 @@ msgstr "Deine Nachricht"
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
 msgid "How can we get in touch with you?"
-msgstr "Wie können wir dich erreichen?"
+msgstr "Wie können wir Dich erreichen?"
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
@@ -68,7 +68,7 @@ msgstr "Nachricht abschicken"
 msgctxt "feedback"
 msgid "An error occured. We could not send your message."
 msgstr ""
-"Wir konnten deine Nachricht aufgrund eines Fehlers leider nicht versenden."
+"Wir konnten Deine Nachricht aufgrund eines Fehlers leider nicht versenden."
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
@@ -83,7 +83,7 @@ msgstr "Bitte fülle das Formular vollständig aus."
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
 msgid "We still need some information from you."
-msgstr "Wir benötigen von dir noch weitere Informationen."
+msgstr "Wir benötigen von Dir noch weitere Informationen."
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
@@ -107,7 +107,7 @@ msgstr "Bitte schreibe mehr als ein Wort."
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
 msgid "Thank you for your message."
-msgstr "Vielen Dank für deine Nachricht."
+msgstr "Vielen Dank für Deine Nachricht."
 
 #: modules/feedback/templates/feedback.template.txt
 msgctxt "feedback"
@@ -137,12 +137,12 @@ msgstr "Name:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
-msgid "You've got a message via your website:"
-msgstr "Du hast eine Nachricht über deine Website erhalten:"
+msgid "You’ve got a message via your website:"
+msgstr "Du hast eine Nachricht über Deine Website erhalten:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
-msgid "You've sent us a message via our website:"
+msgid "You’ve sent us a message via our website:"
 msgstr "Du hast uns eine Nachricht über unsere Website gesendet:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
@@ -157,10 +157,10 @@ msgstr "Verweisende URL:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
-msgid "Sender's IP address:"
+msgid "Sender’s IP address:"
 msgstr "IP-Adresse des Absenders:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
-msgid "Sender's browser:"
+msgid "Sender’s browser:"
 msgstr "Browser des Absenders:"

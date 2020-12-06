@@ -130,12 +130,12 @@ msgstr ""
 
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
-msgid "You've got a message via your website:"
+msgid "You’ve got a message via your website:"
 msgstr ""
 
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
-msgid "You've sent us a message via our website:"
+msgid "You’ve sent us a message via our website:"
 msgstr ""
 
 #: modules/feedback/templates/feedback-mail.template.txt
@@ -150,11 +150,11 @@ msgstr ""
 
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
-msgid "Sender's IP address:"
+msgid "Sender’s IP address:"
 msgstr ""
 
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
-msgid "Sender's browser:"
+msgid "Sender’s browser:"
 msgstr ""
 

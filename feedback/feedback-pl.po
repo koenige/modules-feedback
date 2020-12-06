@@ -104,5 +104,5 @@ msgstr "Imię i nazwisko:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
-msgid "You've got a message via your website:"
+msgid "You’ve got a message via your website:"
 msgstr ""

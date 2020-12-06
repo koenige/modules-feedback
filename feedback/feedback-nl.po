@@ -104,5 +104,5 @@ msgstr "Naam:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
-msgid "You've got a message via your website:"
+msgid "You’ve got a message via your website:"
 msgstr "Je hebt een bericht via uw website:"

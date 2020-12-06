@@ -104,5 +104,5 @@ msgstr "Имя:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
 msgctxt "feedback"
-msgid "You've got a message via your website:"
+msgid "You’ve got a message via your website:"
 msgstr "Вы получили сообщение через свой веб-сайт:"
