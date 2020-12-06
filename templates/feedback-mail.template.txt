@@ -10,10 +10,10 @@
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 %%% condition if copy %%%
-%%% text "You've sent us a message via our website:" %%% 
+%%% text "You’ve sent us a message via our website:" %%% 
 %%% setting host_base %%%
 %%% condition else %%%
-%%% text "You've got a message via your website:" %%%
+%%% text "You’ve got a message via your website:" %%%
 %%% condition endif %%%
 
 %%% text "Name:" %%% %%% item sender %%% 
@@ -28,7 +28,7 @@
 %%% condition if url %%%
 %%% text Referring URL: %%% %%% item url %%% 
 %%% condition endif %%%
-%%% text Sender's IP address: %%% %%% item ip %%% 
+%%% text Sender’s IP address: %%% %%% item ip %%% 
 %%% condition if user_agent %%%
-%%% text Sender's browser: %%% %%% item user_agent %%%
+%%% text Sender’s browser: %%% %%% item user_agent %%%
 %%% condition endif %%% 
