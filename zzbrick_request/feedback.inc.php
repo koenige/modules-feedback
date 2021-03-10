@@ -8,7 +8,7 @@
  * http://www.zugzwang.org/modules/feedback
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2009-2014, 2016-2020 Gustaf Mossakowski
+ * @copyright Copyright © 2009-2014, 2016-2021 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -126,6 +126,9 @@ function mod_feedback_feedback($vars, $setting) {
 	$form['send_copy'] = ($form['mailcopy'] AND !empty($_POST['mailcopy']) AND $_POST['mailcopy'] === 'on') ? true : false;
 	if (wrap_mail_valid($form['contact'])) {
 		$e_mail_valid = true;
+		$sender_mail = $form['contact'];
+	} elseif ($sender_mail = mod_feedback_feedback_extract_mail($form['contact'])) {
+		$e_mail_valid = true;
 	} elseif ($form['mailonly'] OR $form['send_copy']) {
 		$form['wrong_e_mail'] = true;
 	}
@@ -153,7 +156,7 @@ function mod_feedback_feedback($vars, $setting) {
 		}
 		if ($e_mail_valid) {
 			$header = empty($setting['reply_to']) ? 'From' : 'Reply-To';
-			$mail['headers'][$header]['e_mail'] = $form['contact'];
+			$mail['headers'][$header]['e_mail'] = $sender_mail;
 			$mail['headers'][$header]['name'] = $form['sender'];
 		}
 		$mail['subject'] = sprintf(
@@ -239,4 +242,22 @@ function mod_feedback_feedback_checktime($time, $characters) {
 		return false;
 	}
 	return true;
+}
+
+/**
+ * extract e-mail from contact data (if sometimes people give phone and mail)
+ *
+ * @param string $contact
+ * @return string
+ */
+function mod_feedback_feedback_extract_mail($contact) {
+	if (!strstr($contact, '@')) return '';
+	if (!strstr($contact, ' ')) return '';
+	$contact = explode(' ', $contact);
+	foreach ($contact as $part) {
+		if (!strstr($part, '@')) continue;
+		$part = trim($part, ',');
+		if (wrap_mail_valid($part)) return $part;
+	}
+	return '';
 }
