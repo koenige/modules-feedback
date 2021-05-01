@@ -97,24 +97,30 @@ function mod_feedback_feedback($vars, $setting) {
 			$form['url'] = 'Hi!';
 		} elseif ($form['url'] !== 'Hi!')  {
 			$referer = parse_url($form['url']);
-			$request = parse_url($zz_setting['request_uri']);
-
-			if ($form['url'] === sprintf('%s://%s', $referer['scheme'], $referer['host'])) {
-				// missing trailing slash
+			if (empty($referer['scheme'])) {
+				// incorrect referer URL
+				wrap_error(sprintf('Potential SPAM mail because referer is set to %s', $form['url']));
 				$form['url'] = 'Hi!';
-			} elseif (!empty($zz_setting['canonical_hostname'])
-				AND in_array('/', $zz_setting['https_urls'])
-				AND !empty($referer['path'])
-				AND $referer['path'] !== $request['path']) // no https redirect
-			{
-				// missing https, although it's required for the site?
-				if ($referer['scheme'] === 'http' AND $referer['host'] === $zz_setting['canonical_hostname']) {
+			} else {
+				$request = parse_url($zz_setting['request_uri']);
+
+				if ($form['url'] === sprintf('%s://%s', $referer['scheme'], $referer['host'])) {
+					// missing trailing slash
 					$form['url'] = 'Hi!';
-				} elseif (substr($zz_setting['canonical_hostname'], 0, 4) === 'www.'
-					AND $referer['scheme'] === 'http'
-					AND $referer['host'] === substr($zz_setting['canonical_hostname'], 4))
+				} elseif (!empty($zz_setting['canonical_hostname'])
+					AND in_array('/', $zz_setting['https_urls'])
+					AND !empty($referer['path'])
+					AND $referer['path'] !== $request['path']) // no https redirect
 				{
-					$form['url'] = 'Hi!';
+					// missing https, although it's required for the site?
+					if ($referer['scheme'] === 'http' AND $referer['host'] === $zz_setting['canonical_hostname']) {
+						$form['url'] = 'Hi!';
+					} elseif (substr($zz_setting['canonical_hostname'], 0, 4) === 'www.'
+						AND $referer['scheme'] === 'http'
+						AND $referer['host'] === substr($zz_setting['canonical_hostname'], 4))
+					{
+						$form['url'] = 'Hi!';
+					}
 				}
 			}
 		}
