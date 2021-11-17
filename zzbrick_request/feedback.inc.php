@@ -5,7 +5,7 @@
  * Feedback form
  *
  * Part of »Zugzwang Project«
- * http://www.zugzwang.org/modules/feedback
+ * https://www.zugzwang.org/modules/feedback
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
  * @copyright Copyright © 2009-2014, 2016-2021 Gustaf Mossakowski

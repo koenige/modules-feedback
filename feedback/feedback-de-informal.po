@@ -2,7 +2,7 @@
 # Translations to German, informal
 #
 # Part of »Zugzwang Project«
-# http://www.zugzwang.org/modules/feedback
+# https://www.zugzwang.org/modules/feedback
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
 # @copyright Copyright © 2020 Gustaf Mossakowski
