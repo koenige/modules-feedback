@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/feedback
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2009-2014, 2016-2021 Gustaf Mossakowski
+ * @copyright Copyright © 2009-2014, 2016-2022 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -168,6 +168,10 @@ function mod_feedback_feedback($vars, $setting) {
 		$mail['subject'] = sprintf(
 			wrap_text('Feedback via %s'), $zz_setting['hostname']
 		);
+		if (!empty($setting['no_mail_subject_prefix'])) {
+			$old_mail_subject_prefix = $zz_setting['mail_subject_prefix'];
+			$zz_setting['mail_subject_prefix'] = false;
+		}
 		$mail['message'] = wrap_template('feedback-mail', $form, 'ignore positions');
 		$mail['parameters'] = '-f '.wrap_get_setting('own_e_mail');
 		$success = wrap_mail($mail);
@@ -186,6 +190,9 @@ function mod_feedback_feedback($vars, $setting) {
 			}
 		} else {
 			$form['mail_error'] = true;
+		}
+		if (!empty($setting['no_mail_subject_prefix'])) {
+			$zz_setting['mail_subject_prefix'] = $old_mail_subject_prefix;
 		}
 	} elseif (!empty($_POST)) {
 		// form incomplete or spam
