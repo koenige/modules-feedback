@@ -172,6 +172,8 @@ function mod_feedback_feedback($vars, $setting) {
 			$old_mail_subject_prefix = $zz_setting['mail_subject_prefix'];
 			$zz_setting['mail_subject_prefix'] = false;
 		}
+		if (!empty($setting['extra_lead']))
+			$form['extra_lead'] = $setting['extra_lead'];
 		$mail['message'] = wrap_template('feedback-mail', $form, 'ignore positions');
 		$mail['parameters'] = '-f '.wrap_get_setting('own_e_mail');
 		$success = wrap_mail($mail);
