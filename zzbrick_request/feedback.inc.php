@@ -165,9 +165,13 @@ function mod_feedback_feedback($vars, $setting) {
 			$mail['headers'][$header]['e_mail'] = $sender_mail;
 			$mail['headers'][$header]['name'] = $form['sender'];
 		}
-		$mail['subject'] = sprintf(
-			wrap_text('Feedback via %s'), $zz_setting['hostname']
-		);
+		if (!empty($setting['subject'])) {
+			$mail['subject'] = $setting['subject'];
+		} else {
+			$mail['subject'] = sprintf(
+				wrap_text('Feedback via %s'), $zz_setting['hostname']
+			);
+		}
 		if (!empty($setting['no_mail_subject_prefix'])) {
 			$old_mail_subject_prefix = $zz_setting['mail_subject_prefix'];
 			$zz_setting['mail_subject_prefix'] = false;
