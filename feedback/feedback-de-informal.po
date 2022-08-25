@@ -5,7 +5,7 @@
 # https://www.zugzwang.org/modules/feedback
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2020 Gustaf Mossakowski
+# @copyright Copyright © 2020, 2022 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 msgid ""
@@ -24,74 +24,60 @@ msgstr ""
 "X-Generator: Poedit 1.8.12\n"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Your Message"
 msgstr "Deine Nachricht"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "How can we get in touch with you?"
 msgstr "Wie können wir Dich erreichen?"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Your Name"
 msgstr "Dein Name"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "E-Mail or phone"
 msgstr "E-Mail oder Telefon"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "E-Mail"
 msgstr "E-Mail"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Send me a copy of my message via e-mail"
 msgstr "Schicke mir eine Kopie meiner Nachricht"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "The e-mail address is incorrect."
 msgstr "Die E-Mail-Adresse ist fehlerhaft."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Submit Message"
 msgstr "Nachricht abschicken"
 
 # ---  HTML: error responses
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "An error occured. We could not send your message."
 msgstr ""
 "Wir konnten Deine Nachricht aufgrund eines Fehlers leider nicht versenden."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Please try again soon."
 msgstr "Bitte versuche es gleich noch einmal."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Please complete the form."
 msgstr "Bitte fülle das Formular vollständig aus."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "We still need some information from you."
 msgstr "Wir benötigen von Dir noch weitere Informationen."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Please do not use HTML or BBCode formatting!"
 msgstr "Bitte benutze zur Formatierung kein HTML oder BBCode!"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid ""
 "Your message looks like bulk mail. We do not accept bulk mail via this form."
 msgstr ""
@@ -99,68 +85,55 @@ msgstr ""
 "Formular keine Massenmails bekommen."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Please write more than one word."
 msgstr "Bitte schreibe mehr als ein Wort."
 
 # ---  HTML: successful responses
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Thank you for your message."
 msgstr "Vielen Dank für Deine Nachricht."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Send another message"
 msgstr "Eine weitere Nachricht senden"
 
 # --- Mail
 #: modules/feedback/zzbrick_request/feedback.inc.php
 #, php-format
-msgctxt "feedback"
 msgid "Feedback via %s"
 msgstr "Nachricht via %s"
 
-msgctxt "feedback"
 msgid "(Your Copy)"
 msgstr "(Deine Kopie)"
 
 #: modules/feedback/templates/feedback-mail.template.txt
-msgctxt "feedback"
 msgid "Contact details:"
 msgstr "Kontaktdetails:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
-msgctxt "feedback"
 msgid "Name:"
 msgstr "Name:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
-msgctxt "feedback"
 msgid "You’ve got a message via your website:"
 msgstr "Du hast eine Nachricht über Deine Website erhalten:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
-msgctxt "feedback"
 msgid "You’ve sent us a message via our website:"
 msgstr "Du hast uns eine Nachricht über unsere Website gesendet:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
-msgctxt "feedback"
 msgid "Technical data:"
 msgstr "Technische Daten:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
-msgctxt "feedback"
 msgid "Referring URL:"
 msgstr "Verweisende URL:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
-msgctxt "feedback"
 msgid "Sender’s IP address:"
 msgstr "IP-Adresse des Absenders:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
-msgctxt "feedback"
 msgid "Sender’s browser:"
 msgstr "Browser des Absenders:"

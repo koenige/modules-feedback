@@ -5,7 +5,7 @@
 # https://www.zugzwang.org/modules/feedback
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2012-2014 Gustaf Mossakowski
+# @copyright Copyright © 2012-2014, 2022 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 msgid ""
@@ -24,85 +24,69 @@ msgstr ""
 "Language: nl\n"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Your Message"
 msgstr "Uw bericht"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "How can we get in touch with you?"
 msgstr "Hoe kunnen we contact met u opnemen?"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Your Name"
 msgstr "Uw naam"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "E-Mail or phone"
 msgstr "E-Mail of telefoon"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Submit Message"
 msgstr "Verzend bericht"
 
 # ---  HTML: error responses
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "An error occured. We could not send your message."
 msgstr "Er is een fout opgetreden. We konden niet uw bericht sturen."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Please try again soon."
 msgstr "Probeer het later nog eens."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Please complete the form."
 msgstr "Vul het formulier in."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "We still need some information from you."
 msgstr "We nog steeds nodig enkele gegevens van u."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Please do not use HTML or BBCode formatting!"
 msgstr "Gebruik geen HTML of BBCode opmaak!"
 
 # ---  HTML: successful responses
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Thank you for your message."
 msgstr "Dank u voor uw bericht."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Send another message"
 msgstr "Stuur een bericht"
 
 # --- Mail
 #: modules/feedback/zzbrick_request/feedback.inc.php
 #, php-format
-msgctxt "feedback"
 msgid "Feedback via %s"
 msgstr "Feedback via %s"
 
 #: modules/feedback/templates/feedback-mail.template.txt
-msgctxt "feedback"
 msgid "Contact details:"
 msgstr "Contactgegevens:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
-msgctxt "feedback"
 msgid "Name:"
 msgstr "Naam:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
-msgctxt "feedback"
 msgid "You’ve got a message via your website:"
 msgstr "Je hebt een bericht via uw website:"

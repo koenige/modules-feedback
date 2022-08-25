@@ -5,7 +5,7 @@
 # https://www.zugzwang.org/modules/feedback
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2012-2014 Gustaf Mossakowski
+# @copyright Copyright © 2012-2014, 2022 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 msgid ""
@@ -24,85 +24,69 @@ msgstr ""
 "Language: ru\n"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Your Message"
 msgstr "Ваше cообщение"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "How can we get in touch with you?"
 msgstr "Как мы можем связаться с Вами?"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Your Name"
 msgstr "Ваше имя"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "E-Mail or phone"
 msgstr "Электронная почта или телефон"
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Submit Message"
 msgstr "Отправить сообщение"
 
 # ---  HTML: error responses
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "An error occured. We could not send your message."
 msgstr "Произошла ошибка. Мы не смогли отправить Ваше сообщение."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Please try again soon."
 msgstr "Пожалуйста, повторите попытку позже."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Please complete the form."
 msgstr "Пожалуйста, заполните форму."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "We still need some information from you."
 msgstr "Некоторые поля не заполнены."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Please do not use HTML or BBCode formatting!"
 msgstr "Пожалуйста, не используйте форматирование HTML или BBCode!"
 
 # ---  HTML: successful responses
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Thank you for your message."
 msgstr "Спасибо за Ваше сообщение."
 
 #: modules/feedback/templates/feedback.template.txt
-msgctxt "feedback"
 msgid "Send another message"
 msgstr "Отправить еще одно сообщение"
 
 # --- Mail
 #: modules/feedback/zzbrick_request/feedback.inc.php
 #, php-format
-msgctxt "feedback"
 msgid "Feedback via %s"
 msgstr "Обратная связь посредством %s"
 
 #: modules/feedback/templates/feedback-mail.template.txt
-msgctxt "feedback"
 msgid "Contact details:"
 msgstr "Контактные данные:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
-msgctxt "feedback"
 msgid "Name:"
 msgstr "Имя:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
-msgctxt "feedback"
 msgid "You’ve got a message via your website:"
 msgstr "Вы получили сообщение через свой веб-сайт:"
