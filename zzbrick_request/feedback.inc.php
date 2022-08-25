@@ -34,6 +34,7 @@ function mod_feedback_feedback($vars, $setting) {
 	$form['spam'] = false;
 	$form['mailonly'] = !empty($setting['mailonly']) ? true : false;
 	$form['mailcopy'] = !empty($setting['mailcopy']) ? true : false;
+	$form['form_lead'] = $setting['form_lead'] ?? '';
 
 	// Read form data, test if spam
 	$fields = ['feedback', 'contact', 'sender', 'url'];
