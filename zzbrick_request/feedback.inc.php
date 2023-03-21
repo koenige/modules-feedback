@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/feedback
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2009-2014, 2016-2022 Gustaf Mossakowski
+ * @copyright Copyright © 2009-2014, 2016-2023 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -24,11 +24,9 @@
  *		reply_to=1 set sender of mail not as From but as Reply-To
  */
 function mod_feedback_feedback($vars, $setting) {
-	global $zz_setting;
-
-	$zz_setting['mail_with_signature'] = false;
-	$zz_setting['extra_http_headers'][] = 'X-Frame-Options: Deny';
-	$zz_setting['extra_http_headers'][] = "Content-Security-Policy: frame-ancestors 'self'";
+	wrap_setting('mail_with_signature', false);
+	wrap_setting_add('extra_http_headers', 'X-Frame-Options: Deny');
+	wrap_setting_add('extra_http_headers', "Content-Security-Policy: frame-ancestors 'self'");
 
 	$form = [];
 	$form['spam'] = false;
@@ -42,7 +40,7 @@ function mod_feedback_feedback($vars, $setting) {
 		$fields = array_merge($fields, $setting['extra_fields']);
 	}
 	$rejected = ['<a href=', '[url=', '[link=', '??????', '<iframe'];
-	if (file_exists($file = $zz_setting['custom_wrap_dir'].'/feedback-spam-phrases.txt')) {
+	if (file_exists($file = wrap_setting('custom_wrap_dir').'/feedback-spam-phrases.txt')) {
 		// add local spam phrases, setting these globally could mark too many mails
 		// that are valid
 		$data = file($file);
@@ -70,7 +68,7 @@ function mod_feedback_feedback($vars, $setting) {
 	if (!empty($_POST)) {
 		// check for some simple hidden fields
 		if (empty($_POST['feedback_domain'])) $form['spam'] = true;
-		elseif ($_POST['feedback_domain'] !== $zz_setting['hostname']) $form['spam'] = true;
+		elseif ($_POST['feedback_domain'] !== wrap_setting('hostname')) $form['spam'] = true;
 		elseif (empty($_POST['feedback_status'])) $form['spam'] = true;
 		elseif ($_POST['feedback_status'] !== 'sent') $form['spam'] = true;
 		if (empty($_POST['status'])) $form['spam'] = true;
@@ -93,7 +91,7 @@ function mod_feedback_feedback($vars, $setting) {
 				$form['spam'] = true;
 			}
 		}
-		if (empty($_POST) AND $form['url'] === $zz_setting['host_base'].$zz_setting['request_uri'] AND !array_key_exists('another', $_GET)) {
+		if (empty($_POST) AND $form['url'] === wrap_setting('host_base').wrap_setting('request_uri') AND !array_key_exists('another', $_GET)) {
 			// page does not link itself, therefore referer = request is impossible
 			$form['url'] = 'Hi!';
 		} elseif ($form['url'] !== 'Hi!')  {
@@ -103,22 +101,22 @@ function mod_feedback_feedback($vars, $setting) {
 				wrap_error(sprintf('Potential SPAM mail because referer is set to %s', $form['url']));
 				$form['url'] = 'Hi!';
 			} else {
-				$request = parse_url($zz_setting['request_uri']);
+				$request = parse_url(wrap_setting('request_uri'));
 
 				if ($form['url'] === sprintf('%s://%s', $referer['scheme'], $referer['host'])) {
 					// missing trailing slash
 					$form['url'] = 'Hi!';
-				} elseif (!empty($zz_setting['canonical_hostname'])
-					AND in_array('/', $zz_setting['https_urls'])
+				} elseif (!empty(wrap_setting('canonical_hostname'))
+					AND in_array('/', wrap_setting('https_urls'))
 					AND !empty($referer['path'])
 					AND $referer['path'] !== $request['path']) // no https redirect
 				{
 					// missing https, although it's required for the site?
-					if ($referer['scheme'] === 'http' AND $referer['host'] === $zz_setting['canonical_hostname']) {
+					if ($referer['scheme'] === 'http' AND $referer['host'] === wrap_setting('canonical_hostname')) {
 						$form['url'] = 'Hi!';
-					} elseif (substr($zz_setting['canonical_hostname'], 0, 4) === 'www.'
+					} elseif (substr(wrap_setting('canonical_hostname'), 0, 4) === 'www.'
 						AND $referer['scheme'] === 'http'
-						AND $referer['host'] === substr($zz_setting['canonical_hostname'], 4))
+						AND $referer['host'] === substr(wrap_setting('canonical_hostname'), 4))
 					{
 						$form['url'] = 'Hi!';
 					}
@@ -149,17 +147,17 @@ function mod_feedback_feedback($vars, $setting) {
 	if ($form['sender'] AND $form['contact'] AND $form['feedback']
 		AND !$form['spam'] AND !$form['wrong_e_mail']) {
 
-		$form['ip'] = $zz_setting['remote_ip'];
+		$form['ip'] = wrap_setting('remote_ip');
 		if ($form['url'] === 'Hi!') $form['url'] = ''; // remove spam marker
 		
 		$page['replace_db_text'] = true;
 		if (!empty($setting['mailto'])) {
 			$mail['to'] = $setting['mailto'];
-		} elseif ($from_name = wrap_get_setting('own_name')) {
-			$mail['to']['e_mail'] = wrap_get_setting('own_e_mail');
+		} elseif ($from_name = wrap_setting('own_name')) {
+			$mail['to']['e_mail'] = wrap_setting('own_e_mail');
 			$mail['to']['name'] = $from_name;
 		} else {
-			$mail['to'] = wrap_get_setting('own_e_mail');
+			$mail['to'] = wrap_setting('own_e_mail');
 		}
 		if ($e_mail_valid) {
 			$header = empty($setting['reply_to']) ? 'From' : 'Reply-To';
@@ -170,23 +168,23 @@ function mod_feedback_feedback($vars, $setting) {
 			$mail['subject'] = $setting['subject'];
 		} else {
 			$mail['subject'] = sprintf(
-				wrap_text('Feedback via %s'), $zz_setting['hostname']
+				wrap_text('Feedback via %s'), wrap_setting('hostname')
 			);
 		}
 		if (!empty($setting['no_mail_subject_prefix'])) {
-			$old_mail_subject_prefix = $zz_setting['mail_subject_prefix'];
-			$zz_setting['mail_subject_prefix'] = false;
+			$old_mail_subject_prefix = wrap_setting('mail_subject_prefix');
+			wrap_setting('mail_subject_prefix', false);
 		}
 		if (!empty($setting['extra_lead']))
 			$form['extra_lead'] = $setting['extra_lead'];
 		$mail['message'] = wrap_template('feedback-mail', $form, 'ignore positions');
-		$mail['parameters'] = '-f '.wrap_get_setting('own_e_mail');
+		$mail['parameters'] = '-f '.wrap_setting('own_e_mail');
 		$success = wrap_mail($mail);
 		if ($success) {
 			$form['mail_sent'] = true;
 			if ($form['send_copy']) {
 				$mail['headers']['From']['e_mail'] = $mail['to'];
-				$mail['headers']['From']['name'] = wrap_get_setting('project');
+				$mail['headers']['From']['name'] = wrap_setting('project');
 				$mail['to'] = [];
 				$mail['to']['e_mail'] = $form['contact'];
 				$mail['to']['name'] = $form['sender'];
@@ -199,7 +197,7 @@ function mod_feedback_feedback($vars, $setting) {
 			$form['mail_error'] = true;
 		}
 		if (!empty($setting['no_mail_subject_prefix'])) {
-			$zz_setting['mail_subject_prefix'] = $old_mail_subject_prefix;
+			wrap_setting('mail_subject_prefix', $old_mail_subject_prefix);
 		}
 	} elseif (!empty($_POST)) {
 		// form incomplete or spam
@@ -247,7 +245,7 @@ function mod_feedback_feedback_checktime($time, $characters) {
 		$chars[] = ord($time[$i])-100;
 	}
 	$time = implode('', $chars);
-	$min_time = wrap_get_setting('feedback_write_min_seconds');
+	$min_time = wrap_setting('feedback_write_min_seconds');
 	if (!$min_time) {
 		$min_time = 5;
 		if (empty($_POST['repost'])) {
