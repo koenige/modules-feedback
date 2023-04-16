@@ -225,7 +225,7 @@ function mod_feedback_feedback_settime() {
 	$time = time();
 	$time = str_split($time);
 	for ($i = 0; $i < count($time); $i++) {
-		$chars[] = chr(100+$time[$i]);
+		$chars[] = chr(100 + $time[$i]);
 	}
 	$time = implode('', $chars);
 	return $time;
@@ -242,7 +242,8 @@ function mod_feedback_feedback_settime() {
 function mod_feedback_feedback_checktime($time, $characters) {
 	$time = str_split($time);
 	for ($i = 0; $i < count($time); $i++) {
-		$chars[] = ord($time[$i])-100;
+		if (($number = ord($time[$i])) < 100) return false;
+		$chars[] = $number - 100;
 	}
 	$time = implode('', $chars);
 	$min_time = wrap_setting('feedback_write_min_seconds');
