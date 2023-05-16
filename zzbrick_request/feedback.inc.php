@@ -197,6 +197,8 @@ function mod_feedback_feedback($vars, $setting) {
 			$form['mail_error'] = true;
 		}
 		if (!empty($setting['no_mail_subject_prefix'])) {
+			if (str_starts_with($old_mail_subject_prefix, '['))
+				$old_mail_subject_prefix = '\\'.$old_mail_subject_prefix;
 			wrap_setting('mail_subject_prefix', $old_mail_subject_prefix);
 		}
 	} elseif (!empty($_POST)) {
