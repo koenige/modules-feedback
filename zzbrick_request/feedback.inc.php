@@ -27,6 +27,8 @@ function mod_feedback_feedback($vars, $setting) {
 	wrap_setting('mail_with_signature', false);
 	wrap_setting_add('extra_http_headers', 'X-Frame-Options: Deny');
 	wrap_setting_add('extra_http_headers', "Content-Security-Policy: frame-ancestors 'self'");
+	if (isset($_GET['another']))
+		$page['meta'][] = ['name' => 'robots', 'content' => 'noindex'];
 
 	$form = [];
 	$form['spam'] = false;
