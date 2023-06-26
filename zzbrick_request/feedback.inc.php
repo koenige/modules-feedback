@@ -27,9 +27,11 @@ function mod_feedback_feedback($vars, $setting) {
 	wrap_setting('mail_with_signature', false);
 	wrap_setting_add('extra_http_headers', 'X-Frame-Options: Deny');
 	wrap_setting_add('extra_http_headers', "Content-Security-Policy: frame-ancestors 'self'");
-	if (isset($_GET['another']))
+	if (isset($_GET['another'])) {
 		$page['meta'][] = ['name' => 'robots', 'content' => 'noindex'];
-
+		wrap_setting('cache', false); // no need to cache second mail pages
+	}
+	
 	$form = [];
 	$form['spam'] = false;
 	$form['mailonly'] = !empty($setting['mailonly']) ? true : false;
