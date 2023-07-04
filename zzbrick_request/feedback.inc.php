@@ -44,7 +44,8 @@ function mod_feedback_feedback($vars, $setting) {
 		$fields = array_merge($fields, $setting['extra_fields']);
 	}
 	$rejected = ['<a href=', '[url=', '[link=', '??????', '<iframe'];
-	if (file_exists($file = wrap_setting('custom_wrap_dir').'/feedback-spam-phrases.txt')) {
+	$files = wrap_collect_files('feedback-spam-phrases.txt');
+	foreach ($files as $file) {
 		// add local spam phrases, setting these globally could mark too many mails
 		// that are valid
 		$data = file($file);
