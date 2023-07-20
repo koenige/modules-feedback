@@ -106,15 +106,13 @@ function mod_feedback_feedback($vars, $setting) {
 				wrap_error(sprintf('Potential SPAM mail because referer is set to %s', $form['url']));
 				$form['url'] = 'Hi!';
 			} else {
-				$request = parse_url(wrap_setting('request_uri'));
-
 				if ($form['url'] === sprintf('%s://%s', $referer['scheme'], $referer['host'])) {
 					// missing trailing slash
 					$form['url'] = 'Hi!';
 				} elseif (!empty(wrap_setting('canonical_hostname'))
 					AND in_array('/', wrap_setting('https_urls'))
 					AND !empty($referer['path'])
-					AND $referer['path'] !== $request['path']) // no https redirect
+					AND $referer['path'] !== parse_url(wrap_setting('request_uri'), PHP_URL_PATH)) // no https redirect
 				{
 					// missing https, although it's required for the site?
 					if ($referer['scheme'] === 'http' AND $referer['host'] === wrap_setting('canonical_hostname')) {
