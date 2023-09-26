@@ -40,27 +40,19 @@ function mod_feedback_feedback($vars, $setting) {
 
 	// Read form data, test if spam
 	$fields = ['feedback', 'contact', 'sender', 'url'];
-	if (!empty($setting['extra_fields'])) {
+	if (!empty($setting['extra_fields']))
 		$fields = array_merge($fields, $setting['extra_fields']);
-	}
-	$rejected = ['<a href=', '[url=', '[link=', '??????', '<iframe'];
-	$files = wrap_collect_files('feedback-spam-phrases.txt');
-	foreach ($files as $file) {
-		// add local spam phrases, setting these globally could mark too many mails
-		// that are valid
-		$data = file($file);
-		foreach ($data as $line) {
-			if (substr($line, 0, 1) === '#') continue;
-			if (!trim($line)) continue;
-			$rejected[] = trim($line);
-		}
-	}
+
+	$rejected = wrap_tsv_parse('feedback-spam-phrases');
+	
 	foreach ($fields as $field) {
 		$form[$field] = (!empty($_POST[$field]) ? trim($_POST[$field]) : '');
 		if ($form[$field] AND !$form['spam']) {
 			foreach ($rejected as $word) {
 				$spam = strpos($form[$field], $word);
-				if ($spam !== false) $form['spam'] = true;
+				if ($spam === false) continue;
+				$form['spam'] = true;
+				break;
 			}
 		}
 	}
