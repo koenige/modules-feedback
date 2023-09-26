@@ -44,42 +44,8 @@ function mod_feedback_feedback($vars, $setting) {
 	else
 		$form['status'] = mod_feedback_feedback_settime();
 
-	if (!$form['url'])
-		$form['url'] = $_SERVER['HTTP_REFERER'] ?? '';
-
-	if ($form['url']) {
-		if (empty($_POST) AND $form['url'] === wrap_setting('host_base').wrap_setting('request_uri') AND !array_key_exists('another', $_GET)) {
-			// page does not link itself, therefore referer = request is impossible
-			$form['url'] = 'Hi!';
-		} elseif ($form['url'] !== 'Hi!')  {
-			$referer = parse_url($form['url']);
-			if (empty($referer['scheme'])) {
-				// incorrect referer URL
-				wrap_error(sprintf('Potential SPAM mail because referer is set to %s', $form['url']));
-				$form['url'] = 'Hi!';
-			} else {
-				if ($form['url'] === sprintf('%s://%s', $referer['scheme'], $referer['host'])) {
-					// missing trailing slash
-					$form['url'] = 'Hi!';
-				} elseif (!empty(wrap_setting('canonical_hostname'))
-					AND in_array('/', wrap_setting('https_urls'))
-					AND !empty($referer['path'])
-					AND $referer['path'] !== parse_url(wrap_setting('request_uri'), PHP_URL_PATH)) // no https redirect
-				{
-					// missing https, although it's required for the site?
-					if ($referer['scheme'] === 'http' AND $referer['host'] === wrap_setting('canonical_hostname')) {
-						$form['url'] = 'Hi!';
-					} elseif (substr(wrap_setting('canonical_hostname'), 0, 4) === 'www.'
-						AND $referer['scheme'] === 'http'
-						AND $referer['host'] === substr(wrap_setting('canonical_hostname'), 4))
-					{
-						$form['url'] = 'Hi!';
-					}
-				}
-			}
-		}
-		$form['code'] = mod_feedback_feedback_code($form['url']);
-	}
+	$form['url'] = mod_feedback_feedback_referer($form['url']);
+	$form['code'] = mod_feedback_feedback_code($form['url']);
 
 	$form['wrong_e_mail'] = false;
 	$e_mail_valid = false;
@@ -103,7 +69,7 @@ function mod_feedback_feedback($vars, $setting) {
 		AND !$form['spam'] AND !$form['wrong_e_mail']) {
 
 		$form['ip'] = wrap_setting('remote_ip');
-		if ($form['url'] === 'Hi!') $form['url'] = ''; // remove spam marker
+		if ($form['url'] === wrap_setting('feedback_spam_referer_marker')) $form['url'] = ''; // remove spam marker
 		
 		$page['replace_db_text'] = true;
 		if (!empty($setting['mailto'])) {
@@ -212,7 +178,7 @@ function mod_feedback_feedback_spam(&$form) {
 	}
 
 	// wrong referer?	
-	if ($form['url'] === 'Hi!') return true;
+	if ($form['url'] === wrap_setting('feedback_spam_referer_marker')) return true;
 
 	// check for some simple hidden fields
 	if (empty($_POST['feedback_domain'])) return true;
@@ -235,6 +201,7 @@ function mod_feedback_feedback_spam(&$form) {
  * @return string
  */
 function mod_feedback_feedback_code($str) {
+	if (!$str) return $str;
 	return substr(md5(str_rot13($str)), 0, 12);
 }
 
@@ -284,6 +251,49 @@ function mod_feedback_feedback_checktime($time, $characters) {
 		return false;
 	}
 	return true;
+}
+
+/**
+ * set and check 'url' to referer and check if it is correct
+ *
+ * @param string $url
+ * @return string
+ */
+function mod_feedback_feedback_referer($url) {
+	if (!$url) $url = $_SERVER['HTTP_REFERER'] ?? '';
+	if (!$url) return $url;
+
+	if (empty($_POST) AND $url === wrap_setting('host_base').wrap_setting('request_uri') AND !array_key_exists('another', $_GET))
+		// page does not link itself, therefore referer = request is impossible
+		return wrap_setting('feedback_spam_referer_marker');
+
+	if ($url === wrap_setting('feedback_spam_referer_marker')) return $url;
+
+	$referer = parse_url($url);
+	if (empty($referer['scheme'])) {
+		// incorrect referer URL
+		wrap_error(sprintf('Potential SPAM mail because referer is set to %s', $url));
+		return wrap_setting('feedback_spam_referer_marker');
+	}
+	if ($url === sprintf('%s://%s', $referer['scheme'], $referer['host']))
+		// missing trailing slash
+		return wrap_setting('feedback_spam_referer_marker');
+
+	// check if no https redirect	
+	if (!wrap_setting('canonical_hostname')) return $url;
+	if (!in_array('/', wrap_setting('https_urls'))) return $url;
+	if (empty($referer['path'])) return $url;
+	if ($referer['path'] === parse_url(wrap_setting('request_uri'), PHP_URL_PATH)) return $url;
+	
+	// missing https, although it's required for the site?
+	if ($referer['scheme'] === 'http' AND $referer['host'] === wrap_setting('canonical_hostname'))
+		return wrap_setting('feedback_spam_referer_marker');
+		
+	if (substr(wrap_setting('canonical_hostname'), 0, 4) !== 'www.') return $url;
+	if ($referer['scheme'] !== 'http') return $url;
+	if ($referer['host'] !== substr(wrap_setting('canonical_hostname'), 4)) return $url;
+	
+	return wrap_setting('feedback_spam_referer_marker');
 }
 
 /**
