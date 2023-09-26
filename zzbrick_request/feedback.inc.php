@@ -33,30 +33,13 @@ function mod_feedback_feedback($vars, $setting) {
 	}
 	
 	$form = mod_feedback_feedback_fields($setting['extra_fields'] ?? []);
-	$form = mod_feedback_feedback_spam($form);
+	$form['spam'] = mod_feedback_feedback_spam($form);
 
 	$form['mailonly'] = $setting['mailonly'] ?? false;
 	$form['mailcopy'] = $setting['mailcopy'] ?? false;
 	$form['form_lead'] = $setting['form_lead'] ?? '';
 	
-	// message just one word? not enough
-	if (!empty($_POST) AND !strstr($form['feedback'], ' ')) {
-		$form['spam'] = true;
-		$form['one_word_only'] = true;
-	}
-	if (!empty($_POST['url']) AND $_POST['url'] === 'Hi!') $form['spam'] = true;
 	if (!empty($_POST)) {
-		// check for some simple hidden fields
-		if (empty($_POST['feedback_domain'])) $form['spam'] = true;
-		elseif ($_POST['feedback_domain'] !== wrap_setting('hostname')) $form['spam'] = true;
-		elseif (empty($_POST['feedback_status'])) $form['spam'] = true;
-		elseif ($_POST['feedback_status'] !== 'sent') $form['spam'] = true;
-		if (empty($_POST['status'])) $form['spam'] = true;
-		else {
-			$form['status'] = $_POST['status'];
-			$check = mod_feedback_feedback_checktime($form['status'], mb_strlen($form['feedback']));
-			if (!$check) $form['spam'] = true;
-		}
 		$form['repost'] = mod_feedback_feedback_settime();
 	} else {
 		$form['status'] = mod_feedback_feedback_settime();
@@ -213,9 +196,9 @@ function mod_feedback_feedback_fields($extra_fields = []) {
  * check if it is a legitimate form sent
  *
  * @param array $form
- * @return array
+ * @return bool
  */
-function mod_feedback_feedback_spam($form) {
+function mod_feedback_feedback_spam(&$form) {
 	$rejected = wrap_tsv_parse('feedback-spam-phrases');
 
 	foreach ($form as $field_value) {
@@ -223,12 +206,29 @@ function mod_feedback_feedback_spam($form) {
 		foreach ($rejected as $word) {
 			$spam = strpos($field_value, $word);
 			if ($spam === false) continue;
-			$form['spam'] = true;
-			return $form;
+			return true;
 		}
 	}
-	$form['spam'] = false;
-	return $form;
+	if ($_SERVER['REQUEST_METHOD'] !== 'POST') return false;
+
+	// message just one word? not enough
+	if (!strstr($form['feedback'], ' ')) {
+		$form['one_word_only'] = true;
+		return true;
+	}
+
+	// wrong referer?	
+	if ($form['url'] === 'Hi!') return true;
+
+	// check for some simple hidden fields
+	if (empty($_POST['feedback_domain'])) return true;
+	if ($_POST['feedback_domain'] !== wrap_setting('hostname')) return true;
+	if (empty($_POST['feedback_status'])) return true;
+	if ($_POST['feedback_status'] !== 'sent') return true;
+	if (!$form['status']) return true;
+	if (!mod_feedback_feedback_checktime($form['status'], mb_strlen($form['feedback']))) return true;
+
+	return false;
 }
 
 function mod_feedback_feedback_code($str) {
