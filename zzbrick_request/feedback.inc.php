@@ -39,21 +39,15 @@ function mod_feedback_feedback($vars, $setting) {
 	$form['mailcopy'] = $setting['mailcopy'] ?? false;
 	$form['form_lead'] = $setting['form_lead'] ?? '';
 	
-	if (!empty($_POST)) {
+	if ($_SERVER['REQUEST_METHOD'] === 'POST')
 		$form['repost'] = mod_feedback_feedback_settime();
-	} else {
+	else
 		$form['status'] = mod_feedback_feedback_settime();
-	}
-	if (empty($form['url'])) {
+
+	if (!$form['url'])
 		$form['url'] = $_SERVER['HTTP_REFERER'] ?? '';
-	}
-	if (!empty($form['url'])) {
-		// code to check if referer is set via HTTP_REFERER or sent from bot
-		if (!empty($_POST['code'])) {
-			if ($_POST['code'] !== mod_feedback_feedback_code($form['url'])) {
-				$form['spam'] = true;
-			}
-		}
+
+	if ($form['url']) {
 		if (empty($_POST) AND $form['url'] === wrap_setting('host_base').wrap_setting('request_uri') AND !array_key_exists('another', $_GET)) {
 			// page does not link itself, therefore referer = request is impossible
 			$form['url'] = 'Hi!';
@@ -100,7 +94,7 @@ function mod_feedback_feedback($vars, $setting) {
 	}
 
 	// get user agent for mail
-	$form['user_agent'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+	$form['user_agent'] = $_SERVER['HTTP_USER_AGENT'] ?? '';
 	// no normal user agent has " in it, some spammers have
 	if (strstr($form['user_agent'], '"')) $form['spam'] = true;
 
@@ -228,9 +222,18 @@ function mod_feedback_feedback_spam(&$form) {
 	if (!$form['status']) return true;
 	if (!mod_feedback_feedback_checktime($form['status'], mb_strlen($form['feedback']))) return true;
 
+	// code to check if referer is set via HTTP_REFERER or sent from bot
+	if (!empty($_POST['code']) AND $_POST['code'] !== mod_feedback_feedback_code($form['url'])) return true;
+
 	return false;
 }
 
+/**
+ * simple encoding to ensure that 'url' POST parameter is not changed manually
+ *
+ * @param string $str
+ * @return string
+ */
 function mod_feedback_feedback_code($str) {
 	return substr(md5(str_rot13($str)), 0, 12);
 }
