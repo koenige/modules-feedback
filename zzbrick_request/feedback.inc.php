@@ -32,30 +32,13 @@ function mod_feedback_feedback($vars, $setting) {
 		wrap_setting('cache', false); // no need to cache second mail pages
 	}
 	
-	$form = [];
-	$form['spam'] = false;
-	$form['mailonly'] = !empty($setting['mailonly']) ? true : false;
-	$form['mailcopy'] = !empty($setting['mailcopy']) ? true : false;
+	$form = mod_feedback_feedback_fields($setting['extra_fields'] ?? []);
+	$form = mod_feedback_feedback_spam($form);
+
+	$form['mailonly'] = $setting['mailonly'] ?? false;
+	$form['mailcopy'] = $setting['mailcopy'] ?? false;
 	$form['form_lead'] = $setting['form_lead'] ?? '';
-
-	// Read form data, test if spam
-	$fields = ['feedback', 'contact', 'sender', 'url'];
-	if (!empty($setting['extra_fields']))
-		$fields = array_merge($fields, $setting['extra_fields']);
-
-	$rejected = wrap_tsv_parse('feedback-spam-phrases');
 	
-	foreach ($fields as $field) {
-		$form[$field] = (!empty($_POST[$field]) ? trim($_POST[$field]) : '');
-		if ($form[$field] AND !$form['spam']) {
-			foreach ($rejected as $word) {
-				$spam = strpos($form[$field], $word);
-				if ($spam === false) continue;
-				$form['spam'] = true;
-				break;
-			}
-		}
-	}
 	// message just one word? not enough
 	if (!empty($_POST) AND !strstr($form['feedback'], ' ')) {
 		$form['spam'] = true;
@@ -79,7 +62,7 @@ function mod_feedback_feedback($vars, $setting) {
 		$form['status'] = mod_feedback_feedback_settime();
 	}
 	if (empty($form['url'])) {
-		$form['url'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+		$form['url'] = $_SERVER['HTTP_REFERER'] ?? '';
 	}
 	if (!empty($form['url'])) {
 		// code to check if referer is set via HTTP_REFERER or sent from bot
@@ -206,6 +189,46 @@ function mod_feedback_feedback($vars, $setting) {
 	$page['query_strings'] = ['another'];
 	$page['text'] = wrap_template('feedback', $form, 'ignore positions');
 	return $page;
+}
+
+/**
+ * set form fields and get data from POST
+ *
+ * @param array $extra_fields
+ * @return array
+ */
+function mod_feedback_feedback_fields($extra_fields = []) {
+    $form = [];
+	$fields = wrap_setting('feedback_fields'); 
+	$fields = array_merge($fields, $extra_fields);
+	foreach ($fields as $field) {
+		$form[$field] = $_POST[$field] ?? '';
+		if (!$form[$field]) continue;
+		$form[$field] = trim($form[$field]);
+	}
+	return $form;
+}
+
+/**
+ * check if it is a legitimate form sent
+ *
+ * @param array $form
+ * @return array
+ */
+function mod_feedback_feedback_spam($form) {
+	$rejected = wrap_tsv_parse('feedback-spam-phrases');
+
+	foreach ($form as $field_value) {
+		if (!$field_value) continue;
+		foreach ($rejected as $word) {
+			$spam = strpos($field_value, $word);
+			if ($spam === false) continue;
+			$form['spam'] = true;
+			return $form;
+		}
+	}
+	$form['spam'] = false;
+	return $form;
 }
 
 function mod_feedback_feedback_code($str) {
