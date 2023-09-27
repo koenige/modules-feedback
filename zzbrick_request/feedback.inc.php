@@ -114,10 +114,13 @@ function mod_feedback_feedback_spam(&$form) {
 	foreach ($form as $field_value) {
 		if (!$field_value) continue;
 		foreach ($rejected as $word) {
-			$spam = strpos($field_value, $word);
+			$spam = stripos($field_value, $word);
 			if ($spam === false) continue;
 			return true;
 		}
+		if (wrap_setting('feedback_max_http_links')
+			AND preg_match_all('/http[s]*:\/\//i', $field_value, $count))
+			if (count($count[0]) > wrap_setting('feedback_max_http_links')) return true;
 	}
 	if ($_SERVER['REQUEST_METHOD'] !== 'POST') return false;
 
