@@ -214,7 +214,7 @@ function mod_feedback_feedback_checktime($time, $characters) {
  * @return string
  */
 function mod_feedback_feedback_referer($url) {
-	if (!$url) $url = $_SERVER['HTTP_REFERER'] ?? '';
+	if (!$url AND $_SERVER['REQUEST_METHOD'] === 'GET') $url = $_SERVER['HTTP_REFERER'] ?? '';
 	if (!$url) return $url;
 
 	if (empty($_POST) AND $url === wrap_setting('host_base').wrap_setting('request_uri')
