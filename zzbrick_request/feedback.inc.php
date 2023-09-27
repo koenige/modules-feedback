@@ -56,7 +56,8 @@ function mod_feedback_feedback($vars, $setting) {
 	} elseif ($form['sender_mail'] = mod_feedback_feedback_extract_mail($form['contact'])) {
 		$form['e_mail_valid'] = true;
 	} elseif ($form['mailonly'] OR $form['send_copy']) {
-		$form['wrong_e_mail'] = true;
+		if ($_SERVER['REQUEST_METHOD'] === 'POST')
+			$form['wrong_e_mail'] = true;
 	}
 
 	// get user agent for mail
