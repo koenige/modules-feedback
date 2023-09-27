@@ -287,7 +287,9 @@ function mod_feedback_feedback_mail($form, $setting) {
 		$mail['headers'][$header]['e_mail'] = $form['sender_mail'];
 		$mail['headers'][$header]['name'] = $form['sender'];
 	}
-	if (!empty($setting['subject'])) {
+	if (!empty($form['subject'])) {
+		$mail['subject'] = $form['subject'];
+	} elseif (!empty($setting['subject'])) {
 		$mail['subject'] = $setting['subject'];
 	} else {
 		$mail['subject'] = sprintf(
