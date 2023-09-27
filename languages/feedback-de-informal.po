@@ -5,7 +5,7 @@
 # https://www.zugzwang.org/modules/feedback
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2020, 2022 Gustaf Mossakowski
+# @copyright Copyright © 2020, 2022-2023 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 msgid ""
@@ -115,8 +115,8 @@ msgid "Name:"
 msgstr "Name:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
-msgid "You’ve got a message via your website:"
-msgstr "Du hast eine Nachricht über Deine Website erhalten:"
+msgid "You’ve got a message via the website %s:"
+msgstr "Du hast eine Nachricht über die Website %s erhalten:"
 
 #: modules/feedback/templates/feedback-mail.template.txt
 msgid "You’ve sent us a message via our website:"
