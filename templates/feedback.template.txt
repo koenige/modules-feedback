@@ -11,7 +11,7 @@
 <div class="feedback">
 %%% condition if mail_sent %%%
 <h2>%%% text "Thank you for your message." %%%</h2>
-<p><a href="./?another">%%% text "Send another message" %%%</a></p>
+<p><a href="./">%%% text "Send another message" %%%</a></p>
 
 %%% condition else %%%
 

@@ -27,12 +27,13 @@ function mod_feedback_feedback($vars, $setting) {
 	wrap_setting('mail_with_signature', false);
 	wrap_setting_add('extra_http_headers', 'X-Frame-Options: Deny');
 	wrap_setting_add('extra_http_headers', "Content-Security-Policy: frame-ancestors 'self'");
-	if (isset($_GET['another'])) {
-		$page['meta'][] = ['name' => 'robots', 'content' => 'noindex'];
-		wrap_setting('cache', false); // no need to cache second mail pages
-	}
 	
 	$form = mod_feedback_feedback_fields($setting['extra_fields'] ?? []);
+	if (array_key_exists('sent', $_GET)) {
+		$page['meta'][] = ['name' => 'robots', 'content' => 'noindex'];
+		wrap_setting('cache', false); // no need to cache sent return page
+		$form['mail_sent'] = true;
+	}
 	$form['spam'] = mod_feedback_feedback_spam($form);
 
 	$form['mailonly'] = $setting['mailonly'] ?? false;
@@ -72,7 +73,8 @@ function mod_feedback_feedback($vars, $setting) {
 		if ($form['url'] === wrap_setting('feedback_spam_referer_marker')) $form['url'] = ''; // remove spam marker
 		$page['replace_db_text'] = true;
 		$form['mail_sent'] = mod_feedback_feedback_mail($form, $setting);
-		if (!$form['mail_sent']) $form['mail_error'] = true;
+		if ($form['mail_sent']) wrap_redirect_change('?sent');
+		$form['mail_error'] = true;
 	} elseif (!empty($_POST)) {
 		// form incomplete or spam
 		$page['replace_db_text'] = true;
@@ -80,7 +82,7 @@ function mod_feedback_feedback($vars, $setting) {
 		else wrap_error('Potential Spam Mail: '.json_encode($_POST, true));
 	}
 
-	$page['query_strings'] = ['another'];
+	$page['query_strings'] = ['sent'];
 	$page['text'] = wrap_template('feedback', $form, 'ignore positions');
 	return $page;
 }
@@ -217,8 +219,7 @@ function mod_feedback_feedback_referer($url) {
 	if (!$url AND $_SERVER['REQUEST_METHOD'] === 'GET') $url = $_SERVER['HTTP_REFERER'] ?? '';
 	if (!$url) return $url;
 
-	if (empty($_POST) AND $url === wrap_setting('host_base').wrap_setting('request_uri')
-		AND !array_key_exists('another', $_GET))
+	if (empty($_POST) AND $url === wrap_setting('host_base').wrap_setting('request_uri'))
 		// page does not link itself, therefore referer = request is impossible
 		return wrap_setting('feedback_spam_referer_marker');
 
