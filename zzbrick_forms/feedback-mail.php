@@ -26,6 +26,7 @@ foreach ($zz['fields'] as $no => $field) {
 			$zz['fields'][$no]['title'] = wrap_text('Message', ['context' => 'E-Mail']);
 			$zz['fields'][$no]['show_title'] = false;
 			$zz['fields'][$no]['rows'] = 14;
+			$zz['fields'][$no]['field_name'] = 'feedback';
 			break;
 		case 'mail_date':
 		case 'headers_sender':
@@ -39,18 +40,60 @@ foreach ($zz['fields'] as $no => $field) {
 }
 
 $no++;
-
 $zz['fields'][$no]['separator_before'] = 'text <h2>'.wrap_text('How can we get in touch with you?').'</h2>';
-$zz['fields'][$no]['field_name'] = '';
-// evaluate local parameter mailonly=1
+$zz['fields'][$no]['field_name'] = 'contact';
+// @todo evaluate local parameter mailonly=1
 $zz['fields'][$no]['title'] = 'E-Mail or phone';
 $zz['fields'][$no]['type'] = 'text';
 
 $no++;
-
-$zz['fields'][$no]['field_name'] = '';
+$zz['fields'][$no]['field_name'] = 'sender';
 $zz['fields'][$no]['title'] = 'Your Name';
 $zz['fields'][$no]['type'] = 'text';
+
+$no++;
+$zz['fields'][$no]['field_name'] = 'url';
+$zz['fields'][$no]['show_title'] = false;
+$zz['fields'][$no]['type'] = 'hidden';
+$zz['fields'][$no]['class'] = 'hidden';
+$zz['fields'][$no]['value'] = $brick['parameter']['url'];
+
+$no++;
+$zz['fields'][$no]['field_name'] = 'code';
+$zz['fields'][$no]['show_title'] = false;
+$zz['fields'][$no]['type'] = 'hidden';
+$zz['fields'][$no]['class'] = 'hidden';
+$zz['fields'][$no]['value'] = $brick['parameter']['code'];
+
+$no++;
+$zz['fields'][$no]['field_name'] = 'status';
+$zz['fields'][$no]['show_title'] = false;
+$zz['fields'][$no]['type'] = 'hidden';
+$zz['fields'][$no]['class'] = 'hidden';
+$zz['fields'][$no]['value'] = $brick['parameter']['status'];
+
+if (isset($brick['parameter']['repost'])) {
+	$no++;
+	$zz['fields'][$no]['field_name'] = 'repost';
+	$zz['fields'][$no]['show_title'] = false;
+	$zz['fields'][$no]['type'] = 'hidden';
+	$zz['fields'][$no]['class'] = 'hidden';
+	$zz['fields'][$no]['value'] = $brick['parameter']['repost'];
+}
+
+$no++;
+$zz['fields'][$no]['field_name'] = 'feedback_domain';
+$zz['fields'][$no]['show_title'] = false;
+$zz['fields'][$no]['type'] = 'hidden';
+$zz['fields'][$no]['class'] = 'hidden';
+$zz['fields'][$no]['value'] = wrap_setting('hostname');
+
+$no++;
+$zz['fields'][$no]['field_name'] = 'feedback_status';
+$zz['fields'][$no]['show_title'] = false;
+$zz['fields'][$no]['type'] = 'hidden';
+$zz['fields'][$no]['class'] = 'hidden';
+$zz['fields'][$no]['value'] = 'sent';
 
 
 wrap_text_set('Add a record', 'Your Message');
