@@ -1,0 +1,27 @@
+/*
+ * Cascading Style Sheets (CSS)
+ * for feedback module
+ *
+ * Part of »Zugzwang Project«
+ * https://www.zugzwang.org/modules/feedback
+ *
+ * @author Gustaf Mossakowski <gustaf@koenige.org>
+ * @copyright Copyright © 2023 Gustaf Mossakowski
+ * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
+ */
+
+
+.feedback #zzform #record table	{ display: block; background: transparent; }
+.feedback #zzform #record tr	{ display: block; padding: 0; margin: 1em 0; }
+.feedback #zzform #record tr:first-child
+								{ margin: 0; }
+.feedback #zzform #record th	{ display: block; padding: 0; font-weight: normal; }
+.feedback #zzform #record td	{ display: block; padding: 0; }
+.feedback #zzform #record tfoot th
+								{ display: none; }
+.feedback #zzform #record tfoot td
+								{ background: transparent; padding: 0; }
+.feedback #zzform #record .separator
+								{ font-weight: bold; padding: 0; }
+.feedback #zzform #record .separator hr
+								{ display: none; }
