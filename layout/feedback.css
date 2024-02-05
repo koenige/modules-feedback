@@ -6,13 +6,13 @@
  * https://www.zugzwang.org/modules/feedback
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2023 Gustaf Mossakowski
+ * @copyright Copyright © 2023-2024 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
 
 .feedback #zzform #record table	{ display: block; background: transparent; }
-.feedback #zzform #record tr	{ display: block; padding: 0; margin: 1em 0; }
+.feedback #zzform #record tr	{ display: block; padding: 0; margin: 0 0 1em 0; }
 .feedback #zzform #record tr.hidden
 								{ display: none; }
 .feedback #zzform #record tr:first-child
