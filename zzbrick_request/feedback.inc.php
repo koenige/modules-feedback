@@ -71,7 +71,7 @@ function mod_feedback_feedback($vars, $setting) {
 	// no normal user agent has " in it, some spammers have
 	if (strstr($form['user_agent'], '"')) $form['spam'] = true;
 	
-	$form['subject'] = mod_feedback_feedback_subject($form, $setting);
+	$form['headers'] = mod_feedback_feedback_headers($form, $setting);
 
 	// save feedback mail in database?
 	if (wrap_setting('feedback_mail_db')) {
@@ -296,14 +296,19 @@ function mod_feedback_feedback_extract_mail($contact) {
  *
  * @param array $form
  * @param array $setting
- * @return string
+ * @return array
  */
-function mod_feedback_feedback_subject($form, $setting) {
-	if (!empty($form['subject'])) return $form['subject'];
-	if (!empty($setting['subject'])) return $setting['subject'];
-	return sprintf(
-		wrap_text('Feedback via %s'), wrap_setting('hostname')
-	);
+function mod_feedback_feedback_headers($form, $setting) {
+	$headers = [];
+	if (!empty($form['subject']))
+		$headers['subject'] = $form['subject'];
+	elseif (!empty($setting['subject']))
+		$headers['subject'] = $setting['subject'];
+	else
+		$headers['subject'] = sprintf(
+			wrap_text('Feedback via %s'), wrap_setting('hostname')
+		);
+	return $headers;
 }
 
 /**
@@ -314,7 +319,7 @@ function mod_feedback_feedback_subject($form, $setting) {
  * @return bool
  */
 function mod_feedback_feedback_mail($form, $setting) {
-	$mail = [];
+	$mail = $form['headers'];
 	if (!empty($setting['mailto'])) {
 		$mail['to'] = $setting['mailto'];
 	} elseif ($from_name = wrap_setting('own_name')) {
@@ -328,7 +333,6 @@ function mod_feedback_feedback_mail($form, $setting) {
 		$mail['headers'][$header]['e_mail'] = $form['sender_mail'];
 		$mail['headers'][$header]['name'] = $form['sender'];
 	}
-	$mail['subject'] = $form['subject'];
 	if (!empty($setting['no_mail_subject_prefix'])) {
 		$old_mail_subject_prefix = wrap_setting('mail_subject_prefix');
 		wrap_setting('mail_subject_prefix', false);

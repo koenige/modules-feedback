@@ -30,10 +30,10 @@ foreach ($zz['fields'] as $no => $field) {
 			$zz['fields'][$no]['rows'] = 14;
 			break;
 		case 'headers_subject':
-			if (!$brick['parameter']['subject']) break;
+			if (!$brick['parameter']['headers']['subject']) break;
 			$zz['fields'][$no]['fields'][4]['class'] = 'hidden';
 			$zz['fields'][$no]['fields'][4]['type'] = 'hidden';
-			$zz['fields'][$no]['fields'][4]['value'] = $brick['parameter']['subject'];
+			$zz['fields'][$no]['fields'][4]['value'] = $brick['parameter']['headers']['subject'];
 			break;
 		case 'last_update':
 		case 'headers_sender':
