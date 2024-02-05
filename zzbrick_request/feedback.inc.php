@@ -300,6 +300,8 @@ function mod_feedback_feedback_extract_mail($contact) {
  */
 function mod_feedback_feedback_headers($form, $setting) {
 	$headers = [];
+	
+	// Subject:
 	if (!empty($form['subject']))
 		$headers['subject'] = $form['subject'];
 	elseif (!empty($setting['subject']))
@@ -308,6 +310,30 @@ function mod_feedback_feedback_headers($form, $setting) {
 		$headers['subject'] = sprintf(
 			wrap_text('Feedback via %s'), wrap_setting('hostname')
 		);
+
+	// To:
+	if (!empty($setting['mailto'])) {
+		$headers['to'] = $setting['mailto'];
+	} elseif ($from_name = wrap_setting('own_name')) {
+		$headers['to']['e_mail'] = wrap_setting('own_e_mail');
+		$headers['to']['name'] = $from_name;
+	} else {
+		$headers['to'] = wrap_setting('own_e_mail');
+	}
+
+	// From: or Reply-To:
+	if ($form['e_mail_valid']) {
+		$header = empty($setting['reply_to']) ? 'From' : 'Reply-To';
+		$headers[$header]['e_mail'] = $form['sender_mail'];
+		$headers[$header]['name'] = $form['sender'];
+	}
+	
+	// From:
+	if (empty($headers['From'])) {
+		$headers['From']['e_mail'] = wrap_setting('own_e_mail');
+		$headers['From']['name'] = wrap_setting('project');
+	}
+
 	return $headers;
 }
 
@@ -320,18 +346,12 @@ function mod_feedback_feedback_headers($form, $setting) {
  */
 function mod_feedback_feedback_mail($form, $setting) {
 	$mail = $form['headers'];
-	if (!empty($setting['mailto'])) {
-		$mail['to'] = $setting['mailto'];
-	} elseif ($from_name = wrap_setting('own_name')) {
-		$mail['to']['e_mail'] = wrap_setting('own_e_mail');
-		$mail['to']['name'] = $from_name;
-	} else {
-		$mail['to'] = wrap_setting('own_e_mail');
-	}
-	if ($form['e_mail_valid']) {
-		$header = empty($setting['reply_to']) ? 'From' : 'Reply-To';
-		$mail['headers'][$header]['e_mail'] = $form['sender_mail'];
-		$mail['headers'][$header]['name'] = $form['sender'];
+	// via headers
+	$move_to_headers = ['From', 'Reply-To'];
+	foreach ($move_to_headers as $header) {
+		if (!array_key_exists($header, $mail)) continue;
+		$mail['headers'][$header] = $mail[$header];
+		unset($mail[$header]);
 	}
 	if (!empty($setting['no_mail_subject_prefix'])) {
 		$old_mail_subject_prefix = wrap_setting('mail_subject_prefix');
