@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/feedback
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2009-2014, 2016-2023 Gustaf Mossakowski
+ * @copyright Copyright © 2009-2014, 2016-2024 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -28,12 +28,17 @@ function mod_feedback_feedback($vars, $setting) {
 	wrap_setting_add('extra_http_headers', 'X-Frame-Options: Deny');
 	wrap_setting_add('extra_http_headers', "Content-Security-Policy: frame-ancestors 'self'");
 	
-	$form = mod_feedback_feedback_fields($setting['extra_fields'] ?? []);
+	// sent receipt?
 	if (array_key_exists('sent', $_GET)) {
 		$page['meta'][] = ['name' => 'robots', 'content' => 'noindex'];
 		wrap_setting('cache', false); // no need to cache sent return page
 		$form['mail_sent'] = true;
+		$page['query_strings'] = ['sent'];
+		$page['text'] = wrap_template('feedback', $form, 'ignore positions');
+		return $page;
 	}
+
+	$form = mod_feedback_feedback_fields($setting['extra_fields'] ?? []);
 	$form['spam'] = mod_feedback_feedback_spam($form);
 
 	$form['mailonly'] = $setting['mailonly'] ?? false;
@@ -65,15 +70,23 @@ function mod_feedback_feedback($vars, $setting) {
 	$form['user_agent'] = $_SERVER['HTTP_USER_AGENT'] ?? '';
 	// no normal user agent has " in it, some spammers have
 	if (strstr($form['user_agent'], '"')) $form['spam'] = true;
+	
+	$form['subject'] = mod_feedback_feedback_subject($form, $setting);
+
+	// save feedback mail in database?
+	if (wrap_setting('feedback_mail_db')) {
+		$page['text'] = wrap_template('feedbackdb', $form, 'ignore positions');
+		return $page;
+	}
 
 	// All form fields filled out? Send mail and say thank you
-	if ($form['sender'] AND $form['contact'] AND $form['feedback']
+	if ($form['sender'] AND $form['contact'] AND $form[$form['feedback_field_name']]
 		AND !$form['spam'] AND !$form['wrong_e_mail']) {
 		$form['ip'] = wrap_setting('remote_ip');
 		if ($form['url'] === wrap_setting('feedback_spam_referer_marker')) $form['url'] = ''; // remove spam marker
 		$page['replace_db_text'] = true;
-		$form['mail_sent'] = mod_feedback_feedback_mail($form, $setting);
-		if ($form['mail_sent']) wrap_redirect_change('?sent');
+		$mail_sent = mod_feedback_feedback_mail($form, $setting);
+		if ($mail_sent) wrap_redirect_change('?sent');
 		$form['mail_error'] = true;
 	} elseif (!empty($_POST)) {
 		// form incomplete or spam
@@ -82,7 +95,6 @@ function mod_feedback_feedback($vars, $setting) {
 		else wrap_error('Potential Spam Mail: '.json_encode($_POST, true));
 	}
 
-	$page['query_strings'] = ['sent'];
 	$page['text'] = wrap_template('feedback', $form, 'ignore positions');
 	return $page;
 }
@@ -95,7 +107,16 @@ function mod_feedback_feedback($vars, $setting) {
  */
 function mod_feedback_feedback_fields($extra_fields = []) {
     $form = [];
-	$fields = wrap_setting('feedback_fields'); 
+	$fields = wrap_setting('feedback_fields');
+	if (wrap_setting('feedback_mail_db')) {
+		$form['feedback_field_name'] = 'mail';
+		$index = array_search('feedback', $fields);
+		if (!$index !== NULL)
+			unset($fields[$index]);
+		$fields[] = 'mail';
+	} else {
+		$form['feedback_field_name'] = 'feedback';
+	}
 	$fields = array_merge($fields, $extra_fields);
 	foreach ($fields as $field) {
 		$form[$field] = $_POST[$field] ?? '';
@@ -112,8 +133,9 @@ function mod_feedback_feedback_fields($extra_fields = []) {
  * @return bool
  */
 function mod_feedback_feedback_spam(&$form) {
-	$rejected = wrap_tsv_parse('feedback-spam-phrases');
+	if ($_SERVER['REQUEST_METHOD'] !== 'POST') return false;
 
+	$rejected = wrap_tsv_parse('feedback-spam-phrases');
 	foreach ($form as $field_value) {
 		if (!$field_value) continue;
 		foreach ($rejected as $word) {
@@ -125,10 +147,9 @@ function mod_feedback_feedback_spam(&$form) {
 			AND preg_match_all('/http[s]*:\/\//i', $field_value, $count))
 			if (count($count[0]) > wrap_setting('feedback_max_http_links')) return true;
 	}
-	if ($_SERVER['REQUEST_METHOD'] !== 'POST') return false;
 
 	// message just one word? not enough
-	if (!strstr($form['feedback'], ' ')) {
+	if (!strstr($form[$form['feedback_field_name']], ' ')) {
 		$form['one_word_only'] = true;
 		return true;
 	}
@@ -142,7 +163,7 @@ function mod_feedback_feedback_spam(&$form) {
 	if (empty($_POST['feedback_status'])) return true;
 	if ($_POST['feedback_status'] !== 'sent') return true;
 	if (!$form['status']) return true;
-	if (!mod_feedback_feedback_checktime($form['status'], mb_strlen($form['feedback']))) return true;
+	if (!mod_feedback_feedback_checktime($form['status'], mb_strlen($form[$form['feedback_field_name']]))) return true;
 
 	// code to check if referer is set via HTTP_REFERER or sent from bot
 	if (!empty($_POST['code']) AND $_POST['code'] !== mod_feedback_feedback_code($form['url'])) return true;
@@ -271,6 +292,21 @@ function mod_feedback_feedback_extract_mail($contact) {
 }
 
 /**
+ * get/set feedback subject
+ *
+ * @param array $form
+ * @param array $setting
+ * @return string
+ */
+function mod_feedback_feedback_subject($form, $setting) {
+	if (!empty($form['subject'])) return $form['subject'];
+	if (!empty($setting['subject'])) return $setting['subject'];
+	return sprintf(
+		wrap_text('Feedback via %s'), wrap_setting('hostname')
+	);
+}
+
+/**
  * send feedback mail
  *
  * @param array $form
@@ -292,15 +328,7 @@ function mod_feedback_feedback_mail($form, $setting) {
 		$mail['headers'][$header]['e_mail'] = $form['sender_mail'];
 		$mail['headers'][$header]['name'] = $form['sender'];
 	}
-	if (!empty($form['subject'])) {
-		$mail['subject'] = $form['subject'];
-	} elseif (!empty($setting['subject'])) {
-		$mail['subject'] = $setting['subject'];
-	} else {
-		$mail['subject'] = sprintf(
-			wrap_text('Feedback via %s'), wrap_setting('hostname')
-		);
-	}
+	$mail['subject'] = $form['subject'];
 	if (!empty($setting['no_mail_subject_prefix'])) {
 		$old_mail_subject_prefix = wrap_setting('mail_subject_prefix');
 		wrap_setting('mail_subject_prefix', false);

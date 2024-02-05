@@ -1,0 +1,13 @@
+# feedback module
+# Template for feedback form, via zzform
+#
+# Part of »Zugzwang Project«
+# https://www.zugzwang.org/modules/feedback
+#
+# @author Gustaf Mossakowski <gustaf@koenige.org>
+# @copyright Copyright © 2024 Gustaf Mossakowski
+# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
+#
+<div class="feedback">
+%%% forms feedback-mail %%%
+</div>
