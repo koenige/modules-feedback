@@ -59,4 +59,5 @@ function mf_feedback_forminsert($ops) {
 		if (in_array(wrap_category_id('mail-headers/'.$header), $existing_headers)) continue;
 		mf_mail_add_header_db($header, $body, $ops['id']);
 	}
+	wrap_job(wrap_path('mail_send', $ops['id']));
 }
