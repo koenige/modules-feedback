@@ -52,6 +52,10 @@ function mf_feedback_forminsert($ops) {
 	// go through all headers, add to database, not the existing ones
 	foreach (wrap_static('zzform', 'mail_headers') as $header => $body) {
 		$header = strtolower($header);
+		if ($header === 'message') {
+			mf_mail_update_body_db($body, $ops['id']);
+			continue;
+		}
 		if (in_array(wrap_category_id('mail-headers/'.$header), $existing_headers)) continue;
 		mf_mail_add_header_db($header, $body, $ops['id']);
 	}

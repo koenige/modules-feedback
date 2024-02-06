@@ -71,7 +71,7 @@ function mod_feedback_feedback($vars, $setting) {
 	// no normal user agent has " in it, some spammers have
 	if (strstr($form['user_agent'], '"')) $form['spam'] = true;
 	
-	$form['headers'] = mod_feedback_feedback_headers($form, $setting);
+	$form['mail'] = mod_feedback_feedback_headers($form, $setting);
 
 	// save feedback mail in database?
 	$form_recheck = false;
@@ -86,7 +86,6 @@ function mod_feedback_feedback($vars, $setting) {
 		// All form fields filled out? Send mail and say thank you
 		if ($form['sender'] AND $form['contact'] AND $form[$form['feedback_field_name']]
 			AND !$form['spam'] AND !$form['wrong_e_mail']) {
-			if ($form['url'] === wrap_setting('feedback_spam_referer_marker')) $form['url'] = ''; // remove spam marker
 			$mail_sent = mod_feedback_feedback_mail($form, $setting);
 			if ($mail_sent) wrap_redirect_change('?sent');
 			$form['mail_error'] = true;
@@ -298,49 +297,62 @@ function mod_feedback_feedback_extract_mail($contact) {
 }
 
 /**
- * get/set feedback subject
+ * get/set feedback mail headers and body
  *
  * @param array $form
  * @param array $setting
  * @return array
  */
 function mod_feedback_feedback_headers($form, $setting) {
-	$headers = [];
+	$mail = [];
 	
 	// Subject:
 	if (!empty($form['subject']))
-		$headers['subject'] = $form['subject'];
+		$mail['subject'] = $form['subject'];
 	elseif (!empty($setting['subject']))
-		$headers['subject'] = $setting['subject'];
+		$mail['subject'] = $setting['subject'];
 	else
-		$headers['subject'] = sprintf(
+		$mail['subject'] = sprintf(
 			wrap_text('Feedback via %s'), wrap_setting('hostname')
 		);
 
 	// To:
 	if (!empty($setting['mailto'])) {
-		$headers['to'] = $setting['mailto'];
+		$mail['to'] = $setting['mailto'];
 	} elseif ($from_name = wrap_setting('own_name')) {
-		$headers['to']['e_mail'] = wrap_setting('own_e_mail');
-		$headers['to']['name'] = $from_name;
+		$mail['to']['e_mail'] = wrap_setting('own_e_mail');
+		$mail['to']['name'] = $from_name;
 	} else {
-		$headers['to'] = wrap_setting('own_e_mail');
+		$mail['to'] = wrap_setting('own_e_mail');
 	}
 
 	// From: or Reply-To:
 	if ($form['e_mail_valid']) {
 		$header = empty($setting['reply_to']) ? 'From' : 'Reply-To';
-		$headers[$header]['e_mail'] = $form['sender_mail'];
-		$headers[$header]['name'] = $form['sender'];
+		$mail[$header]['e_mail'] = $form['sender_mail'];
+		$mail[$header]['name'] = $form['sender'];
 	}
 	
 	// From:
-	if (empty($headers['From'])) {
-		$headers['From']['e_mail'] = wrap_setting('own_e_mail');
-		$headers['From']['name'] = wrap_setting('project');
+	if (empty($mail['From'])) {
+		$mail['From']['e_mail'] = wrap_setting('own_e_mail');
+		$mail['From']['name'] = wrap_setting('project');
+	}
+	
+	// Message body
+	if ($form['url'] === wrap_setting('feedback_spam_referer_marker'))
+		$form['url'] = ''; // remove spam marker
+	if (!empty($setting['extra_lead']))
+		$form['extra_lead'] = $setting['extra_lead'];
+	if (wrap_setting('feedback_mail_db'))
+		$form['feedback'] = $form['mail'];
+	$mail['message'] = wrap_template('feedback-mail', $form, 'ignore positions');
+	if ($form['send_copy']) {
+		$form['copy'] = true;
+		$mail['message_copy'] = wrap_template('feedback-mail', $form, 'ignore positions');
 	}
 
-	return $headers;
+	return $mail;
 }
 
 /**
@@ -351,7 +363,7 @@ function mod_feedback_feedback_headers($form, $setting) {
  * @return bool
  */
 function mod_feedback_feedback_mail($form, $setting) {
-	$mail = $form['headers'];
+	$mail = $form['mail'];
 	// via headers
 	$move_to_headers = ['From', 'Reply-To'];
 	foreach ($move_to_headers as $header) {
@@ -363,9 +375,6 @@ function mod_feedback_feedback_mail($form, $setting) {
 		$old_mail_subject_prefix = wrap_setting('mail_subject_prefix');
 		wrap_setting('mail_subject_prefix', false);
 	}
-	if (!empty($setting['extra_lead']))
-		$form['extra_lead'] = $setting['extra_lead'];
-	$mail['message'] = wrap_template('feedback-mail', $form, 'ignore positions');
 	$mail['parameters'] = '-f '.wrap_setting('own_e_mail');
 	$success = wrap_mail($mail);
 	if ($success AND $form['send_copy']) {
@@ -375,8 +384,7 @@ function mod_feedback_feedback_mail($form, $setting) {
 		$mail['to']['e_mail'] = $form['contact'];
 		$mail['to']['name'] = $form['sender'];
 		$mail['subject'] .= ' '.wrap_text('(Your Copy)');
-		$form['copy'] = true;
-		$mail['message'] = wrap_template('feedback-mail', $form, 'ignore positions');
+		$mail['message'] = $mail['message_copy'];
 		wrap_mail($mail);
 	}
 	if (!empty($setting['no_mail_subject_prefix'])) {

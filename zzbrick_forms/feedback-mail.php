@@ -30,7 +30,7 @@ foreach ($zz['fields'] as $no => $field) {
 			$zz['fields'][$no]['rows'] = 14;
 			break;
 		case 'headers_subject':
-			if (!$brick['parameter']['headers']['subject']) break;
+			if (!$brick['parameter']['mail']['subject']) break;
 			$zz['fields'][$no]['hide_in_form'] = true;
 			break;
 		case 'last_update':
@@ -113,7 +113,7 @@ $zz['record']['redirect']['successful_insert'] = wrap_setting('request_uri').'?s
 $zz['hooks']['after_validation'][] = 'mf_feedback_formvalidate';
 $zz['hooks']['after_insert'][] = 'mf_feedback_forminsert';
 
-$zz['vars']['mail_headers'] = $brick['parameter']['headers'];
+$zz['vars']['mail_headers'] = $brick['parameter']['mail'];
 $zz['vars']['errors']['one_word_only'] = $brick['parameter']['one_word_only'] ?? false;
 $zz['vars']['errors']['spam'] = $brick['parameter']['spam'] ?? false;
 $zz['vars']['errors']['wrong_e_mail'] = $brick['parameter']['wrong_e_mail'] ?? false;
