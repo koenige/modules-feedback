@@ -31,9 +31,7 @@ foreach ($zz['fields'] as $no => $field) {
 			break;
 		case 'headers_subject':
 			if (!$brick['parameter']['headers']['subject']) break;
-			$zz['fields'][$no]['fields'][4]['class'] = 'hidden';
-			$zz['fields'][$no]['fields'][4]['type'] = 'hidden';
-			$zz['fields'][$no]['fields'][4]['value'] = $brick['parameter']['headers']['subject'];
+			$zz['fields'][$no]['hide_in_form'] = true;
 			break;
 		case 'last_update':
 		case 'headers_sender':
@@ -111,8 +109,13 @@ $zz['fields'][$no]['hidden_value'] = 'sent';
 
 
 $zz['record']['redirect']['successful_insert'] = wrap_setting('request_uri').'?sent';
+
+$zz['hooks']['after_validation'][] = 'mf_feedback_formvalidate';
 $zz['hooks']['after_insert'][] = 'mf_feedback_forminsert';
+
 $zz['vars']['mail_headers'] = $brick['parameter']['headers'];
+$zz['vars']['errors']['one_word_only'] = $brick['parameter']['one_word_only'] ?? false;
+$zz['vars']['errors']['spam'] = $brick['parameter']['spam'] ?? false;
 
 
 wrap_text_set('Add a record', 'Your Message');

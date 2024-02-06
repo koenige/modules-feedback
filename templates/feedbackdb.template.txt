@@ -9,5 +9,25 @@
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 <div class="feedback">
+
+%%% condition if one_word_only %%%
+<div class="error"><p>%%% text "Your message looks like bulk mail. We do not accept bulk mail via this form." %%%</p>
+<p>%%% text "Please write more than one word." %%%</p></div>
+
+%%% condition elseif spam %%%
+<div class="error"><p>%%% text "Your message looks like bulk mail. We do not accept bulk mail via this form." %%% 
+%%% text "Please do not use HTML or BBCode formatting!" %%% 
+<br>%%% text "Please complete the form." %%%</p></div>
+
+%%% condition elseif more_info_necessary %%%
+<div class="error"><p>%%% text "We still need some information from you." %%% 
+<br>%%% text "Please complete the form." %%%
+%%% condition if wrong_e_mail %%%
+<br>%%% text The e-mail address is incorrect. %%%
+%%% condition endif %%%
+</p></div>
+
+%%% condition endif %%%
+
 %%% forms feedback-mail %%%
 </div>

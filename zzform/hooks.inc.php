@@ -14,6 +14,26 @@
 
 
 /**
+ * Validate feedback form
+ * 
+ * @param array $ops
+ * @return array
+ */
+function mf_feedback_formvalidate($ops) {
+	$change = [];
+
+	$validation_errors = wrap_static('zzform', 'errors');
+	if ($validation_errors['one_word_only'])
+		$change['no_validation'] = true;
+	elseif ($validation_errors['spam'])
+		$change['no_validation'] = true;
+	// more_info_necessary
+	// wrong_e_mail
+
+	return $change;
+}
+
+/**
  * Insert further mail headers after successful insert
  * 
  * @param array $ops
