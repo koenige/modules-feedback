@@ -112,7 +112,7 @@ $zz['fields'][$no]['hidden_value'] = 'sent';
 
 $zz['record']['redirect']['successful_insert'] = wrap_setting('request_uri').'?sent';
 $zz['hooks']['after_insert'][] = 'mf_feedback_forminsert';
-$zz['vars']['headers'] = $brick['parameter']['headers'];
+$zz['vars']['mail_headers'] = $brick['parameter']['headers'];
 
 
 wrap_text_set('Add a record', 'Your Message');
