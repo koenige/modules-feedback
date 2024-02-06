@@ -11,9 +11,15 @@
  */
 
 
+/* error messages */
+
+.feedback .error p:last-child	{ margin-bottom: 0; }
+
+/* form via zzform for database */
 .feedback #zzform #record table	{ display: block; background: transparent; }
 .feedback #zzform #record tr	{ display: block; padding: 0; margin: 0 0 1em 0; }
-.feedback #zzform #record tr.hidden
+.feedback #zzform #record tr.hidden,
+.feedback #zzform #record tr.idrow
 								{ display: none; }
 .feedback #zzform #record tr:first-child
 								{ margin: 0; }
