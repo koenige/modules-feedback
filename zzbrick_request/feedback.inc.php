@@ -76,6 +76,7 @@ function mod_feedback_feedback($vars, $setting) {
 	// save feedback mail in database?
 	$form_recheck = false;
 	if (wrap_setting('feedback_mail_db')) {
+		$form['upload'] = mod_feedback_feedback_upload($setting);
 		$result = brick_format('%%% forms feedback-mail %%%', $form);
 		$form['form'] = $result['text'];
 		if (!empty($_POST)) $form_recheck = true;
@@ -393,4 +394,32 @@ function mod_feedback_feedback_mail($form, $setting) {
 		wrap_setting('mail_subject_prefix', $old_mail_subject_prefix);
 	}
 	return $success;
+}
+
+/**
+ * check if upload of a file should be possible, return list of possible filetypes
+ *
+ * @param array $setting
+ * @return array
+ */
+function mod_feedback_feedback_upload($setting) {
+	if (empty($setting['upload_filetypes'])) return [];
+	
+	$filetypes = $setting['upload_filetypes'];
+	$where = [];
+	// check for placeholders
+	foreach ($filetypes as $index => $filetype) {
+		if (!str_ends_with($filetype, '*')) continue;
+		$where[] = sprintf('filetype LIKE ("%s%%")', substr($filetype, 0, -1));
+		unset($filetypes[$index]);
+	}
+	if ($filetypes)
+		$where[] = sprintf('filetype IN ("%s")', implode('","', $filetypes));
+	
+	// get possible types from database
+	$sql = 'SELECT filetype_id, filetype
+		FROM filetypes
+		WHERE (%s)';
+	$sql = sprintf($sql, implode(') OR (', $where));
+	return wrap_db_fetch($sql, 'filetype_id', 'key/value');
 }
