@@ -74,27 +74,34 @@ function mod_feedback_feedback($vars, $setting) {
 	$form['headers'] = mod_feedback_feedback_headers($form, $setting);
 
 	// save feedback mail in database?
+	$form_recheck = false;
 	if (wrap_setting('feedback_mail_db')) {
-		$page['text'] = wrap_template('feedbackdb', $form, 'ignore positions');
-		return $page;
+		$result = brick_format('%%% forms feedback-mail %%%', $form);
+		$form['form'] = $result['text'];
+		if (!empty($_POST)) $form_recheck = true;
+		$validation_errors = wrap_static('zzform', 'errors');
+		if (!empty($validation_errors['more_info_necessary']))
+			$form['more_info_necessary'] = true;
+	} else {
+		// All form fields filled out? Send mail and say thank you
+		if ($form['sender'] AND $form['contact'] AND $form[$form['feedback_field_name']]
+			AND !$form['spam'] AND !$form['wrong_e_mail']) {
+			$form['ip'] = wrap_setting('remote_ip');
+			if ($form['url'] === wrap_setting('feedback_spam_referer_marker')) $form['url'] = ''; // remove spam marker
+			$mail_sent = mod_feedback_feedback_mail($form, $setting);
+			if ($mail_sent) wrap_redirect_change('?sent');
+			$form['mail_error'] = true;
+			$form_recheck = true;
+		} elseif (!empty($_POST)) {
+			if (!$form['spam']) $form['more_info_necessary'] = true;
+			$form_recheck = true;
+		}
 	}
-
-	// All form fields filled out? Send mail and say thank you
-	if ($form['sender'] AND $form['contact'] AND $form[$form['feedback_field_name']]
-		AND !$form['spam'] AND !$form['wrong_e_mail']) {
-		$form['ip'] = wrap_setting('remote_ip');
-		if ($form['url'] === wrap_setting('feedback_spam_referer_marker')) $form['url'] = ''; // remove spam marker
-		$page['replace_db_text'] = true;
-		$mail_sent = mod_feedback_feedback_mail($form, $setting);
-		if ($mail_sent) wrap_redirect_change('?sent');
-		$form['mail_error'] = true;
-	} elseif (!empty($_POST)) {
+	if ($form_recheck) {
 		// form incomplete or spam
 		$page['replace_db_text'] = true;
-		if (!$form['spam']) $form['more_info_necessary'] = true;
-		else wrap_error('Potential Spam Mail: '.json_encode($_POST, true));
+		if ($form['spam']) wrap_error('Potential Spam Mail: '.json_encode($_POST, true));
 	}
-
 	$page['text'] = wrap_template('feedback', $form, 'ignore positions');
 	return $page;
 }

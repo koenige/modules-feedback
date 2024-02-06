@@ -37,6 +37,9 @@
 </p></div>
 
 %%% condition endif %%%
+%%% condition if setting feedback_mail_db %%%
+%%% item form %%%
+%%% condition else %%%
 <div><form method="POST" action="%%% setting base %%%%%% page url_path %%%">
 <h2><label for="feedback">%%% text "Your Message" %%%</label></h2>
 %%% item error_message %%%
@@ -73,5 +76,6 @@
 
 <p><input type="submit" name="submit" value="%%% text "Submit Message" %%%"></p>
 </form></div>
+%%% condition endif %%%
 %%% condition endif %%%
 </div>
