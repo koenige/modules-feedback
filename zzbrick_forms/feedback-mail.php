@@ -116,6 +116,7 @@ $zz['hooks']['after_insert'][] = 'mf_feedback_forminsert';
 $zz['vars']['mail_headers'] = $brick['parameter']['headers'];
 $zz['vars']['errors']['one_word_only'] = $brick['parameter']['one_word_only'] ?? false;
 $zz['vars']['errors']['spam'] = $brick['parameter']['spam'] ?? false;
+$zz['vars']['errors']['wrong_e_mail'] = $brick['parameter']['wrong_e_mail'] ?? false;
 
 
 wrap_text_set('Add a record', 'Your Message');
