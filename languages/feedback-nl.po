@@ -5,88 +5,136 @@
 # https://www.zugzwang.org/modules/feedback
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2012-2014, 2022-2023 Gustaf Mossakowski
+# @copyright Copyright © 2012-2014, 2022-2024 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
 "Project-Id-Version: Zugzwang Project – Feedback Module\n"
 "POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
 "Last-Translator: Gustaf Mossakowski <gustaf@koenige.org>\n"
 "Language-Team: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"PO-Revision-Date: \n"
-"X-Generator: Poedit 1.7.4\n"
-"Language: nl\n"
+"X-Generator: Poedit 3.4.2\n"
 
-#: modules/feedback/templates/feedback.template.txt
+#: templates/feedback.template.txt
 msgid "Your Message"
 msgstr "Uw bericht"
 
-#: modules/feedback/templates/feedback.template.txt
+#: templates/feedback.template.txt
 msgid "How can we get in touch with you?"
 msgstr "Hoe kunnen we contact met u opnemen?"
 
-#: modules/feedback/templates/feedback.template.txt
+#: templates/feedback.template.txt
 msgid "Your Name"
 msgstr "Uw naam"
 
-#: modules/feedback/templates/feedback.template.txt
+#: templates/feedback.template.txt
 msgid "E-Mail or phone"
 msgstr "E-Mail of telefoon"
 
-#: modules/feedback/templates/feedback.template.txt
+#: templates/feedback.template.txt
+msgid "E-Mail"
+msgstr ""
+
+#: templates/feedback.template.txt
+msgid "Send me a copy of my message via e-mail"
+msgstr ""
+
+#: templates/feedback.template.txt
+msgid "The e-mail address is incorrect."
+msgstr ""
+
+#: templates/feedback.template.txt
 msgid "Submit Message"
 msgstr "Verzend bericht"
 
 # ---  HTML: error responses
-#: modules/feedback/templates/feedback.template.txt
+#: templates/feedback.template.txt
 msgid "An error occured. We could not send your message."
 msgstr "Er is een fout opgetreden. We konden niet uw bericht sturen."
 
-#: modules/feedback/templates/feedback.template.txt
+#: templates/feedback.template.txt
 msgid "Please try again soon."
 msgstr "Probeer het later nog eens."
 
-#: modules/feedback/templates/feedback.template.txt
+#: templates/feedback.template.txt
 msgid "Please complete the form."
 msgstr "Vul het formulier in."
 
-#: modules/feedback/templates/feedback.template.txt
+#: templates/feedback.template.txt
 msgid "We still need some information from you."
 msgstr "We nog steeds nodig enkele gegevens van u."
 
-#: modules/feedback/templates/feedback.template.txt
+#: templates/feedback.template.txt
 msgid "Please do not use HTML or BBCode formatting!"
 msgstr "Gebruik geen HTML of BBCode opmaak!"
 
+#: templates/feedback.template.txt
+msgid "Your message looks like bulk mail. We do not accept bulk mail via this form."
+msgstr ""
+
+#: templates/feedback.template.txt
+msgid "Please write more than one word."
+msgstr ""
+
 # ---  HTML: successful responses
-#: modules/feedback/templates/feedback.template.txt
+#: templates/feedback.template.txt
 msgid "Thank you for your message."
 msgstr "Dank u voor uw bericht."
 
-#: modules/feedback/templates/feedback.template.txt
+#: templates/feedback.template.txt
 msgid "Send another message"
 msgstr "Stuur een bericht"
 
 # --- Mail
-#: modules/feedback/zzbrick_request/feedback.inc.php
+#: zzbrick_request/feedback.inc.php
 #, php-format
 msgid "Feedback via %s"
 msgstr "Feedback via %s"
 
-#: modules/feedback/templates/feedback-mail.template.txt
+#: zzbrick_request/feedback.inc.php
+msgid "(Your Copy)"
+msgstr ""
+
+#: templates/feedback-mail.template.txt
 msgid "Contact details:"
 msgstr "Contactgegevens:"
 
-#: modules/feedback/templates/feedback-mail.template.txt
+#: templates/feedback-mail.template.txt
 msgid "Name:"
 msgstr "Naam:"
 
-#: modules/feedback/templates/feedback-mail.template.txt
+#: templates/feedback-mail.template.txt
 msgid "You’ve got a message via the website %s:"
 msgstr "Je hebt een bericht via uw website %s:"
+
+#: templates/feedback-mail.template.txt
+msgid "You’ve sent us a message via our website:"
+msgstr ""
+
+#: templates/feedback-mail.template.txt
+msgid "Technical data:"
+msgstr ""
+
+#: templates/feedback-mail.template.txt
+msgid "Referring URL:"
+msgstr ""
+
+#: templates/feedback-mail.template.txt
+msgid "Sender’s IP address:"
+msgstr ""
+
+#: templates/feedback-mail.template.txt
+msgid "Sender’s browser:"
+msgstr ""
+
+#: zzbrick_forms/feedback-mail.php
+msgid "Attachment"
+msgstr ""

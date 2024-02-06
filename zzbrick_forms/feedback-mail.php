@@ -61,6 +61,47 @@ $zz['fields'][$no]['title'] = 'Your Name';
 $zz['fields'][$no]['type'] = 'text';
 $zz['fields'][$no]['input_only'] = true;
 
+if (!empty($brick['parameter']['upload'])) {
+	$no++;
+	$zz['fields'][$no] = zzform_include('media');
+	$zz['fields'][$no]['type'] = 'subtable';
+	$zz['fields'][$no]['title'] = 'Attachment';
+	$zz['fields'][$no]['min_records'] = 1;
+	$zz['fields'][$no]['max_records'] = 1;
+	foreach ($zz['fields'][$no]['fields'] as $subno => $subfield) {
+		if (empty($subfield['field_name'])) continue;
+		$fieldname = $subfield['field_name'];
+		switch ($fieldname) {
+			case 'main_medium_id':
+				$zz['fields'][$no]['fields'][$subno]['type'] = 'hidden';
+				$zz['fields'][$no]['fields'][$subno]['type_detail'] = 'select';
+				if ($brick['parameter']['upload_folder'])
+					$zz['fields'][$no]['fields'][$subno]['value'] = wrap_id('folders', $brick['parameter']['upload_folder']);
+				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
+				break;
+			case 'image':
+				$zz['fields'][$no]['fields'][$subno]['show_title'] = false;
+				$zz['fields'][$no]['fields'][$subno]['input_filetypes'] = $brick['parameter']['upload'];
+				break;
+			case 'published':
+				$zz['fields'][$no]['fields'][$subno]['type'] = 'hidden';
+				$zz['fields'][$no]['fields'][$subno]['type_detail'] = 'select';
+				$zz['fields'][$no]['fields'][$subno]['value'] = 'no';
+				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
+				break;
+			case 'thumb_filetype_id':
+				// @todo support thumbnails, background operation needs to divert from contact form here
+				unset($zz['fields'][$no]['fields'][$subno]['default']); // set to none
+				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
+				break;
+			default:
+				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
+				break;
+		}
+	}
+	// + mails-media
+}
+
 $no++;
 $zz['fields'][$no]['field_name'] = 'url';
 $zz['fields'][$no]['show_title'] = false;

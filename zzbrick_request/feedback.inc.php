@@ -77,6 +77,7 @@ function mod_feedback_feedback($vars, $setting) {
 	$form_recheck = false;
 	if (wrap_setting('feedback_mail_db')) {
 		$form['upload'] = mod_feedback_feedback_upload($setting);
+		$form['upload_folder'] = $setting['upload_folder'] ?? '';
 		$result = brick_format('%%% forms feedback-mail %%%', $form);
 		$form['form'] = $result['text'];
 		if (!empty($_POST)) $form_recheck = true;
