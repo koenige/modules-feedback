@@ -86,7 +86,6 @@ function mod_feedback_feedback($vars, $setting) {
 		// All form fields filled out? Send mail and say thank you
 		if ($form['sender'] AND $form['contact'] AND $form[$form['feedback_field_name']]
 			AND !$form['spam'] AND !$form['wrong_e_mail']) {
-			$form['ip'] = wrap_setting('remote_ip');
 			if ($form['url'] === wrap_setting('feedback_spam_referer_marker')) $form['url'] = ''; // remove spam marker
 			$mail_sent = mod_feedback_feedback_mail($form, $setting);
 			if ($mail_sent) wrap_redirect_change('?sent');
