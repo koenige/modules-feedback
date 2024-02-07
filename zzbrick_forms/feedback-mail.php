@@ -64,10 +64,11 @@ $zz['fields'][$no]['input_only'] = true;
 if (!empty($brick['parameter']['upload'])) {
 	$no++;
 	$zz['fields'][$no] = zzform_include('media');
-	$zz['fields'][$no]['type'] = 'subtable';
+	$zz['fields'][$no]['type'] = 'foreign_table';
 	$zz['fields'][$no]['title'] = 'Attachment';
 	$zz['fields'][$no]['min_records'] = 1;
 	$zz['fields'][$no]['max_records'] = 1;
+	$foreign_id_field = $no;
 	foreach ($zz['fields'][$no]['fields'] as $subno => $subfield) {
 		if (empty($subfield['field_name'])) continue;
 		$fieldname = $subfield['field_name'];
@@ -79,8 +80,13 @@ if (!empty($brick['parameter']['upload'])) {
 					$zz['fields'][$no]['fields'][$subno]['value'] = wrap_id('folders', $brick['parameter']['upload_folder']);
 				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
 				break;
+			case 'title':
+				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
+				$zz['fields'][$no]['fields'][$subno]['dont_show_missing'] = true;
+				break;
 			case 'image':
 				$zz['fields'][$no]['fields'][$subno]['show_title'] = false;
+				$zz['fields'][$no]['fields'][$subno]['title'] = 'Attachment';
 				$zz['fields'][$no]['fields'][$subno]['input_filetypes'] = $brick['parameter']['upload'];
 				break;
 			case 'published':
@@ -99,7 +105,27 @@ if (!empty($brick['parameter']['upload'])) {
 				break;
 		}
 	}
-	// + mails-media
+
+	$no++;
+	$zz['fields'][$no] = zzform_include('mails-media');
+	$zz['fields'][$no]['type'] = 'subtable';
+	$zz['fields'][$no]['min_records'] = 1;
+	$zz['fields'][$no]['max_records'] = 1;
+	$zz['fields'][$no]['hide_in_form'] = true;
+	foreach ($zz['fields'][$no]['fields'] as $subno => $subfield) {
+		if (empty($subfield['field_name'])) continue;
+		$fieldname = $subfield['field_name'];
+		switch ($fieldname) {
+			case 'mail_id':
+				$zz['fields'][$no]['fields'][$subno]['type'] = 'foreign_key';
+				break;
+			case 'medium_id':
+				$zz['fields'][$no]['fields'][$subno]['type'] = 'foreign_id';
+				$zz['fields'][$no]['fields'][$subno]['type_detail'] = 'select';
+				$zz['fields'][$no]['fields'][$subno]['foreign_id_field'] = $foreign_id_field;
+				break;
+		}
+	}
 }
 
 $no++;
