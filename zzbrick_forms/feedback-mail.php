@@ -68,6 +68,7 @@ if (!empty($brick['parameter']['upload'])) {
 	$zz['fields'][$no]['title'] = 'Attachment';
 	$zz['fields'][$no]['min_records'] = 1;
 	$zz['fields'][$no]['max_records'] = 1;
+	$zz['fields'][$no]['records_depend_on_upload'] = true;
 	$foreign_id_field = $no;
 	foreach ($zz['fields'][$no]['fields'] as $subno => $subfield) {
 		if (empty($subfield['field_name'])) continue;
@@ -85,6 +86,7 @@ if (!empty($brick['parameter']['upload'])) {
 				$zz['fields'][$no]['fields'][$subno]['dont_show_missing'] = true;
 				break;
 			case 'image':
+				$zz['fields'][$no]['fields'][$subno]['image'][0]['required'] = false;
 				$zz['fields'][$no]['fields'][$subno]['show_title'] = false;
 				$zz['fields'][$no]['fields'][$subno]['title'] = 'Attachment';
 				$zz['fields'][$no]['fields'][$subno]['input_filetypes'] = $brick['parameter']['upload'];
@@ -98,6 +100,8 @@ if (!empty($brick['parameter']['upload'])) {
 			case 'thumb_filetype_id':
 				// @todo support thumbnails, background operation needs to divert from contact form here
 				unset($zz['fields'][$no]['fields'][$subno]['default']); // set to none
+				// @todo on re-check form, some background thumbnail mechanism is triggered, look into it
+				wrap_setting('zzform_upload_background_thumbnails', false);
 				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
 				break;
 			default:
@@ -109,9 +113,9 @@ if (!empty($brick['parameter']['upload'])) {
 	$no++;
 	$zz['fields'][$no] = zzform_include('mails-media');
 	$zz['fields'][$no]['type'] = 'subtable';
+	$zz['fields'][$no]['show_title'] = false;
 	$zz['fields'][$no]['min_records'] = 1;
 	$zz['fields'][$no]['max_records'] = 1;
-	$zz['fields'][$no]['hide_in_form'] = true;
 	foreach ($zz['fields'][$no]['fields'] as $subno => $subfield) {
 		if (empty($subfield['field_name'])) continue;
 		$fieldname = $subfield['field_name'];
@@ -123,6 +127,17 @@ if (!empty($brick['parameter']['upload'])) {
 				$zz['fields'][$no]['fields'][$subno]['type'] = 'foreign_id';
 				$zz['fields'][$no]['fields'][$subno]['type_detail'] = 'select';
 				$zz['fields'][$no]['fields'][$subno]['foreign_id_field'] = $foreign_id_field;
+				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
+				break;
+			case 'sequence':
+				// show as hidden field so record is not ignored by zzform
+				// @todo solve this in zzform() and remove this case
+				$zz['fields'][$no]['fields'][$subno]['type'] = 'hidden';
+				$zz['fields'][$no]['fields'][$subno]['value'] = 1;
+				$zz['fields'][$no]['fields'][$subno]['class'] = 'hidden';
+				break;
+			default:
+				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
 				break;
 		}
 	}
