@@ -38,6 +38,10 @@ foreach ($zz['fields'] as $no => $field) {
 		case 'headers_recipients':
 			$zz['fields'][$no]['hide_in_form'] = true;
 			break;
+		case 'attachments':
+			// @todo use later?
+			unset($zz['fields'][$no]);
+			break;
 		case 'mail_date':
 		default:
 			$zz['fields'][$no]['hide_in_form'] = true;
