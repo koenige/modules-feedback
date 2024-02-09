@@ -197,7 +197,7 @@ $zz['fields'][$no]['hidden_value'] = 'sent';
 $zz['record']['redirect']['successful_insert'] = wrap_setting('request_uri').'?sent';
 
 $zz['hooks']['after_validation'][] = 'mf_feedback_formvalidate';
-$zz['hooks']['after_insert'][] = 'mf_feedback_forminsert';
+$zz['hooks']['successful_insert'][] = 'mf_feedback_forminsert';
 
 $zz['vars']['mail_headers'] = $brick['parameter']['mail'];
 $zz['vars']['errors']['one_word_only'] = $brick['parameter']['one_word_only'] ?? false;
