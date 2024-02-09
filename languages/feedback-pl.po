@@ -98,7 +98,7 @@ msgstr "Wyślij wiadomość innym"
 # --- Mail
 #: zzbrick_request/feedback.inc.php
 #, php-format
-msgid "Feedback via %s, from %s"
+msgid "Feedback via %s from %s"
 msgstr ""
 
 #: zzbrick_request/feedback.inc.php

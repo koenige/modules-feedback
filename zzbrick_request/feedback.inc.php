@@ -316,7 +316,7 @@ function mod_feedback_feedback_headers($form, $setting) {
 		$mail['subject'] = $setting['subject'];
 	else
 		$mail['subject'] = wrap_text(
-			'Feedback via %s, from %s', ['values' => [wrap_setting('hostname'), $form['sender']]]
+			'Feedback via %s from %s', ['values' => [wrap_setting('hostname'), $form['sender']]]
 		);
 
 	// To:

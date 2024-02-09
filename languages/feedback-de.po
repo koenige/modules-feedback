@@ -100,8 +100,8 @@ msgstr "Eine weitere Nachricht senden"
 # --- Mail
 #: zzbrick_request/feedback.inc.php
 #, php-format
-msgid "Feedback via %s, from %s"
-msgstr "Nachricht via %s, von %s"
+msgid "Feedback via %s from %s"
+msgstr "Nachricht via %s von %s"
 
 #: zzbrick_request/feedback.inc.php
 msgid "(Your Copy)"
