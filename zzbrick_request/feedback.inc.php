@@ -141,6 +141,7 @@ function mod_feedback_feedback_fields($extra_fields = []) {
  */
 function mod_feedback_feedback_spam(&$form) {
 	if ($_SERVER['REQUEST_METHOD'] !== 'POST') return false;
+	if (wrap_setting('feedback_mail_db') AND $_POST === ['zz_html_fragment' => '1']) return false;
 
 	$rejected = wrap_tsv_parse('feedback-spam-phrases');
 	foreach ($form as $field_value) {
