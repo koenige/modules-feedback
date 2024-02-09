@@ -96,8 +96,8 @@ msgstr "Stuur een bericht"
 # --- Mail
 #: zzbrick_request/feedback.inc.php
 #, php-format
-msgid "Feedback via %s"
-msgstr "Feedback via %s"
+msgid "Feedback via %s, from %s"
+msgstr ""
 
 #: zzbrick_request/feedback.inc.php
 msgid "(Your Copy)"
