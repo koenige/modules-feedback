@@ -42,7 +42,7 @@ function mf_feedback_formvalidate($ops) {
  * @param array $ops
  */
 function mf_feedback_forminsert($ops) {
-	wrap_include_files('zzform/batch', 'mail');
+	wrap_include('zzform/batch', 'mail');
 	// are there existing headers in record?
 	$existing_headers = [];
 	foreach ($ops['return'] as $index => $table) {
