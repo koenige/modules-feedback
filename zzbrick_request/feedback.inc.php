@@ -28,6 +28,8 @@ function mod_feedback_feedback($vars, $setting) {
 	wrap_setting_add('extra_http_headers', 'X-Frame-Options: Deny');
 	wrap_setting_add('extra_http_headers', "Content-Security-Policy: frame-ancestors 'self'");
 	
+	$hook = wrap_hook($setting);
+	
 	// sent receipt?
 	if (array_key_exists('sent', $_GET)) {
 		$page['meta'][] = ['name' => 'robots', 'content' => 'noindex'];
@@ -88,6 +90,7 @@ function mod_feedback_feedback($vars, $setting) {
 		// All form fields filled out? Send mail and say thank you
 		if ($form['sender'] AND $form['contact'] AND $form[$form['feedback_field_name']]
 			AND !$form['spam'] AND !$form['wrong_e_mail']) {
+			if ($hook['finish']) $form = $hook['finish']($form, $vars);
 			$mail_sent = mod_feedback_feedback_mail($form, $setting);
 			if ($mail_sent) wrap_redirect_change('?sent');
 			$form['mail_error'] = true;
