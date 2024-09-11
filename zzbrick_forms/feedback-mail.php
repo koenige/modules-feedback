@@ -20,28 +20,33 @@ $zz['title'] = '';
 $zz['setting']['zzform_autofocus'] = false;
 
 foreach ($zz['fields'] as $no => $field) {
-	$fieldname = $field['field_name'] ?? $field['table_name'] ?? $field['table'];
-	switch ($fieldname) {
+	$identifier = zzform_field_identifier($field);
+	switch ($identifier) {
 		case 'mail_id':
 			break;
+
 		case 'mail':
 			$zz['fields'][$no]['title'] = wrap_text('Message', ['context' => 'E-Mail']);
 			$zz['fields'][$no]['show_title'] = false;
 			$zz['fields'][$no]['rows'] = 14;
 			break;
+
 		case 'headers_subject':
 			if (!$brick['parameter']['mail']['subject']) break;
 			$zz['fields'][$no]['hide_in_form'] = true;
 			break;
+
 		case 'last_update':
 		case 'headers_sender':
 		case 'headers_recipients':
 			$zz['fields'][$no]['hide_in_form'] = true;
 			break;
+
 		case 'attachments':
 			// @todo use later?
 			unset($zz['fields'][$no]);
 			break;
+
 		case 'mail_date':
 		default:
 			$zz['fields'][$no]['hide_in_form'] = true;
@@ -75,9 +80,9 @@ if (!empty($brick['parameter']['upload'])) {
 	$zz['fields'][$no]['records_depend_on_upload'] = true;
 	$foreign_id_field = $no;
 	foreach ($zz['fields'][$no]['fields'] as $subno => $subfield) {
-		if (empty($subfield['field_name'])) continue;
-		$fieldname = $subfield['field_name'];
-		switch ($fieldname) {
+		$identifier = zzform_field_identifier($subfield);
+		if (!$identifier) continue;
+		switch ($identifier) {
 			case 'main_medium_id':
 				$zz['fields'][$no]['fields'][$subno]['type'] = 'hidden';
 				$zz['fields'][$no]['fields'][$subno]['type_detail'] = 'select';
@@ -85,22 +90,26 @@ if (!empty($brick['parameter']['upload'])) {
 					$zz['fields'][$no]['fields'][$subno]['value'] = wrap_id('folders', $brick['parameter']['upload_folder']);
 				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
 				break;
+
 			case 'title':
 				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
 				$zz['fields'][$no]['fields'][$subno]['dont_show_missing'] = true;
 				break;
+
 			case 'image':
 				$zz['fields'][$no]['fields'][$subno]['image'][0]['required'] = false;
 				$zz['fields'][$no]['fields'][$subno]['show_title'] = false;
 				$zz['fields'][$no]['fields'][$subno]['title'] = 'Attachment';
 				$zz['fields'][$no]['fields'][$subno]['input_filetypes'] = $brick['parameter']['upload'];
 				break;
+
 			case 'published':
 				$zz['fields'][$no]['fields'][$subno]['type'] = 'hidden';
 				$zz['fields'][$no]['fields'][$subno]['type_detail'] = 'select';
 				$zz['fields'][$no]['fields'][$subno]['value'] = 'no';
 				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
 				break;
+
 			case 'thumb_filetype_id':
 				// @todo support thumbnails, background operation needs to divert from contact form here
 				unset($zz['fields'][$no]['fields'][$subno]['default']); // set to none
@@ -108,6 +117,7 @@ if (!empty($brick['parameter']['upload'])) {
 				wrap_setting('zzform_upload_background_thumbnails', false);
 				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
 				break;
+
 			default:
 				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
 				break;
@@ -121,18 +131,20 @@ if (!empty($brick['parameter']['upload'])) {
 	$zz['fields'][$no]['min_records'] = 1;
 	$zz['fields'][$no]['max_records'] = 1;
 	foreach ($zz['fields'][$no]['fields'] as $subno => $subfield) {
-		if (empty($subfield['field_name'])) continue;
-		$fieldname = $subfield['field_name'];
-		switch ($fieldname) {
+		$identifier = zzform_field_identifier($subfield);
+		if (!$identifier) continue;
+		switch ($identifier) {
 			case 'mail_id':
 				$zz['fields'][$no]['fields'][$subno]['type'] = 'foreign_key';
 				break;
+
 			case 'medium_id':
 				$zz['fields'][$no]['fields'][$subno]['type'] = 'foreign_id';
 				$zz['fields'][$no]['fields'][$subno]['type_detail'] = 'select';
 				$zz['fields'][$no]['fields'][$subno]['foreign_id_field'] = $foreign_id_field;
 				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
 				break;
+
 			case 'sequence':
 				// show as hidden field so record is not ignored by zzform
 				// @todo solve this in zzform() and remove this case
@@ -140,6 +152,7 @@ if (!empty($brick['parameter']['upload'])) {
 				$zz['fields'][$no]['fields'][$subno]['value'] = 1;
 				$zz['fields'][$no]['fields'][$subno]['class'] = 'hidden';
 				break;
+
 			default:
 				$zz['fields'][$no]['fields'][$subno]['hide_in_form'] = true;
 				break;
