@@ -20,7 +20,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.4.2\n"
 
 #: configuration/settings.cfg
 msgid "field names in feedback form"
@@ -97,6 +96,10 @@ msgstr ""
 
 #: templates/feedback.template.txt
 msgid "Your message looks like bulk mail. We do not accept bulk mail via this form."
+msgstr ""
+
+#: templates/feedback.template.txt
+msgid "Please use simple links instead of URL shorteners so we know what we are clicking on."
 msgstr ""
 
 #: templates/feedback.template.txt

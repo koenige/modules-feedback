@@ -42,6 +42,7 @@ function mod_feedback_feedback($vars, $setting) {
 
 	$form = mod_feedback_feedback_fields($setting['extra_fields'] ?? []);
 	$form['spam'] = mod_feedback_feedback_spam($form);
+	$form['url_shortener'] = mod_feedback_feedback_urlshort($form);
 
 	$form['mailonly'] = $setting['mailonly'] ?? false;
 	$form['mailcopy'] = $setting['mailcopy'] ?? false;
@@ -89,7 +90,8 @@ function mod_feedback_feedback($vars, $setting) {
 	} else {
 		// All form fields filled out? Send mail and say thank you
 		if ($form['sender'] AND $form['contact'] AND $form[$form['feedback_field_name']]
-			AND !$form['spam'] AND !$form['wrong_e_mail']) {
+			AND !$form['spam'] AND !$form['wrong_e_mail']
+			AND !$form['url_shortener']) {
 			if ($hook['finish']) $form = $hook['finish']($form, $vars);
 			$mail_sent = mod_feedback_feedback_mail($form, $setting);
 			if ($mail_sent) wrap_redirect_change('?sent');
@@ -427,4 +429,21 @@ function mod_feedback_feedback_upload($setting) {
 		WHERE (%s)';
 	$sql = sprintf($sql, implode(') OR (', $where));
 	return wrap_db_fetch($sql, 'filetype_id', 'key/value');
+}
+
+/**
+ * check if a URL shortener is used
+ *
+ * @param array $form
+ * @return bool
+ */
+function mod_feedback_feedback_urlshort($form) {
+	if (!wrap_setting('feedback_reject_url_shorteners')) return false;
+	$services = wrap_tsv_parse('url-shorteners');
+	if (empty($form[$form['feedback_field_name']])) return false;
+	foreach ($services as $service) {
+		$service = sprintf('https://%s/', $service);
+		if (strstr($form[$form['feedback_field_name']], $service)) return true;
+	}
+	return false;
 }

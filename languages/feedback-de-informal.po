@@ -21,7 +21,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
+
+#: configuration/settings.cfg
+msgid "field names in feedback form"
+msgstr ""
+
+#: configuration/settings.cfg
+msgid "use mail module to save mails in database, use zzform as frontend?"
+msgstr ""
+
+#: configuration/settings.cfg
+msgid "maximum no. of links inside a feedback mail"
+msgstr ""
+
+#: configuration/settings.cfg
+msgid "String used as a marker that referer was spam"
+msgstr ""
+
+#: configuration/settings.cfg
+msgid ""
+"minimum time real user should spend with feedback form before he/she can "
+"send it without having to re-send it."
+msgstr ""
 
 #: templates/feedback.template.txt
 msgid "Your Message"
@@ -83,6 +105,14 @@ msgid ""
 msgstr ""
 "Deine Nachricht sieht aus wie eine Massenmail. Wir möchten über dieses "
 "Formular keine Massenmails bekommen."
+
+#: templates/feedback.template.txt
+msgid ""
+"Please use simple links instead of URL shorteners so we know what we are "
+"clicking on."
+msgstr ""
+"Bitte verwende einfache Links anstelle von URL-Verkürzungen, damit wir "
+"wissen, worauf wir klicken."
 
 #: templates/feedback.template.txt
 msgid "Please write more than one word."

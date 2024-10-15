@@ -28,6 +28,10 @@
 %%% text "Please do not use HTML or BBCode formatting!" %%% 
 <br>%%% text "Please complete the form." %%%</p></div>
 
+%%% condition elseif url_shortener %%%
+<div class="error"><p>%%% text "Please use simple links instead of URL shorteners so we know what we are clicking on." %%% 
+<br>%%% text "Please complete the form." %%%</p></div>
+
 %%% condition elseif more_info_necessary %%%
 <div class="error"><p>%%% text "We still need some information from you." %%% 
 <br>%%% text "Please complete the form." %%%

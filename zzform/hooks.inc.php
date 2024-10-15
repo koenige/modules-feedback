@@ -27,6 +27,8 @@ function mf_feedback_formvalidate($ops) {
 		$change['no_validation'] = true;
 	elseif ($validation_errors['spam'])
 		$change['no_validation'] = true;
+	elseif ($validation_errors['url_shortener'])
+		$change['no_validation'] = true;
 	elseif ($validation_errors['wrong_e_mail']) {
 		$change['no_validation'] = true;
 		wrap_static('zzform', 'errors', ['more_info_necessary' => true], 'add');
