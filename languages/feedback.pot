@@ -75,7 +75,7 @@ msgstr ""
 
 # ---  HTML: error responses
 #: templates/feedback.template.txt
-msgid "An error occured. We could not send your message."
+msgid "A temporary problem has occured. We have not been able to send your message yet."
 msgstr ""
 
 #: templates/feedback.template.txt

@@ -16,7 +16,7 @@
 %%% condition else %%%
 
 %%% condition if mail_error %%%
-<p>%%% text "An error occured. We could not send your message." %%%
+<p>%%% text "A temporary problem has occured. We have not been able to send your message yet." %%%
 %%% text "Please try again soon." %%%</p>
 
 %%% condition elseif one_word_only %%%

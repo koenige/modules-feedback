@@ -79,13 +79,13 @@ msgstr "Nachricht abschicken"
 
 # ---  HTML: error responses
 #: templates/feedback.template.txt
-msgid "An error occured. We could not send your message."
+msgid "A temporary problem has occured. We have not been able to send your message yet."
 msgstr ""
-"Wir konnten Deine Nachricht aufgrund eines Fehlers leider nicht versenden."
+"Wir konnten Deine Nachricht aufgrund eines vorübergehenden Problems leider noch nicht versenden."
 
 #: templates/feedback.template.txt
 msgid "Please try again soon."
-msgstr "Bitte versuche es gleich noch einmal."
+msgstr "Bitte versuche es erneut."
 
 #: templates/feedback.template.txt
 msgid "Please complete the form."
