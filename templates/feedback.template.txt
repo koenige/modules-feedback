@@ -56,7 +56,7 @@
 <input type="hidden" name="feedback_status" value="sent">
 <input type="hidden" name="code" value="%%% item code %%%">
 <input type="hidden" name="status" value="%%% item status %%%">
-<textarea name="feedback" rows="14" cols="42" id="feedback" required="required"%%% condition if more_info_necessary %%% autofocus="autofocus"
+<textarea name="feedback" rows="14" cols="42" id="feedback" required%%% condition if more_info_necessary %%% autofocus
 %%% condition endif %%%>%%% item feedback wrap_html_escape %%%</textarea>
 
 <h2>%%% text "How can we get in touch with you?" %%%</h2>
@@ -67,15 +67,15 @@
 %%% text "E-Mail or phone" %%%
 %%% condition endif %%%
 <br>
-<input type="text" name="contact" size="50" id="contact" required="required" value="%%% item contact wrap_html_escape %%%">
+<input type="text" name="contact" size="50" id="contact" required value="%%% item contact wrap_html_escape %%%">
 </label>
 %%% condition if mailcopy %%%
-<br><label for="mailcopy"><input type="checkbox" name="mailcopy" id="mailcopy" %%% item send_copy " checked='checked'" %%%> %%% text Send me a copy of my message via e-mail %%%</label>
+<br><label for="mailcopy"><input type="checkbox" name="mailcopy" id="mailcopy" %%% item send_copy " checked" %%%> %%% text Send me a copy of my message via e-mail %%%</label>
 %%% condition endif %%%
 </p>
 
 <p><label for="sender">%%% text "Your Name" %%%<br>
-<input type="text" name="sender" size="50" id="sender" required="required" value="%%% item sender wrap_html_escape %%%">
+<input type="text" name="sender" size="50" id="sender" required value="%%% item sender wrap_html_escape %%%">
 </label></p>
 
 <p><input type="submit" name="submit" value="%%% text "Submit Message" %%%"></p>
