@@ -29,6 +29,8 @@ function mf_feedback_formvalidate($ops) {
 		$change['no_validation'] = true;
 	elseif ($validation_errors['url_shortener'])
 		$change['no_validation'] = true;
+	elseif ($validation_errors['mail_error'])
+		$change['no_validation'] = true;
 	elseif ($validation_errors['wrong_e_mail']) {
 		$change['no_validation'] = true;
 		wrap_static('zzform', 'errors', ['more_info_necessary' => true], 'add');
@@ -44,6 +46,7 @@ function mf_feedback_formvalidate($ops) {
  * @param array $ops
  */
 function mf_feedback_forminsert($ops) {
+	mod_feedback_feedback_hash_delete();
 	wrap_include('zzform/batch', 'mail');
 	// are there existing headers in record?
 	$existing_headers = [];

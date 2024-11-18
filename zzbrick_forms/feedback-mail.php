@@ -217,6 +217,7 @@ $zz['vars']['errors']['one_word_only'] = $brick['parameter']['one_word_only'] ??
 $zz['vars']['errors']['spam'] = $brick['parameter']['spam'] ?? false;
 $zz['vars']['errors']['wrong_e_mail'] = $brick['parameter']['wrong_e_mail'] ?? false;
 $zz['vars']['errors']['url_shortener'] = $brick['parameter']['url_shortener'] ?? false;
+$zz['vars']['errors']['mail_error'] = $brick['parameter']['mail_error'] ?? false;
 
 // no :: are allowed in httpd usernames, so replace : with - for IPv6
 wrap_setting('log_username', sprintf('%s (IP %s)', $_POST['sender'] ?? wrap_text('unknown'), str_replace(':', '-', wrap_setting('remote_ip'))));

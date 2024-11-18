@@ -41,6 +41,8 @@ function mod_feedback_feedback($vars, $setting) {
 	}
 
 	$form = mod_feedback_feedback_fields($setting['extra_fields'] ?? []);
+	$form['mail_error'] = mod_feedback_feedback_hash_fail();
+	$form['feedback_hash'] = mod_feedback_feedback_hash_create();
 	$form['spam'] = mod_feedback_feedback_spam($form);
 	$form['url_shortener'] = mod_feedback_feedback_urlshort($form);
 
@@ -91,14 +93,17 @@ function mod_feedback_feedback($vars, $setting) {
 		// All form fields filled out? Send mail and say thank you
 		if ($form['sender'] AND $form['contact'] AND $form[$form['feedback_field_name']]
 			AND !$form['spam'] AND !$form['wrong_e_mail']
-			AND !$form['url_shortener']) {
+			AND !$form['url_shortener'] AND !$form['mail_error']) {
 			if ($hook['finish']) $form = $hook['finish']($form, $vars);
 			$mail_sent = mod_feedback_feedback_mail($form, $setting);
-			if ($mail_sent) wrap_redirect_change('?sent');
+			if ($mail_sent) {
+				mod_feedback_feedback_hash_delete();
+				wrap_redirect_change('?sent');
+			}
 			$form['mail_error'] = true;
 			$form_recheck = true;
 		} elseif (!empty($_POST)) {
-			if (!$form['spam']) $form['more_info_necessary'] = true;
+			if (!$form['spam'] AND !$form['mail_error']) $form['more_info_necessary'] = true;
 			$form_recheck = true;
 		}
 	}
@@ -106,6 +111,7 @@ function mod_feedback_feedback($vars, $setting) {
 		// form incomplete or spam
 		$page['replace_db_text'] = true;
 		if ($form['spam']) wrap_error('Potential Spam Mail: '.json_encode($_POST, true));
+		elseif ($form['mail_error']) wrap_error('Mail was not sent at first try: '.json_encode($_POST, true));
 	}
 	$page['text'] = wrap_template('feedback', $form, 'ignore positions');
 	return $page;
@@ -446,4 +452,58 @@ function mod_feedback_feedback_urlshort($form) {
 		if (strstr($form[$form['feedback_field_name']], $service)) return true;
 	}
 	return false;
+}
+
+/**
+ * return a feedback hash
+ *
+ * @return string
+ */
+function mod_feedback_feedback_hash_create() {
+	if (!wrap_setting('feedback_logfile_hashes')) return '';
+	wrap_include('file', 'zzwrap');
+	if (!empty($_POST['feedback_hash'])) return $_POST['feedback_hash'];
+	$hash = wrap_random_hash(16);
+	wrap_file_log('feedback/hashes', 'write', [time(), $hash, wrap_setting('remote_ip'), wrap_setting('request_uri')]);
+	return $hash;
+}
+
+/**
+ * check if feedback hash failed
+ *
+ * @return bool
+ */
+function mod_feedback_feedback_hash_fail() {
+	if (!wrap_setting('feedback_logfile_hashes')) return false;
+	if ($_SERVER['REQUEST_METHOD'] !== 'POST') return false;
+	wrap_include('file', 'zzwrap');
+
+	if (empty($_POST['feedback_hash'])) return true;
+	$logs = wrap_file_log('feedback/hashes');
+	foreach ($logs as $index => $log) {
+		if ($log['feedback_hash'] !== $_POST['feedback_hash']) continue;
+		if ($log['request_uri'] !== wrap_setting('request_uri')) {
+			$_POST['feedback_hash'] = NULL;
+			return true;
+		}
+		if ($log['remote_ip'] !== wrap_setting('remote_ip'))  {
+			$_POST['feedback_hash'] = NULL;
+			return true;
+		}
+		return false;
+	}
+	$_POST['feedback_hash'] = NULL;
+	return true;
+}
+
+/**
+ * delete a feedback hash after mail was sent successfully
+ *
+ * @return bool
+ */
+function mod_feedback_feedback_hash_delete() {
+	if (!wrap_setting('feedback_logfile_hashes')) return false;
+	if (empty($_POST['feedback_hash'])) return false;
+	wrap_include('file', 'zzwrap');
+	wrap_file_log('feedback/hashes', 'delete', ['feedback_hash' => $_POST['feedback_hash']]);
 }
