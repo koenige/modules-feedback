@@ -138,6 +138,10 @@ function mod_feedback_feedback_fields($extra_fields = []) {
 	$fields = array_merge($fields, $extra_fields);
 	foreach ($fields as $field) {
 		$form[$field] = $_POST[$field] ?? '';
+		if (is_array($form[$field])) {
+			unset($form[$field]);
+			continue;
+		}
 		if (!$form[$field]) continue;
 		$form[$field] = trim($form[$field]);
 	}
