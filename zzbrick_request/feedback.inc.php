@@ -139,7 +139,7 @@ function mod_feedback_feedback_fields($extra_fields = []) {
 	foreach ($fields as $field) {
 		$form[$field] = $_POST[$field] ?? '';
 		if (is_array($form[$field])) {
-			unset($form[$field]);
+			$form[$field] = '';
 			continue;
 		}
 		if (!$form[$field]) continue;
@@ -270,13 +270,11 @@ function mod_feedback_feedback_referer($url) {
 	if ($url === wrap_setting('feedback_spam_referer_marker')) return $url;
 
 	$referer = parse_url($url);
-	if (empty($referer['scheme'])) {
+	if (empty($referer['scheme']) OR empty($referer['host'])) {
 		// incorrect referer URL
 		wrap_error(sprintf('Potential SPAM mail because referer is set to %s', $url));
 		return wrap_setting('feedback_spam_referer_marker');
 	}
-	if (empty($referer['host']))
-		return wrap_setting('feedback_spam_referer_marker');
 	if ($url === sprintf('%s://%s', $referer['scheme'], $referer['host']))
 		// missing trailing slash
 		return wrap_setting('feedback_spam_referer_marker');
