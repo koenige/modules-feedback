@@ -161,6 +161,7 @@ function mod_feedback_feedback_spam(&$form) {
 	$rejected = wrap_tsv_parse('feedback-spam-phrases');
 	foreach ($form as $field_value) {
 		if (!$field_value) continue;
+		if (is_array($field_value)) return true;
 		foreach ($rejected as $word) {
 			$spam = stripos($field_value, $word);
 			if ($spam === false) continue;
