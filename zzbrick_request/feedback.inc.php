@@ -271,6 +271,8 @@ function mod_feedback_feedback_referer($url) {
 		wrap_error(sprintf('Potential SPAM mail because referer is set to %s', $url));
 		return wrap_setting('feedback_spam_referer_marker');
 	}
+	if (empty($referer['host']))
+		return wrap_setting('feedback_spam_referer_marker');
 	if ($url === sprintf('%s://%s', $referer['scheme'], $referer['host']))
 		// missing trailing slash
 		return wrap_setting('feedback_spam_referer_marker');
