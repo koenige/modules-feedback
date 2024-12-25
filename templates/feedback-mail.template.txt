@@ -9,12 +9,12 @@
 # @copyright Copyright © 2012-2014, 2016-2017, 2020-2024 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
-%%% condition if copy %%%
+%%% if copy %%%
 %%% text "You’ve sent us a message via our website:" %%% 
 %%% setting host_base %%%
-%%% condition else %%%
+%%% else %%%
 %%% text "You’ve got a message via the website %s:" setting site %%%
-%%% condition endif %%%
+%%% endif %%%
 
 %%% text "Name:" %%% %%% item sender %%% 
 %%% text "Contact details:" %%% %%% item contact %%% 
@@ -26,10 +26,10 @@
 
 -- 
 %%% text Technical data: %%% 
-%%% condition if url %%%
+%%% if url %%%
 %%% text Referring URL: %%% %%% item url %%% 
-%%% condition endif %%%
+%%% endif %%%
 %%% text Sender’s IP address: %%% %%% setting remote_ip %%% 
-%%% condition if user_agent %%%
+%%% if user_agent %%%
 %%% text Sender’s browser: %%% %%% item user_agent %%%
-%%% condition endif %%% 
+%%% endif %%% 

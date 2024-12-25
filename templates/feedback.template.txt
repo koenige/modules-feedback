@@ -9,72 +9,72 @@
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 <div class="feedback">
-%%% condition if mail_sent %%%
+%%% if mail_sent %%%
 <h2>%%% text "Thank you for your message." %%%</h2>
 <p><a href="./">%%% text "Send another message" %%%</a></p>
 
-%%% condition else %%%
+%%% else %%%
 
-%%% condition if mail_error %%%
+%%% if mail_error %%%
 <p>%%% text "A temporary problem has occured. We have not been able to send your message yet." %%%
 %%% text "Please try again soon." %%%</p>
 
-%%% condition elseif one_word_only %%%
+%%% elseif one_word_only %%%
 <div class="error"><p>%%% text "Your message looks like bulk mail. We do not accept bulk mail via this form." %%%</p>
 <p>%%% text "Please write more than one word." %%%</p></div>
 
-%%% condition elseif spam %%%
+%%% elseif spam %%%
 <div class="error"><p>%%% text "Your message looks like bulk mail. We do not accept bulk mail via this form." %%% 
 %%% text "Please do not use HTML or BBCode formatting!" %%% 
 <br>%%% text "Please complete the form." %%%</p></div>
 
-%%% condition elseif url_shortener %%%
+%%% elseif url_shortener %%%
 <div class="error"><p>%%% text "Please use simple links instead of URL shorteners so we know what we are clicking on." %%% 
 <br>%%% text "Please complete the form." %%%</p></div>
 
-%%% condition elseif more_info_necessary %%%
+%%% elseif more_info_necessary %%%
 <div class="error"><p>%%% text "We still need some information from you." %%% 
 <br>%%% text "Please complete the form." %%%
-%%% condition if wrong_e_mail %%%
+%%% if wrong_e_mail %%%
 <br>%%% text The e-mail address is incorrect. %%%
-%%% condition endif %%%
+%%% endif %%%
 </p></div>
 
-%%% condition endif %%%
-%%% condition if setting feedback_mail_db %%%
+%%% endif %%%
+%%% if setting feedback_mail_db %%%
 %%% item form %%%
-%%% condition else %%%
+%%% else %%%
 <div><form method="POST" action="%%% setting base %%%%%% page url_path %%%">
 <h2><label for="feedback">%%% text "Your Message" %%%</label></h2>
 %%% item error_message %%%
 %%% item form_lead markdown %%%
-%%% condition if repost %%%
+%%% if repost %%%
 <input type="hidden" name="repost" value="%%% item repost wrap_html_escape %%%">
-%%% condition endif %%%
+%%% endif %%%
 <input type="hidden" name="url" value="%%% item url wrap_html_escape %%%">
 <input type="hidden" name="feedback_domain" value="%%% setting hostname %%%">
 <input type="hidden" name="feedback_status" value="sent">
 <input type="hidden" name="code" value="%%% item code wrap_html_escape %%%">
 <input type="hidden" name="status" value="%%% item status wrap_html_escape %%%">
-%%% condition if setting feedback_logfile_hashes %%%
+%%% if setting feedback_logfile_hashes %%%
 <input type="hidden" name="feedback_hash" value="%%% item feedback_hash wrap_html_escape %%%">
-%%% condition endif %%%
-<textarea name="feedback" rows="14" cols="42" id="feedback" required%%% condition if more_info_necessary %%% autofocus
-%%% condition endif %%%>%%% item feedback wrap_html_escape %%%</textarea>
+%%% endif %%%
+<textarea name="feedback" rows="14" cols="42" id="feedback" required%%% if more_info_necessary %%% autofocus
+%%% endif %%%>%%% item feedback wrap_html_escape %%%</textarea>
 
 <h2>%%% text "How can we get in touch with you?" %%%</h2>
 
-<p><label for="contact">%%% condition if mailonly %%%
+<p><label for="contact">%%% if mailonly %%%
 %%% text "E-Mail" %%%
-%%% condition else %%%
+%%% else %%%
 %%% text "E-Mail or phone" %%%
-%%% condition endif %%%
+%%% endif %%%
 <br>
 <input type="text" name="contact" size="50" id="contact" required value="%%% item contact wrap_html_escape %%%">
 </label>
-%%% condition if mailcopy %%%
+%%% if mailcopy %%%
 <br><label for="mailcopy"><input type="checkbox" name="mailcopy" id="mailcopy" %%% item send_copy " checked" %%%> %%% text Send me a copy of my message via e-mail %%%</label>
-%%% condition endif %%%
+%%% endif %%%
 </p>
 
 <p><label for="sender">%%% text "Your Name" %%%<br>
@@ -83,6 +83,6 @@
 
 <p><input type="submit" name="submit" value="%%% text "Submit Message" %%%"></p>
 </form></div>
-%%% condition endif %%%
-%%% condition endif %%%
+%%% endif %%%
+%%% endif %%%
 </div>
