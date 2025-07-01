@@ -64,7 +64,7 @@
 
 <h2>%%% text "How can we get in touch with you?" %%%</h2>
 
-<p><label for="contact">%%% if mailonly %%%
+<p><label for="contact">%%% if mail_only %%%
 %%% text "E-Mail" %%%
 %%% else %%%
 %%% text "E-Mail or phone" %%%
@@ -72,8 +72,8 @@
 <br>
 <input type="text" name="contact" size="50" id="contact" required value="%%% item contact wrap_html_escape %%%">
 </label>
-%%% if mailcopy %%%
-<br><label for="mailcopy"><input type="checkbox" name="mailcopy" id="mailcopy" %%% item send_copy " checked" %%%> %%% text Send me a copy of my message via e-mail %%%</label>
+%%% if mail_copy %%%
+<br><label for="mail_copy"><input type="checkbox" name="mail_copy" id="mail_copy" %%% item send_copy " checked" %%%> %%% text Send me a copy of my message via e-mail %%%</label>
 %%% endif %%%
 </p>
 

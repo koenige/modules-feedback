@@ -46,8 +46,8 @@ function mod_feedback_feedback($vars, $setting) {
 	$form['spam'] = mod_feedback_feedback_spam($form);
 	$form['url_shortener'] = mod_feedback_feedback_urlshort($form);
 
-	$form['mailonly'] = $setting['mailonly'] ?? false;
-	$form['mailcopy'] = $setting['mailcopy'] ?? false;
+	$form['mail_only'] = $setting['mailonly'] ?? wrap_setting('feedback_mail_only') ?? false;
+	$form['mail_copy'] = $setting['mailcopy'] ?? wrap_setting('feedback_mail_copy') ?? false;
 	$form['form_lead'] = $setting['form_lead'] ?? '';
 	
 	if ($_SERVER['REQUEST_METHOD'] === 'POST')
@@ -60,13 +60,13 @@ function mod_feedback_feedback($vars, $setting) {
 
 	$form['wrong_e_mail'] = false;
 	$form['e_mail_valid'] = false;
-	$form['send_copy'] = ($form['mailcopy'] AND !empty($_POST['mailcopy']) AND $_POST['mailcopy'] === 'on') ? true : false;
+	$form['send_copy'] = ($form['mail_copy'] AND !empty($_POST['mail_copy']) AND $_POST['mail_copy'] === 'on') ? true : false;
 	if (wrap_mail_valid($form['contact'])) {
 		$form['e_mail_valid'] = true;
 		$form['sender_mail'] = $form['contact'];
 	} elseif ($form['sender_mail'] = mod_feedback_feedback_extract_mail($form['contact'])) {
 		$form['e_mail_valid'] = true;
-	} elseif ($form['mailonly'] OR $form['send_copy']) {
+	} elseif ($form['mail_only'] OR $form['send_copy']) {
 		if ($_SERVER['REQUEST_METHOD'] === 'POST')
 			$form['wrong_e_mail'] = true;
 	}
@@ -347,7 +347,8 @@ function mod_feedback_feedback_headers($form, $setting) {
 
 	// From: or Reply-To:
 	if ($form['e_mail_valid']) {
-		$header = empty($setting['reply_to']) ? 'From' : 'Reply-To';
+	    $reply_to = $setting['reply_to'] ?? wrap_setting('feedback_reply_to') ?? false;
+		$header = $reply_to ? 'Reply-To' : 'From';
 		$mail[$header]['e_mail'] = $form['sender_mail'];
 		$mail[$header]['name'] = $form['sender'];
 	}
