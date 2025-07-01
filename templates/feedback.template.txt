@@ -64,13 +64,21 @@
 
 <h2>%%% text "How can we get in touch with you?" %%%</h2>
 
+%%% if field_phone %%%
+<p><label for="contact">
+%%% text "Phone" %%%
+<br>
+<input type="text" name="phone" size="50" id="phone" %%% if field_phone_required %%%required %%% endif %%%value="%%% item phone wrap_html_escape %%%">
+</label></p>
+%%% endif %%%
+
 <p><label for="contact">%%% if mail_only %%%
 %%% text "E-Mail" %%%
 %%% else %%%
 %%% text "E-Mail or phone" %%%
 %%% endif %%%
 <br>
-<input type="text" name="contact" size="50" id="contact" required value="%%% item contact wrap_html_escape %%%">
+<input type="text" name="contact" size="50" id="contact" %%% if field_contact_required %%%required %%% endif %%%value="%%% item contact wrap_html_escape %%%">
 </label>
 %%% if mail_copy %%%
 <br><label for="mail_copy"><input type="checkbox" name="mail_copy" id="mail_copy" %%% item send_copy " checked" %%%> %%% text Send me a copy of my message via e-mail %%%</label>

@@ -40,14 +40,21 @@ function mod_feedback_feedback($vars, $setting) {
 		return $page;
 	}
 
-	$form = mod_feedback_feedback_fields($setting['extra_fields'] ?? []);
+	$extra_fields = $setting['extra_fields'] ?? [];
+	$field_phone = $setting['field_phone'] ?? wrap_setting('feedback_field_phone');
+	if ($field_phone AND !in_array('phone', $extra_fields)) $extra_fields[] = 'phone';
+	$form = mod_feedback_feedback_fields($extra_fields);
 	$form['mail_error'] = mod_feedback_feedback_hash_fail();
 	$form['feedback_hash'] = mod_feedback_feedback_hash_create();
 	$form['spam'] = mod_feedback_feedback_spam($form);
 	$form['url_shortener'] = mod_feedback_feedback_urlshort($form);
 
-	$form['mail_only'] = $setting['mailonly'] ?? wrap_setting('feedback_mail_only') ?? false;
-	$form['mail_copy'] = $setting['mailcopy'] ?? wrap_setting('feedback_mail_copy') ?? false;
+	$form['mail_only'] = $setting['mailonly'] ?? wrap_setting('feedback_mail_only');
+	$form['mail_copy'] = $setting['mailcopy'] ?? wrap_setting('feedback_mail_copy');
+	$form['field_contact_required'] = $setting['field_contact_required'] ?? wrap_setting('feedback_field_contact_required');
+	$form['field_phone'] = $field_phone;
+	if ($form['field_phone']) $form['mail_only'] = true; // label contact field with mail
+	$form['field_phone_required'] = $setting['field_phone_required'] ?? wrap_setting('feedback_field_phone_required');
 	$form['form_lead'] = $setting['form_lead'] ?? '';
 	
 	if ($_SERVER['REQUEST_METHOD'] === 'POST')
