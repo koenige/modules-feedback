@@ -68,7 +68,10 @@ function mod_feedback_feedback($vars, $setting) {
 	$form['wrong_e_mail'] = false;
 	$form['e_mail_valid'] = false;
 	$form['send_copy'] = ($form['mail_copy'] AND !empty($_POST['mail_copy']) AND $_POST['mail_copy'] === 'on') ? true : false;
-	if (wrap_mail_valid($form['contact'])) {
+	if (!$form['field_contact_required'] AND !$form['contact']) {
+		// .. okay, no mail required, do not check it
+		$form['sender_mail'] = '';
+	} elseif (wrap_mail_valid($form['contact'])) {
 		$form['e_mail_valid'] = true;
 		$form['sender_mail'] = $form['contact'];
 	} elseif ($form['sender_mail'] = mod_feedback_feedback_extract_mail($form['contact'])) {
@@ -98,9 +101,7 @@ function mod_feedback_feedback($vars, $setting) {
 			$form['more_info_necessary'] = true;
 	} else {
 		// All form fields filled out? Send mail and say thank you
-		if ($form['sender'] AND $form['contact'] AND $form[$form['feedback_field_name']]
-			AND !$form['spam'] AND !$form['wrong_e_mail']
-			AND !$form['url_shortener'] AND !$form['mail_error']) {
+		if (mod_feedback_feedback_complete($form)) {
 			if ($hook['finish']) $form = $hook['finish']($form, $vars);
 			$mail_sent = mod_feedback_feedback_mail($form, $setting);
 			if ($mail_sent) {
@@ -519,4 +520,23 @@ function mod_feedback_feedback_hash_delete() {
 	if (empty($_POST['feedback_hash'])) return false;
 	wrap_include('file', 'zzwrap');
 	wrap_file_log('feedback/hashes', 'delete', ['feedback_hash' => $_POST['feedback_hash']]);
+}
+
+/**
+ * check if all required fields have been filled out
+ * and there is no sign that this is an unsolicited mail
+ *
+ * @param array $form
+ * @return bool true everything ok
+ */
+function mod_feedback_feedback_complete($form) {
+	if (!$form['sender']) return false;
+	if (!$form['contact'] AND $form['field_contact_required']) return false;
+	if (!$form['phone'] AND $form['field_phone_required']) return false;
+	if (!$form[$form['feedback_field_name']]) return false;
+	if ($form['spam']) return false;
+	if ($form['wrong_e_mail']) return false;
+	if ($form['url_shortener']) return false;
+	if ($form['mail_error']) return false;
+	return true;
 }
