@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/feedback
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2009-2014, 2016-2024 Gustaf Mossakowski
+ * @copyright Copyright © 2009-2014, 2016-2025 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -532,7 +532,7 @@ function mod_feedback_feedback_hash_delete() {
 function mod_feedback_feedback_complete($form) {
 	if (!$form['sender']) return false;
 	if (!$form['contact'] AND $form['field_contact_required']) return false;
-	if (!$form['phone'] AND $form['field_phone_required']) return false;
+	if (empty($form['phone']) AND !empty($form['field_phone_required'])) return false;
 	if (!$form[$form['feedback_field_name']]) return false;
 	if ($form['spam']) return false;
 	if ($form['wrong_e_mail']) return false;
