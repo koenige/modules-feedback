@@ -84,7 +84,8 @@ function mod_feedback_feedback($vars, $setting) {
 	// get user agent for mail
 	$form['user_agent'] = $_SERVER['HTTP_USER_AGENT'] ?? '';
 	// no normal user agent has " in it, some spammers have
-	if (strstr($form['user_agent'], '"')) $form['spam'] = true;
+	if (strstr($form['user_agent'], '"'))
+		$form['spam'] = wrap_text('User Agent with quotes detected: %s.', ['values' => wrap_html_escape($form['user_agent'])]);
 	
 	$form['mail'] = mod_feedback_feedback_headers($form, $setting);
 
@@ -118,7 +119,7 @@ function mod_feedback_feedback($vars, $setting) {
 	if ($form_recheck) {
 		// form incomplete or spam
 		$page['replace_db_text'] = true;
-		if ($form['spam']) wrap_error('Potential Spam Mail: '.json_encode($_POST, true));
+		if ($form['spam']) mod_feedback_feedback_log($form);
 		elseif ($form['mail_error']) wrap_error('Mail was not sent at first try: '.json_encode($_POST, true));
 	}
 	$page['text'] = wrap_template('feedback', $form, 'ignore positions');
@@ -160,47 +161,56 @@ function mod_feedback_feedback_fields($extra_fields = []) {
  * check if it is a legitimate form sent
  *
  * @param array $form
- * @return bool
+ * @return string
  */
 function mod_feedback_feedback_spam(&$form) {
-	if ($_SERVER['REQUEST_METHOD'] !== 'POST') return false;
-	if (wrap_setting('feedback_mail_db') AND $_POST === ['zz_html_fragment' => '1']) return false;
+	if ($_SERVER['REQUEST_METHOD'] !== 'POST') return '';
+	if (wrap_setting('feedback_mail_db') AND $_POST === ['zz_html_fragment' => '1']) return '';
 
 	$rejected = wrap_tsv_parse('feedback-spam-phrases');
-	foreach ($form as $field_value) {
+	foreach ($form as $field => $field_value) {
 		if (!$field_value) continue;
-		if (is_array($field_value)) return true;
+		if (is_array($field_value)) return wrap_text('Field %s has array as value.', ['values' => [$field]]);
 		foreach ($rejected as $word) {
 			$spam = stripos($field_value, $word);
 			if ($spam === false) continue;
-			return true;
+			return wrap_text('Spam phrase `%s` found.', ['values' => [wrap_html_escape($word)]]);
 		}
 		if (wrap_setting('feedback_max_http_links')
 			AND preg_match_all('/http[s]*:\/\//i', $field_value, $count))
-			if (count($count[0]) > wrap_setting('feedback_max_http_links')) return true;
+			if (count($count[0]) > wrap_setting('feedback_max_http_links'))
+				return wrap_text('Too many HTTP Links found (%d).', ['values' => [count($count[0])]]);
 	}
 
 	// message just one word? not enough
 	if (!strstr($form[$form['feedback_field_name']], ' ') AND !strstr($form[$form['feedback_field_name']], "\n")) {
 		$form['one_word_only'] = true;
-		return true;
+		return wrap_text('Forms are accepted only with more than one word.');
 	}
 
 	// wrong referer?	
-	if ($form['url'] === wrap_setting('feedback_spam_referer_marker')) return true;
+	if ($form['url'] === wrap_setting('feedback_spam_referer_marker'))
+		return wrap_text('Webpage with contact form was accessed directly.');
 
 	// check for some simple hidden fields
-	if (empty($_POST['feedback_domain'])) return true;
-	if ($_POST['feedback_domain'] !== wrap_setting('hostname')) return true;
-	if (empty($_POST['feedback_status'])) return true;
-	if ($_POST['feedback_status'] !== 'sent') return true;
-	if (!$form['status']) return true;
-	if (!mod_feedback_feedback_checktime($form['status'], mb_strlen($form[$form['feedback_field_name']]))) return true;
+	if (empty($_POST['feedback_domain']))
+		return wrap_text('Feedback domain is missing.');
+	if ($_POST['feedback_domain'] !== wrap_setting('hostname'))
+		return wrap_text('Feedback domain wrong (%s).', ['values' => [wrap_html_escape($_POST['feedback_domain'])]]);
+	if (empty($_POST['feedback_status']))
+		return wrap_text('Feedback status is missing.');
+	if ($_POST['feedback_status'] !== 'sent')
+		return wrap_text('Feedback status is wrong: %s.', ['values' => [wrap_html_escape($_POST['feedback_status'])]]);
+	if (!$form['status'])
+		return wrap_text('Form status is missing.');
+	if (!mod_feedback_feedback_checktime($form['status'], mb_strlen($form[$form['feedback_field_name']])))
+		return wrap_text('Form has wrong time.');
 
 	// code to check if referer is set via HTTP_REFERER or sent from bot
-	if (!empty($_POST['code']) AND $_POST['code'] !== mod_feedback_feedback_code($form['url'])) return true;
+	if (!empty($_POST['code']) AND $_POST['code'] !== mod_feedback_feedback_code($form['url']))
+		return wrap_text('Code is wrong: %s.', ['values' => wrap_html_escape($_POST['code'])]);
 
-	return false;
+	return '';
 }
 
 /**
@@ -539,4 +549,19 @@ function mod_feedback_feedback_complete($form) {
 	if ($form['url_shortener']) return false;
 	if ($form['mail_error']) return false;
 	return true;
+}
+
+/**
+ * log suspicious mails
+ *
+ * @param array $form
+ */
+function mod_feedback_feedback_log($form) {
+	$settings['log_post_data'] = false;
+	// log feedback as first key
+	$data[wrap_text('Error')] = 'Potential Spam Mail';
+	$data[wrap_text('Reason')] = $form['spam'];
+	$data[$form['feedback_field_name']] = $_POST[$form['feedback_field_name']] ?? [];
+	$data += $_POST;
+	wrap_error('[json]2 '.json_encode($data, true), E_USER_NOTICE, $settings);
 }
