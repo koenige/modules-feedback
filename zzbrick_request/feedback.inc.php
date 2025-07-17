@@ -204,7 +204,7 @@ function mod_feedback_feedback_spam(&$form) {
 	if (!$form['status'])
 		return wrap_text('Form status is missing.');
 	if (!mod_feedback_feedback_checktime($form['status'], mb_strlen($form[$form['feedback_field_name']])))
-		return wrap_text('Form has wrong time.');
+		return wrap_text('Form was submitted too fast.');
 
 	// code to check if referer is set via HTTP_REFERER or sent from bot
 	if (!empty($_POST['code']) AND $_POST['code'] !== mod_feedback_feedback_code($form['url']))
