@@ -119,8 +119,11 @@ function mod_feedback_feedback($vars, $setting) {
 	if ($form_recheck) {
 		// form incomplete or spam
 		$page['replace_db_text'] = true;
-		if ($form['spam']) mod_feedback_feedback_log($form);
-		elseif ($form['mail_error']) wrap_error('Mail was not sent at first try: '.json_encode($_POST, true));
+		if ($form['spam']) {
+			mod_feedback_feedback_log($form, $form['spam']);
+		} elseif ($form['mail_error']) {
+			mod_feedback_feedback_log($form, wrap_text('Mail was not sent at first try.'));
+		}
 	}
 	$page['text'] = wrap_template('feedback', $form, 'ignore positions');
 	return $page;
@@ -555,12 +558,14 @@ function mod_feedback_feedback_complete($form) {
  * log suspicious mails
  *
  * @param array $form
+ * @param string $msg
+ * @return void
  */
-function mod_feedback_feedback_log($form) {
+function mod_feedback_feedback_log($form, $msg) {
 	$settings['log_post_data'] = false;
 	// log feedback as first key
 	$data[wrap_text('Error')] = 'Potential Spam Mail';
-	$data[wrap_text('Reason')] = $form['spam'];
+	$data[wrap_text('Reason')] = $msg;
 	$data[$form['feedback_field_name']] = $_POST[$form['feedback_field_name']] ?? [];
 	$data += $_POST;
 	wrap_error('[json]2 '.json_encode($data, true), E_USER_NOTICE, $settings);
