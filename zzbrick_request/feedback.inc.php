@@ -120,9 +120,9 @@ function mod_feedback_feedback($vars, $setting) {
 		// form incomplete or spam
 		$page['replace_db_text'] = true;
 		if ($form['spam']) {
-			mod_feedback_feedback_log($form, $form['spam']);
+			mod_feedback_feedback_log($form['spam']);
 		} elseif ($form['mail_error']) {
-			mod_feedback_feedback_log($form, wrap_text('Mail was not sent at first try.'));
+			mod_feedback_feedback_log(wrap_text('Mail was not sent at first try.'));
 		}
 	}
 	$page['text'] = wrap_template('feedback', $form, 'ignore positions');
@@ -137,15 +137,13 @@ function mod_feedback_feedback($vars, $setting) {
  */
 function mod_feedback_feedback_fields($extra_fields = []) {
     $form = [];
+	$form['feedback_field_name'] = mod_feedback_feedback_feedback_field();
 	$fields = wrap_setting('feedback_fields');
 	if (wrap_setting('feedback_mail_db')) {
-		$form['feedback_field_name'] = 'mail';
 		$index = array_search('feedback', $fields);
 		if (!$index !== NULL)
 			unset($fields[$index]);
 		$fields[] = 'mail';
-	} else {
-		$form['feedback_field_name'] = 'feedback';
 	}
 	$fields = array_merge($fields, $extra_fields);
 	foreach ($fields as $field) {
@@ -158,6 +156,16 @@ function mod_feedback_feedback_fields($extra_fields = []) {
 		$form[$field] = trim($form[$field]);
 	}
 	return $form;
+}
+
+/**
+ * get field name for feedback
+ *
+ * @return string
+ */
+function mod_feedback_feedback_feedback_field() {
+	if (wrap_setting('feedback_mail_db')) return 'mail';
+	return 'feedback';
 }
 
 /**
@@ -294,7 +302,7 @@ function mod_feedback_feedback_referer($url) {
 	$referer = parse_url($url);
 	if (empty($referer['scheme']) OR empty($referer['host'])) {
 		// incorrect referer URL
-		wrap_error(sprintf('Potential SPAM mail because referer is set to %s', $url));
+		mod_feedback_feedback_log(wrap_text('Referer is set to %s.', ['values' => [$url]]));
 		return wrap_setting('feedback_spam_referer_marker');
 	}
 	if ($url === sprintf('%s://%s', $referer['scheme'], $referer['host']))
@@ -557,16 +565,15 @@ function mod_feedback_feedback_complete($form) {
 /**
  * log suspicious mails
  *
- * @param array $form
  * @param string $msg
  * @return void
  */
-function mod_feedback_feedback_log($form, $msg) {
+function mod_feedback_feedback_log($msg) {
 	$settings['log_post_data'] = false;
 	// log feedback as first key
 	$data[wrap_text('Error')] = 'Potential Spam Mail';
 	$data[wrap_text('Reason')] = $msg;
-	$data[$form['feedback_field_name']] = $_POST[$form['feedback_field_name']] ?? [];
+	$data[mod_feedback_feedback_feedback_field()] = $_POST[mod_feedback_feedback_feedback_field()] ?? [];
 	$data += $_POST;
 	wrap_error('[json]2 '.json_encode($data, true), E_USER_NOTICE, $settings);
 }
