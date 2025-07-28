@@ -1,0 +1,180 @@
+# feedback module
+# Translations
+#
+# Part of »Zugzwang Project«
+# https://www.zugzwang.org/modules/feedback
+#
+# @author Gustaf Mossakowski <gustaf@koenige.org>
+# @copyright Copyright © 2012-2014, 2016-2017, 2022-2024 Gustaf Mossakowski
+# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Zugzwang Project – Feedback Module\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Gustaf Mossakowski <gustaf@koenige.org>\n"
+"Language-Team: \n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 3.6\n"
+
+#: configuration/settings.cfg
+msgid "field names in feedback form"
+msgstr "geri bildirim formundaki alan adları"
+
+#: configuration/settings.cfg
+msgid "use mail module to save mails in database, use zzform as frontend?"
+msgstr ""
+"postaları veritabanına kaydetmek için posta modülünü kullanın, ön uç olarak "
+"zzform kullanın?"
+
+#: configuration/settings.cfg
+msgid "maximum no. of links inside a feedback mail"
+msgstr "bir geri bildirim postası içindeki maksimum bağlantı sayısı"
+
+#: configuration/settings.cfg
+msgid "String used as a marker that referer was spam"
+msgstr ""
+"Yönlendiricinin spam olduğuna dair bir işaretleyici olarak kullanılan dize"
+
+#: configuration/settings.cfg
+msgid ""
+"minimum time real user should spend with feedback form before he/she can "
+"send it without having to re-send it."
+msgstr ""
+"gerçek kullanıcının geri bildirim formunu tekrar göndermek zorunda kalmadan "
+"önce formla geçirmesi gereken minimum süre."
+
+#: templates/feedback.template.txt
+msgid "Your Message"
+msgstr "Mesajınız"
+
+#: templates/feedback.template.txt
+msgid "How can we get in touch with you?"
+msgstr "Sizinle nasıl iletişime geçebiliriz?"
+
+#: templates/feedback.template.txt
+msgid "Your Name"
+msgstr "Adınız"
+
+#: templates/feedback.template.txt
+msgid "E-Mail or phone"
+msgstr "E-Posta veya telefon"
+
+#: templates/feedback.template.txt
+msgid "E-Mail"
+msgstr "E-Posta"
+
+#: templates/feedback.template.txt
+msgid "Send me a copy of my message via e-mail"
+msgstr "Mesajımın bir kopyasını e-posta yoluyla bana gönderin"
+
+#: templates/feedback.template.txt
+msgid "The e-mail address is incorrect."
+msgstr "E-posta adresi yanlış."
+
+#: templates/feedback.template.txt
+msgid "Submit Message"
+msgstr "Mesaj Gönder"
+
+# ---  HTML: error responses
+#: templates/feedback.template.txt
+msgid ""
+"A temporary problem has occured. We have not been able to send your message "
+"yet."
+msgstr "Geçici bir sorun oluştu. Mesajınızı henüz gönderemedik."
+
+#: templates/feedback.template.txt
+msgid "Please try again soon."
+msgstr "Lütfen yakında tekrar deneyin."
+
+#: templates/feedback.template.txt
+msgid "Please complete the form."
+msgstr "Lütfen formu doldurunuz."
+
+#: templates/feedback.template.txt
+msgid "We still need some information from you."
+msgstr "Hâlâ sizden bazı bilgiler almamız gerekiyor."
+
+#: templates/feedback.template.txt
+msgid "Please do not use HTML or BBCode formatting!"
+msgstr "Lütfen HTML veya BBCode biçimlendirmesi kullanmayın!"
+
+#: templates/feedback.template.txt
+msgid ""
+"Your message looks like bulk mail. We do not accept bulk mail via this form."
+msgstr ""
+"Mesajınız toplu posta gibi görünüyor. Bu form aracılığıyla toplu posta "
+"kabul etmiyoruz."
+
+#: templates/feedback.template.txt
+msgid ""
+"Please use simple links instead of URL shorteners so we know what we are "
+"clicking on."
+msgstr ""
+"Lütfen URL kısaltıcıları yerine basit bağlantılar kullanın, böylece neye "
+"tıkladığımızı bilelim."
+
+#: templates/feedback.template.txt
+msgid "Please write more than one word."
+msgstr "Lütfen birden fazla kelime yazınız."
+
+# ---  HTML: successful responses
+#: templates/feedback.template.txt
+msgid "Thank you for your message."
+msgstr "Mesajınız için teşekkür ederim."
+
+#: templates/feedback.template.txt
+msgid "Send another message"
+msgstr "Başka bir bildirim gönder"
+
+# --- Mail
+#: zzbrick_request/feedback.inc.php
+#, php-format
+msgid "Feedback via %s from %s"
+msgstr "%s'den %s aracılığıyla geri bildirim"
+
+#: zzbrick_request/feedback.inc.php
+msgid "(Your Copy)"
+msgstr "(Sizin Kopyanız)"
+
+#: templates/feedback-mail.template.txt
+msgid "Contact details:"
+msgstr "İletişim Bilgileri:"
+
+#: templates/feedback-mail.template.txt
+msgid "Name:"
+msgstr "İsim:"
+
+#: templates/feedback-mail.template.txt
+msgid "You’ve got a message via the website %s:"
+msgstr "Web sitesi üzerinden bir mesajınız var %s:"
+
+#: templates/feedback-mail.template.txt
+msgid "You’ve sent us a message via our website:"
+msgstr "Web sitemiz aracılığıyla bize bir mesaj gönderdiniz:"
+
+#: templates/feedback-mail.template.txt
+msgid "Technical data:"
+msgstr "Teknik veriler:"
+
+#: templates/feedback-mail.template.txt
+msgid "Referring URL:"
+msgstr "Yönlendiren URL:"
+
+#: templates/feedback-mail.template.txt
+msgid "Sender’s IP address:"
+msgstr "Gönderenin IP adresi:"
+
+#: templates/feedback-mail.template.txt
+msgid "Sender’s browser:"
+msgstr "Gönderenin tarayıcısı:"
+
+#: zzbrick_forms/feedback-mail.php
+msgid "Attachment"
+msgstr "Ek dosya"
