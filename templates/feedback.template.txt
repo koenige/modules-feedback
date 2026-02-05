@@ -5,7 +5,7 @@
 # https://www.zugzwang.org/modules/feedback
 #
 # @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2012-2014, 2016-2020, 2022-2024 Gustaf Mossakowski
+# @copyright Copyright © 2012-2014, 2016-2020, 2022-2024, 2026 Gustaf Mossakowski
 # @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
 #
 <div class="feedback">
@@ -47,20 +47,20 @@
 <div><form method="POST" action="%%% setting base %%%%%% page url_path %%%">
 <h2><label for="feedback">%%% text "Your Message" %%%</label></h2>
 %%% item error_message %%%
-%%% item form_lead markdown %%%
+%%% item form_lead format=markdown %%%
 %%% if repost %%%
-<input type="hidden" name="repost" value="%%% item repost wrap_html_escape %%%">
+<input type="hidden" name="repost" value="%%% item repost format=html_escape %%%">
 %%% endif %%%
-<input type="hidden" name="url" value="%%% item url wrap_html_escape %%%">
+<input type="hidden" name="url" value="%%% item url format=html_escape %%%">
 <input type="hidden" name="feedback_domain" value="%%% setting hostname %%%">
 <input type="hidden" name="feedback_status" value="sent">
-<input type="hidden" name="code" value="%%% item code wrap_html_escape %%%">
-<input type="hidden" name="status" value="%%% item status wrap_html_escape %%%">
+<input type="hidden" name="code" value="%%% item code format=html_escape %%%">
+<input type="hidden" name="status" value="%%% item status format=html_escape %%%">
 %%% if setting feedback_logfile_hashes %%%
-<input type="hidden" name="feedback_hash" value="%%% item feedback_hash wrap_html_escape %%%">
+<input type="hidden" name="feedback_hash" value="%%% item feedback_hash format=html_escape %%%">
 %%% endif %%%
 <textarea name="feedback" rows="14" cols="42" id="feedback" required%%% if more_info_necessary %%% autofocus
-%%% endif %%%>%%% item feedback wrap_html_escape %%%</textarea>
+%%% endif %%%>%%% item feedback format=html_escape %%%</textarea>
 
 <h2>%%% text "How can we get in touch with you?" %%%</h2>
 
@@ -68,7 +68,7 @@
 <p><label for="contact">
 %%% text "Phone" %%%
 <br>
-<input type="text" name="phone" size="50" id="phone" %%% if field_phone_required %%%required %%% endif %%%value="%%% item phone wrap_html_escape %%%">
+<input type="text" name="phone" size="50" id="phone" %%% if field_phone_required %%%required %%% endif %%%value="%%% item phone format=html_escape %%%">
 </label></p>
 %%% endif %%%
 
@@ -78,7 +78,7 @@
 %%% text "E-Mail or phone" %%%
 %%% endif %%%
 <br>
-<input type="text" name="contact" size="50" id="contact" %%% if field_contact_required %%%required %%% endif %%%value="%%% item contact wrap_html_escape %%%">
+<input type="text" name="contact" size="50" id="contact" %%% if field_contact_required %%%required %%% endif %%%value="%%% item contact format=html_escape %%%">
 </label>
 %%% if mail_copy %%%
 <br><label for="mail_copy"><input type="checkbox" name="mail_copy" id="mail_copy" %%% item send_copy " checked" %%%> %%% text Send me a copy of my message via e-mail %%%</label>
@@ -86,7 +86,7 @@
 </p>
 
 <p><label for="sender">%%% text "Your Name" %%%<br>
-<input type="text" name="sender" size="50" id="sender" required value="%%% item sender wrap_html_escape %%%">
+<input type="text" name="sender" size="50" id="sender" required value="%%% item sender format=html_escape %%%">
 </label></p>
 
 <p><input type="submit" name="submit" value="%%% text "Submit Message" %%%"></p>
