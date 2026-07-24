@@ -73,9 +73,9 @@
 %%% endif %%%
 
 <p><label for="contact">%%% if mail_only %%%
-%%% text "E-Mail" %%%
+%%% text "E-mail" %%%
 %%% else %%%
-%%% text "E-Mail or phone" %%%
+%%% text "E-mail or phone" %%%
 %%% endif %%%
 <br>
 <input type="text" name="contact" size="50" id="contact" %%% if field_contact_required %%%required %%% endif %%%value="%%% item contact format=html_escape %%%">

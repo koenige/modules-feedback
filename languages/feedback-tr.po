@@ -63,11 +63,11 @@ msgid "Your Name"
 msgstr "Adınız"
 
 #: templates/feedback.template.txt
-msgid "E-Mail or phone"
+msgid "E-mail or phone"
 msgstr "E-Posta veya telefon"
 
 #: templates/feedback.template.txt
-msgid "E-Mail"
+msgid "E-mail"
 msgstr "E-Posta"
 
 #: templates/feedback.template.txt

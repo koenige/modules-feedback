@@ -54,11 +54,11 @@ msgid "Your Name"
 msgstr ""
 
 #: templates/feedback.template.txt
-msgid "E-Mail or phone"
+msgid "E-mail or phone"
 msgstr ""
 
 #: templates/feedback.template.txt
-msgid "E-Mail"
+msgid "E-mail"
 msgstr ""
 
 #: templates/feedback.template.txt

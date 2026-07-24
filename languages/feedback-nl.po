@@ -36,11 +36,11 @@ msgid "Your Name"
 msgstr "Uw naam"
 
 #: templates/feedback.template.txt
-msgid "E-Mail or phone"
+msgid "E-mail or phone"
 msgstr "E-Mail of telefoon"
 
 #: templates/feedback.template.txt
-msgid "E-Mail"
+msgid "E-mail"
 msgstr ""
 
 #: templates/feedback.template.txt

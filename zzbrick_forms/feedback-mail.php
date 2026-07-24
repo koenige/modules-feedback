@@ -26,7 +26,7 @@ foreach ($zz['fields'] as $no => $field) {
 			break;
 
 		case 'mail':
-			$zz['fields'][$no]['title'] = wrap_text('Message', ['context' => 'E-Mail']);
+			$zz['fields'][$no]['title'] = wrap_text('Message', ['context' => 'E-mail']);
 			$zz['fields'][$no]['show_title'] = false;
 			$zz['fields'][$no]['rows'] = 14;
 			break;
@@ -60,7 +60,7 @@ $no++;
 $zz['fields'][$no]['separator_before'] = 'text <h2>'.wrap_text('How can we get in touch with you?').'</h2>';
 $zz['fields'][$no]['field_name'] = 'contact';
 // @todo evaluate local parameter mailonly=1
-$zz['fields'][$no]['title'] = 'E-Mail or phone';
+$zz['fields'][$no]['title'] = 'E-mail or phone';
 $zz['fields'][$no]['type'] = 'text';
 $zz['fields'][$no]['input_only'] = true;
 

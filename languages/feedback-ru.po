@@ -37,11 +37,11 @@ msgid "Your Name"
 msgstr "Ваше имя"
 
 #: templates/feedback.template.txt
-msgid "E-Mail or phone"
+msgid "E-mail or phone"
 msgstr "Электронная почта или телефон"
 
 #: templates/feedback.template.txt
-msgid "E-Mail"
+msgid "E-mail"
 msgstr ""
 
 #: templates/feedback.template.txt

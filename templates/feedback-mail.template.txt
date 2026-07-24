@@ -18,7 +18,7 @@
 
 %%% text "Name:" %%% %%% item sender %%% 
 %%% if phone %%%
-%%% text "E-Mail:" %%% %%% item contact %%% 
+%%% text "E-mail:" %%% %%% item contact %%% 
 %%% text "Phone:" %%% %%% item phone %%% 
 %%% else %%%
 %%% text "Contact details:" %%% %%% item contact %%% 
