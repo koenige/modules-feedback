@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/feedback
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2023-2024 Gustaf Mossakowski
+ * @copyright Copyright © 2023-2024, 2026 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -26,7 +26,7 @@ foreach ($zz['fields'] as $no => $field) {
 			break;
 
 		case 'mail':
-			$zz['fields'][$no]['title'] = wrap_text('Message', ['context' => 'E-mail']);
+			$zz['fields'][$no]['title'] = ['Message', ['context' => 'E-mail']];
 			$zz['fields'][$no]['show_title'] = false;
 			$zz['fields'][$no]['rows'] = 14;
 			break;
