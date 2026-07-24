@@ -23,33 +23,6 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 3.6\n"
 
-#: configuration/settings.cfg
-msgid "field names in feedback form"
-msgstr "geri bildirim formundaki alan adları"
-
-#: configuration/settings.cfg
-msgid "use mail module to save mails in database, use zzform as frontend?"
-msgstr ""
-"postaları veritabanına kaydetmek için posta modülünü kullanın, ön uç olarak "
-"zzform kullanın?"
-
-#: configuration/settings.cfg
-msgid "maximum no. of links inside a feedback mail"
-msgstr "bir geri bildirim postası içindeki maksimum bağlantı sayısı"
-
-#: configuration/settings.cfg
-msgid "String used as a marker that referer was spam"
-msgstr ""
-"Yönlendiricinin spam olduğuna dair bir işaretleyici olarak kullanılan dize"
-
-#: configuration/settings.cfg
-msgid ""
-"minimum time real user should spend with feedback form before he/she can "
-"send it without having to re-send it."
-msgstr ""
-"gerçek kullanıcının geri bildirim formunu tekrar göndermek zorunda kalmadan "
-"önce formla geçirmesi gereken minimum süre."
-
 #: templates/feedback.template.txt
 msgid "Your Message"
 msgstr "Mesajınız"

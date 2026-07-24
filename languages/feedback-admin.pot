@@ -1,0 +1,85 @@
+# feedback module
+# Translations, admin
+#
+# Part of »Zugzwang Project«
+# https://www.zugzwang.org/modules/feedback
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Zugzwang Project -- feedback module\n"
+"POT-Creation-Date: 2026-07-24 15:41+0000\n"
+"PO-Revision-Date: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: configuration/settings.cfg:21
+msgid "Field names in feedback form"
+msgstr ""
+
+#: configuration/settings.cfg:30
+msgid "Use logfile for hashes for feedback"
+msgstr ""
+
+#: configuration/settings.cfg:35
+msgid "List of fields for feedback hash log"
+msgstr ""
+
+#: configuration/settings.cfg:43
+msgid "Logfile tokens might contain spaces?"
+msgstr ""
+
+#: configuration/settings.cfg:48
+msgid "Validity of entries in feedback hash log"
+msgstr ""
+
+#: configuration/settings.cfg:53
+msgid "Require an input in the contact field"
+msgstr ""
+
+#: configuration/settings.cfg:58
+msgid "Show a separate field for phone number"
+msgstr ""
+
+#: configuration/settings.cfg:62
+msgid "Require an input in the phone number field"
+msgstr ""
+
+#: configuration/settings.cfg:66
+msgid "Use mail module to save mails in database, use zzform as frontend?"
+msgstr ""
+
+#: configuration/settings.cfg:70
+msgid "Send a copy of the mail to the sender (can be overwritten per form with `mailcopy=1`). Probably not a good idea because of Spammers."
+msgstr ""
+
+#: configuration/settings.cfg:74
+msgid "Ask for mail address only, not mail and phone (can be overwritten per form with `mailonly=1`)"
+msgstr ""
+
+#: configuration/settings.cfg:78
+msgid "Maximum no. of links inside a feedback mail"
+msgstr ""
+
+#: configuration/settings.cfg:83
+msgid "Add the sender‘s e-mail to `Reply-To`, not `From`"
+msgstr ""
+
+#: configuration/settings.cfg:87
+msgid "Reject URL shorteners in URLs, used for tracking etc."
+msgstr ""
+
+#: configuration/settings.cfg:92
+msgid "String used as a marker that referer was spam"
+msgstr ""
+
+#: configuration/settings.cfg:96
+msgid "Minimum time real user should spend with feedback form before he/she can send it without having to re-send it."
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:578
+msgid "Potential Spam Mail"
+msgstr ""

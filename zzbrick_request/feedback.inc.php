@@ -8,7 +8,7 @@
  * https://www.zugzwang.org/modules/feedback
  *
  * @author Gustaf Mossakowski <gustaf@koenige.org>
- * @copyright Copyright © 2009-2014, 2016-2025 Gustaf Mossakowski
+ * @copyright Copyright © 2009-2014, 2016-2026 Gustaf Mossakowski
  * @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
  */
 
@@ -570,10 +570,12 @@ function mod_feedback_feedback_complete($form) {
  */
 function mod_feedback_feedback_log($msg) {
 	$settings['log_post_data'] = false;
-	// log feedback as first key
-	$data[wrap_text('Error')] = 'Potential Spam Mail';
+	// set indices to keep sort order
 	$data[wrap_text('Reason')] = $msg;
 	$data[mod_feedback_feedback_feedback_field()] = $_POST[mod_feedback_feedback_feedback_field()] ?? [];
 	$data += $_POST;
-	wrap_error('[json]2 '.json_encode($data, true), E_USER_NOTICE, $settings);
+	wrap_error([
+		'Potential Spam Mail',
+		['data' => $data, 'log_text_parts' => 2],
+	], E_USER_NOTICE, $settings);
 }

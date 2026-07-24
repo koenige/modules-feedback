@@ -4,159 +4,226 @@
 # Part of »Zugzwang Project«
 # https://www.zugzwang.org/modules/feedback
 #
-# @author Gustaf Mossakowski <gustaf@koenige.org>
-# @copyright Copyright © 2012-2014, 2016-2017, 2022-2024 Gustaf Mossakowski
-# @license http://opensource.org/licenses/lgpl-3.0.html LGPL-3.0
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: Zugzwang Project – Feedback Module\n"
-"POT-Creation-Date: \n"
+"Project-Id-Version: Zugzwang Project -- feedback module\n"
+"POT-Creation-Date: 2026-07-24 15:41+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: \n"
 "Language-Team: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-
-#: configuration/settings.cfg
-msgid "field names in feedback form"
-msgstr ""
-
-#: configuration/settings.cfg
-msgid "use mail module to save mails in database, use zzform as frontend?"
-msgstr ""
-
-#: configuration/settings.cfg
-msgid "maximum no. of links inside a feedback mail"
-msgstr ""
-
-#: configuration/settings.cfg
-msgid "String used as a marker that referer was spam"
-msgstr ""
-
-#: configuration/settings.cfg
-msgid "minimum time real user should spend with feedback form before he/she can send it without having to re-send it."
-msgstr ""
-
-#: templates/feedback.template.txt
-msgid "Your Message"
-msgstr ""
-
-#: templates/feedback.template.txt
-msgid "How can we get in touch with you?"
-msgstr ""
-
-#: templates/feedback.template.txt
-msgid "Your Name"
-msgstr ""
-
-#: templates/feedback.template.txt
-msgid "E-mail or phone"
-msgstr ""
-
-#: templates/feedback.template.txt
-msgid "E-mail"
-msgstr ""
-
-#: templates/feedback.template.txt
-msgid "Send me a copy of my message via e-mail"
-msgstr ""
-
-#: templates/feedback.template.txt
-msgid "The e-mail address is incorrect."
-msgstr ""
-
-#: templates/feedback.template.txt
-msgid "Submit Message"
-msgstr ""
-
-# ---  HTML: error responses
-#: templates/feedback.template.txt
-msgid "A temporary problem has occured. We have not been able to send your message yet."
-msgstr ""
-
-#: templates/feedback.template.txt
-msgid "Please try again soon."
-msgstr ""
-
-#: templates/feedback.template.txt
-msgid "Please complete the form."
-msgstr ""
-
-#: templates/feedback.template.txt
-msgid "We still need some information from you."
-msgstr ""
-
-#: templates/feedback.template.txt
-msgid "Please do not use HTML or BBCode formatting!"
-msgstr ""
-
-#: templates/feedback.template.txt
-msgid "Your message looks like bulk mail. We do not accept bulk mail via this form."
-msgstr ""
-
-#: templates/feedback.template.txt
-msgid "Please use simple links instead of URL shorteners so we know what we are clicking on."
-msgstr ""
-
-#: templates/feedback.template.txt
-msgid "Please write more than one word."
-msgstr ""
 
 # ---  HTML: successful responses
-#: templates/feedback.template.txt
+#: templates/feedback.template.txt:13
 msgid "Thank you for your message."
 msgstr ""
 
-#: templates/feedback.template.txt
+#: templates/feedback.template.txt:14
 msgid "Send another message"
 msgstr ""
 
-# --- Mail
-#: zzbrick_request/feedback.inc.php
-#, php-format
-msgid "Feedback via %s from %s"
+# ---  HTML: error responses
+#: templates/feedback.template.txt:19
+msgid "A temporary problem has occured. We have not been able to send your message yet."
 msgstr ""
 
-#: zzbrick_request/feedback.inc.php
-msgid "(Your Copy)"
+#: templates/feedback.template.txt:20
+msgid "Please try again soon."
 msgstr ""
 
-#: templates/feedback-mail.template.txt
-msgid "Contact details:"
+#: templates/feedback.template.txt:23
+#: templates/feedback.template.txt:27
+msgid "Your message looks like bulk mail. We do not accept bulk mail via this form."
 msgstr ""
 
-#: templates/feedback-mail.template.txt
-msgid "Name:"
+#: templates/feedback.template.txt:24
+msgid "Please write more than one word."
 msgstr ""
 
-#: templates/feedback-mail.template.txt
-msgid "You’ve got a message via the website %s:"
+#: templates/feedback.template.txt:28
+msgid "Please do not use HTML or BBCode formatting!"
 msgstr ""
 
-#: templates/feedback-mail.template.txt
+#: templates/feedback.template.txt:29
+#: templates/feedback.template.txt:33
+#: templates/feedback.template.txt:37
+msgid "Please complete the form."
+msgstr ""
+
+#: templates/feedback.template.txt:32
+msgid "Please use simple links instead of URL shorteners so we know what we are clicking on."
+msgstr ""
+
+#: templates/feedback.template.txt:36
+msgid "We still need some information from you."
+msgstr ""
+
+#: templates/feedback.template.txt:39
+msgid "The e-mail address is incorrect."
+msgstr ""
+
+#: templates/feedback.template.txt:48
+#: zzbrick_forms/feedback-mail.php:225
+msgid "Your Message"
+msgstr ""
+
+#: templates/feedback.template.txt:65
+#: zzbrick_forms/feedback-mail.php:60
+msgid "How can we get in touch with you?"
+msgstr ""
+
+#: templates/feedback.template.txt:69
+msgid "Phone"
+msgstr ""
+
+#: templates/feedback.template.txt:76
+msgid "E-mail"
+msgstr ""
+
+#: templates/feedback.template.txt:78
+#: zzbrick_forms/feedback-mail.php:63
+msgid "E-mail or phone"
+msgstr ""
+
+#: templates/feedback.template.txt:84
+msgid "Send me a copy of my message via e-mail"
+msgstr ""
+
+#: templates/feedback.template.txt:88
+#: zzbrick_forms/feedback-mail.php:69
+msgid "Your Name"
+msgstr ""
+
+#: templates/feedback.template.txt:92
+#: zzbrick_forms/feedback-mail.php:226
+msgid "Submit Message"
+msgstr ""
+
+#: templates/feedback-mail.template.txt:13
 msgid "You’ve sent us a message via our website:"
 msgstr ""
 
-#: templates/feedback-mail.template.txt
+#: templates/feedback-mail.template.txt:16
+msgid "You’ve got a message via the website %s:"
+msgstr ""
+
+#: templates/feedback-mail.template.txt:19
+msgid "Name:"
+msgstr ""
+
+#: templates/feedback-mail.template.txt:21
+msgid "E-mail:"
+msgstr ""
+
+#: templates/feedback-mail.template.txt:22
+msgid "Phone:"
+msgstr ""
+
+#: templates/feedback-mail.template.txt:24
+msgid "Contact details:"
+msgstr ""
+
+#: templates/feedback-mail.template.txt:33
 msgid "Technical data:"
 msgstr ""
 
-#: templates/feedback-mail.template.txt
+#: templates/feedback-mail.template.txt:35
 msgid "Referring URL:"
 msgstr ""
 
-#: templates/feedback-mail.template.txt
+#: templates/feedback-mail.template.txt:37
 msgid "Sender’s IP address:"
 msgstr ""
 
-#: templates/feedback-mail.template.txt
+#: templates/feedback-mail.template.txt:39
 msgid "Sender’s browser:"
 msgstr ""
 
-#: zzbrick_forms/feedback-mail.php
+#: zzbrick_forms/feedback-mail.php:29
+msgctxt "E-mail"
+msgid "Message"
+msgstr ""
+
+#: zzbrick_forms/feedback-mail.php:77
 msgid "Attachment"
+msgstr ""
+
+#: zzbrick_forms/feedback-mail.php:223
+msgid "unknown"
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:88
+msgid "User Agent with quotes detected: %s."
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:125
+msgid "Mail was not sent at first try."
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:184
+msgid "Field %s has array as value."
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:188
+msgid "Spam phrase `%s` found."
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:193
+msgid "Too many HTTP Links found (%d)."
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:199
+msgid "Forms are accepted only with more than one word."
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:204
+msgid "Webpage with contact form was accessed directly."
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:208
+msgid "Feedback domain is missing."
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:210
+msgid "Feedback domain wrong (%s)."
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:212
+msgid "Feedback status is missing."
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:214
+msgid "Feedback status is wrong: %s."
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:216
+msgid "Form status is missing."
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:218
+msgid "Form was submitted too fast."
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:222
+msgid "Code is wrong: %s."
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:305
+msgid "Referer is set to %s."
+msgstr ""
+
+# --- Mail
+#: zzbrick_request/feedback.inc.php:364
+msgid "Feedback via %s from %s"
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:435
+msgid "(Your Copy)"
+msgstr ""
+
+#: zzbrick_request/feedback.inc.php:574
+msgid "Reason"
 msgstr ""
