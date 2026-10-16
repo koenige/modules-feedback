@@ -90,7 +90,9 @@
 </label></p>
 
 <p><input type="submit" name="submit" value="%%% text "Submit Message" %%%"></p>
-</form></div>
+</form>
+%%% script default/form-submit-once.js %%%
+</div>
 %%% endif %%%
 %%% endif %%%
 </div>
