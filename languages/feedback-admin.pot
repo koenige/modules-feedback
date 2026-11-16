@@ -85,6 +85,10 @@ msgid "Reject submissions whose user agent contains a quote."
 msgstr ""
 
 #: configuration/settings.cfg:106
+msgid "Check a public form for spam before it is saved."
+msgstr ""
+
+#: configuration/settings.cfg:111
 msgid "Minimum time real user should spend with feedback form before he/she can send it without having to re-send it."
 msgstr ""
 

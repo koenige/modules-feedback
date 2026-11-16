@@ -85,6 +85,12 @@ zzform-Formulare können die Inhaltsprüfungen über den Hook
 	if (wrap_package('feedback'))
 		$zz['hooks']['before_insert'][] = 'mf_feedback_spamcheck';
 
+Die Einstellung `feedback_spamcheck` (Voreinstellung: an) schaltet den Hook
+für die ganze Website aus oder für ein einzelnes Formular: Parameter der
+Veranstaltungskategorie, der Formularkategorie und der Veranstaltung gelten
+in dieser Reihenfolge, ein Veranstaltungsparameter gewinnt. Beispiel:
+`feedback_spamcheck=0` in den Veranstaltungsparametern.
+
 Der Hook entfällt für angemeldete Benutzer. Er prüft jeden Textwert des neuen
 Datensatzes auf Spam-Phrasen, zu viele Links und URL-Kürzer und versieht das
 erste Feld mit einem Treffer mit einer Erklärung. Ein auffälliger User-Agent

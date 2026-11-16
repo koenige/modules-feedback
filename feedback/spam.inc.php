@@ -96,6 +96,7 @@ function mf_feedback_spam_log($reason, $field_name = '') {
  * @return array
  */
 function mf_feedback_spamcheck($ops) {
+	if (!wrap_setting('feedback_spamcheck')) return [];
 	if (!empty($_SESSION['logged_in'])) return [];
 
 	if ($reason = mf_feedback_spam_user_agent()) {

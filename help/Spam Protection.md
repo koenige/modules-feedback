@@ -81,6 +81,11 @@ zzform forms can use the content checks via the hook
 	if (wrap_package('feedback'))
 		$zz['hooks']['before_insert'][] = 'mf_feedback_spamcheck';
 
+Setting `feedback_spamcheck` (default: on) turns the hook off for the whole
+site, or for one form: event category, form category and event parameters
+are applied in that order, so an event parameter wins. Example:
+`feedback_spamcheck=0` in the event parameters.
+
 The hook is skipped for logged-in users. It checks every text value of the
 new record for spam phrases, too many links and URL shorteners and marks the
 first field with a match with an explanation. A suspicious user agent stops

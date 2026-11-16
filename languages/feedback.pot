@@ -32,13 +32,13 @@ msgstr ""
 msgid "Reason"
 msgstr ""
 
-#: feedback/spam.inc.php:131
+#: feedback/spam.inc.php:132
 #: templates/feedback.template.txt:23
 #: templates/feedback.template.txt:27
 msgid "Your message looks like bulk mail. We do not accept bulk mail via this form."
 msgstr ""
 
-#: feedback/spam.inc.php:134
+#: feedback/spam.inc.php:135
 #: templates/feedback.template.txt:32
 msgid "Please use simple links instead of URL shorteners so we know what we are clicking on."
 msgstr ""
