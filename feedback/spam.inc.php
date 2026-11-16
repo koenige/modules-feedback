@@ -86,3 +86,51 @@ function mf_feedback_spam_log($reason, $field_name = '') {
 	], E_USER_NOTICE, $settings);
 }
 
+/**
+ * check values of a new public record for spam, before insert
+ *
+ * @param array $ops
+ * @return array
+ */
+function mf_feedback_spamcheck($ops) {
+	if (!empty($_SESSION['logged_in'])) return [];
+
+	if ($reason = mf_feedback_spam_user_agent()) {
+		mf_feedback_spam_log($reason);
+		return ['no_validation' => true];
+	}
+
+	foreach ($ops['planned'] as $index => $table) {
+		foreach ($ops['record_new'][$index] ?? [] as $field_name => $value) {
+			if (!is_string($value)) continue;
+			$explanation = mf_feedback_spamcheck_value($value);
+			if (!$explanation) continue;
+			return [
+				'no_validation' => true,
+				'validation_fields' => [
+					$index => [$field_name => ['class' => 'error', 'explanation' => $explanation]]
+				]
+			];
+		}
+	}
+	return [];
+}
+
+/**
+ * check a single value for spam, log if spam was found
+ *
+ * @param string $value
+ * @return string explanation for user, empty if no spam was found
+ */
+function mf_feedback_spamcheck_value($value) {
+	if ($reason = mf_feedback_spam_text($value)) {
+		mf_feedback_spam_log($reason);
+		return wrap_text('Your message looks like bulk mail. We do not accept bulk mail via this form.');
+	}
+	if (mf_feedback_spam_url_shortener($value)) {
+		$explanation = wrap_text('Please use simple links instead of URL shorteners so we know what we are clicking on.');
+		mf_feedback_spam_log($explanation);
+		return $explanation;
+	}
+	return '';
+}

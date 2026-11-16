@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zugzwang Project -- feedback module\n"
-"POT-Creation-Date: 2026-11-16 15:08+0000\n"
+"POT-Creation-Date: 2026-11-16 17:10+0000\n"
 "PO-Revision-Date: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -32,6 +32,17 @@ msgstr ""
 msgid "Reason"
 msgstr ""
 
+#: feedback/spam.inc.php:128
+#: templates/feedback.template.txt:23
+#: templates/feedback.template.txt:27
+msgid "Your message looks like bulk mail. We do not accept bulk mail via this form."
+msgstr ""
+
+#: feedback/spam.inc.php:131
+#: templates/feedback.template.txt:32
+msgid "Please use simple links instead of URL shorteners so we know what we are clicking on."
+msgstr ""
+
 # ---  HTML: successful responses
 #: templates/feedback.template.txt:13
 msgid "Thank you for your message."
@@ -50,11 +61,6 @@ msgstr ""
 msgid "Please try again soon."
 msgstr ""
 
-#: templates/feedback.template.txt:23
-#: templates/feedback.template.txt:27
-msgid "Your message looks like bulk mail. We do not accept bulk mail via this form."
-msgstr ""
-
 #: templates/feedback.template.txt:24
 msgid "Please write more than one word."
 msgstr ""
@@ -67,10 +73,6 @@ msgstr ""
 #: templates/feedback.template.txt:33
 #: templates/feedback.template.txt:37
 msgid "Please complete the form."
-msgstr ""
-
-#: templates/feedback.template.txt:32
-msgid "Please use simple links instead of URL shorteners so we know what we are clicking on."
 msgstr ""
 
 #: templates/feedback.template.txt:36
