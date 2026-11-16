@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zugzwang Project -- feedback module\n"
-"POT-Creation-Date: 2026-07-24 15:41+0000\n"
+"POT-Creation-Date: 2026-11-16 15:08+0000\n"
 "PO-Revision-Date: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -15,6 +15,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: feedback/spam.inc.php:29
+msgid "Spam phrase `%s` found."
+msgstr ""
+
+#: feedback/spam.inc.php:35
+msgid "Too many HTTP Links found (%d)."
+msgstr ""
+
+#: feedback/spam.inc.php:66
+msgid "User Agent with quotes detected: %s."
+msgstr ""
+
+#: feedback/spam.inc.php:79
+msgid "Reason"
+msgstr ""
 
 # ---  HTML: successful responses
 #: templates/feedback.template.txt:13
@@ -155,75 +171,59 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
-#: zzbrick_request/feedback.inc.php:88
-msgid "User Agent with quotes detected: %s."
-msgstr ""
-
 #: zzbrick_request/feedback.inc.php:125
 msgid "Mail was not sent at first try."
 msgstr ""
 
-#: zzbrick_request/feedback.inc.php:184
+#: zzbrick_request/feedback.inc.php:183
 msgid "Field %s has array as value."
 msgstr ""
 
-#: zzbrick_request/feedback.inc.php:188
-msgid "Spam phrase `%s` found."
-msgstr ""
-
-#: zzbrick_request/feedback.inc.php:193
-msgid "Too many HTTP Links found (%d)."
-msgstr ""
-
-#: zzbrick_request/feedback.inc.php:199
+#: zzbrick_request/feedback.inc.php:190
 msgid "Forms are accepted only with more than one word."
 msgstr ""
 
-#: zzbrick_request/feedback.inc.php:204
+#: zzbrick_request/feedback.inc.php:195
 msgid "Webpage with contact form was accessed directly."
 msgstr ""
 
-#: zzbrick_request/feedback.inc.php:208
+#: zzbrick_request/feedback.inc.php:199
 msgid "Feedback domain is missing."
 msgstr ""
 
-#: zzbrick_request/feedback.inc.php:210
+#: zzbrick_request/feedback.inc.php:201
 msgid "Feedback domain wrong (%s)."
 msgstr ""
 
-#: zzbrick_request/feedback.inc.php:212
+#: zzbrick_request/feedback.inc.php:203
 msgid "Feedback status is missing."
 msgstr ""
 
-#: zzbrick_request/feedback.inc.php:214
+#: zzbrick_request/feedback.inc.php:205
 msgid "Feedback status is wrong: %s."
 msgstr ""
 
-#: zzbrick_request/feedback.inc.php:216
+#: zzbrick_request/feedback.inc.php:207
 msgid "Form status is missing."
 msgstr ""
 
-#: zzbrick_request/feedback.inc.php:218
+#: zzbrick_request/feedback.inc.php:209
 msgid "Form was submitted too fast."
 msgstr ""
 
-#: zzbrick_request/feedback.inc.php:222
+#: zzbrick_request/feedback.inc.php:213
 msgid "Code is wrong: %s."
 msgstr ""
 
-#: zzbrick_request/feedback.inc.php:305
+#: zzbrick_request/feedback.inc.php:296
 msgid "Referer is set to %s."
 msgstr ""
 
 # --- Mail
-#: zzbrick_request/feedback.inc.php:364
+#: zzbrick_request/feedback.inc.php:355
 msgid "Feedback via %s from %s"
 msgstr ""
 
-#: zzbrick_request/feedback.inc.php:435
+#: zzbrick_request/feedback.inc.php:426
 msgid "(Your Copy)"
-msgstr ""
-
-#: zzbrick_request/feedback.inc.php:574
-msgid "Reason"
 msgstr ""

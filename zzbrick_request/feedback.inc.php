@@ -24,6 +24,7 @@
  *		reply_to=1 set sender of mail not as From but as Reply-To
  */
 function mod_feedback_feedback($vars, $setting) {
+	wrap_include('spam', 'feedback');
 	wrap_setting('mail_with_signature', false);
 	wrap_setting_add('extra_http_headers', 'X-Frame-Options: Deny');
 	wrap_setting_add('extra_http_headers', "Content-Security-Policy: frame-ancestors 'self'");
@@ -47,7 +48,7 @@ function mod_feedback_feedback($vars, $setting) {
 	$form['mail_error'] = mod_feedback_feedback_hash_fail();
 	$form['feedback_hash'] = mod_feedback_feedback_hash_create();
 	$form['spam'] = mod_feedback_feedback_spam($form);
-	$form['url_shortener'] = mod_feedback_feedback_urlshort($form);
+	$form['url_shortener'] = mf_feedback_spam_url_shortener($form[$form['feedback_field_name']] ?? '');
 
 	$form['mail_only'] = $setting['mailonly'] ?? wrap_setting('feedback_mail_only');
 	$form['mail_copy'] = $setting['mailcopy'] ?? wrap_setting('feedback_mail_copy');
@@ -83,9 +84,8 @@ function mod_feedback_feedback($vars, $setting) {
 
 	// get user agent for mail
 	$form['user_agent'] = $_SERVER['HTTP_USER_AGENT'] ?? '';
-	// no normal user agent has " in it, some spammers have
-	if (strstr($form['user_agent'], '"'))
-		$form['spam'] = wrap_text('User Agent with quotes detected: %s.', ['values' => wrap_html_escape($form['user_agent'])]);
+	if ($user_agent_spam = mf_feedback_spam_user_agent())
+		$form['spam'] = $user_agent_spam;
 	
 	$form['mail'] = mod_feedback_feedback_headers($form, $setting);
 
@@ -120,9 +120,9 @@ function mod_feedback_feedback($vars, $setting) {
 		// form incomplete or spam
 		$page['replace_db_text'] = true;
 		if ($form['spam']) {
-			mod_feedback_feedback_log($form['spam']);
+			mf_feedback_spam_log($form['spam'], mod_feedback_feedback_feedback_field());
 		} elseif ($form['mail_error']) {
-			mod_feedback_feedback_log(wrap_text('Mail was not sent at first try.'));
+			mf_feedback_spam_log(wrap_text('Mail was not sent at first try.'), mod_feedback_feedback_feedback_field());
 		}
 	}
 	$page['text'] = wrap_template('feedback', $form, 'ignore positions');
@@ -178,19 +178,10 @@ function mod_feedback_feedback_spam(&$form) {
 	if ($_SERVER['REQUEST_METHOD'] !== 'POST') return '';
 	if (wrap_setting('feedback_mail_db') AND $_POST === ['zz_html_fragment' => '1']) return '';
 
-	$rejected = wrap_tsv_parse('feedback-spam-phrases');
 	foreach ($form as $field => $field_value) {
 		if (!$field_value) continue;
 		if (is_array($field_value)) return wrap_text('Field %s has array as value.', ['values' => [$field]]);
-		foreach ($rejected as $word) {
-			$spam = stripos($field_value, $word);
-			if ($spam === false) continue;
-			return wrap_text('Spam phrase `%s` found.', ['values' => [wrap_html_escape($word)]]);
-		}
-		if (wrap_setting('feedback_max_http_links')
-			AND preg_match_all('/http[s]*:\/\//i', $field_value, $count))
-			if (count($count[0]) > wrap_setting('feedback_max_http_links'))
-				return wrap_text('Too many HTTP Links found (%d).', ['values' => [count($count[0])]]);
+		if ($spam = mf_feedback_spam_text($field_value)) return $spam;
 	}
 
 	// message just one word? not enough
@@ -302,7 +293,7 @@ function mod_feedback_feedback_referer($url) {
 	$referer = parse_url($url);
 	if (empty($referer['scheme']) OR empty($referer['host'])) {
 		// incorrect referer URL
-		mod_feedback_feedback_log(wrap_text('Referer is set to %s.', ['values' => [$url]]));
+		mf_feedback_spam_log(wrap_text('Referer is set to %s.', ['values' => [$url]]), mod_feedback_feedback_feedback_field());
 		return wrap_setting('feedback_spam_referer_marker');
 	}
 	if ($url === sprintf('%s://%s', $referer['scheme'], $referer['host']))
@@ -473,23 +464,6 @@ function mod_feedback_feedback_upload($setting) {
 }
 
 /**
- * check if a URL shortener is used
- *
- * @param array $form
- * @return bool
- */
-function mod_feedback_feedback_urlshort($form) {
-	if (!wrap_setting('feedback_reject_url_shorteners')) return false;
-	$services = wrap_tsv_parse('url-shorteners');
-	if (empty($form[$form['feedback_field_name']])) return false;
-	foreach ($services as $service) {
-		$service = sprintf('https://%s/', $service);
-		if (strstr($form[$form['feedback_field_name']], $service)) return true;
-	}
-	return false;
-}
-
-/**
  * return a feedback hash
  *
  * @return string
@@ -560,22 +534,4 @@ function mod_feedback_feedback_complete($form) {
 	if ($form['url_shortener']) return false;
 	if ($form['mail_error']) return false;
 	return true;
-}
-
-/**
- * log suspicious mails
- *
- * @param string $msg
- * @return void
- */
-function mod_feedback_feedback_log($msg) {
-	$settings['log_post_data'] = false;
-	// set indices to keep sort order
-	$data[wrap_text('Reason')] = $msg;
-	$data[mod_feedback_feedback_feedback_field()] = $_POST[mod_feedback_feedback_feedback_field()] ?? [];
-	$data += $_POST;
-	wrap_error([
-		'Potential Spam Mail',
-		['data' => $data, 'log_text_parts' => 2],
-	], E_USER_NOTICE, $settings);
 }
