@@ -21,9 +21,9 @@ Prüfungen fehlschlägt. Das Formular wird mit einem Hinweis erneut angezeigt,
 nichts wird versendet, und der Versuch wird als Hinweis »Potential Spam Mail«
 zusammen mit dem Grund und den gesendeten Daten protokolliert.
 
-Die Inhaltsprüfungen (Spam-Phrasen, Links, URL-Kürzer, User-Agent) liegen in
-`feedback/spam.inc.php` und können auch von anderen Formularen genutzt werden,
-siehe [Andere Formulare](#andere-formulare).
+Die Inhaltsprüfungen (Spam-Phrasen, Links, URL-Kürzer, nur ein Wort,
+User-Agent) liegen in `feedback/spam.inc.php` und können auch von anderen
+Formularen genutzt werden, siehe [Andere Formulare](#andere-formulare).
 
 ## Inhaltsprüfungen
 
@@ -42,6 +42,11 @@ schaltet die Prüfung aus).
 `configuration/url-shorteners.tsv`, z. B. `https://bit.ly/`. Im
 Feedback-Formular wird nur das Nachrichtenfeld geprüft. Einstellung:
 `feedback_reject_url_shorteners` (Voreinstellung: an).
+- **Nur ein Wort**: Die Nachricht besteht aus einem einzigen Wort, ohne
+Leerzeichen oder Zeilenumbruch. Im Feedback-Formular gilt das für das
+Nachrichtenfeld, in anderen Formularen für jedes Memofeld
+(`registrationtext`); leere Memos bleiben unberührt. Einstellung:
+`feedback_spam_one_word` (Voreinstellung: an).
 - **User-Agent**: Der User-Agent des Browsers enthält ein doppeltes
 Anführungszeichen `"`, das normale Browser nie senden. Einstellung:
 `feedback_spam_user_agent` (Voreinstellung: an).
@@ -52,8 +57,6 @@ Diese Prüfungen nutzen versteckte Felder und Werte des Feedback-Formulars
 selbst.
 
 - **Array-Werte**: Ein Feld wurde als Array statt als einzelner Wert gesendet.
-- **Nur ein Wort**: Die Nachricht besteht aus einem einzigen Wort, ohne
-Leerzeichen oder Zeilenumbruch.
 - **Referer**: Die Seite mit dem Formular wurde nicht über einen Link
 erreicht. Der Referer wird auf die Markierung aus
 `feedback_spam_referer_marker` gesetzt (Voreinstellung: `Hi!`), wenn
@@ -92,16 +95,20 @@ in dieser Reihenfolge, ein Veranstaltungsparameter gewinnt. Beispiel:
 `feedback_spamcheck=0` in den Veranstaltungsparametern.
 
 Der Hook entfällt für angemeldete Benutzer. Er prüft jeden Textwert des neuen
-Datensatzes auf Spam-Phrasen, zu viele Links und URL-Kürzer und versieht das
-erste Feld mit einem Treffer mit einer Erklärung. Ein auffälliger User-Agent
-stoppt das Einfügen ohne Feldhinweis. Alle Treffer werden wie oben beschrieben
-protokolliert.
+Datensatzes auf Spam-Phrasen, zu viele Links und URL-Kürzer und jedes
+Memofeld auf ein einzelnes Wort. Das erste Feld mit einem Treffer erhält eine
+Erklärung. Ein auffälliger User-Agent stoppt das Einfügen ohne Feldhinweis.
+Alle Treffer werden wie oben beschrieben protokolliert.
+`feedback_spam_one_word=0` in den Veranstaltungsparametern schaltet die
+Ein-Wort-Prüfung für dieses Formular aus; die übrigen Prüfungen bleiben an.
 
 Die einzelnen Prüfungen lassen sich auch direkt aufrufen, nach
 `wrap_include('spam', 'feedback')`:
 
 - `mf_feedback_spam_text($text)`: Spam-Phrasen und Links; liefert den Grund
 oder eine leere Zeichenkette
+- `mf_feedback_spam_one_word($text)`: liefert den Grund, wenn der Text aus
+einem einzigen Wort besteht, sonst eine leere Zeichenkette
 - `mf_feedback_spam_url_shortener($text)`: liefert `true`, wenn ein URL-Kürzer
 gefunden wurde
 - `mf_feedback_spam_user_agent()`: liefert den Grund oder eine leere

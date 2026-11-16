@@ -185,9 +185,9 @@ function mod_feedback_feedback_spam(&$form) {
 	}
 
 	// message just one word? not enough
-	if (!strstr($form[$form['feedback_field_name']], ' ') AND !strstr($form[$form['feedback_field_name']], "\n")) {
+	if ($one_word = mf_feedback_spam_one_word($form[$form['feedback_field_name']])) {
 		$form['one_word_only'] = true;
-		return wrap_text('Forms are accepted only with more than one word.');
+		return $one_word;
 	}
 
 	// wrong referer?	

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zugzwang Project -- feedback module\n"
-"POT-Creation-Date: 2026-11-16 15:08+0000\n"
+"POT-Creation-Date: 2026-11-16 17:55+0000\n"
 "PO-Revision-Date: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -73,22 +73,26 @@ msgid "Reject URL shorteners in URLs, used for tracking etc."
 msgstr ""
 
 #: configuration/settings.cfg:92
-msgid "Reject texts that contain a phrase from the spam phrase list."
+msgid "Reject a message that consists of only one word."
 msgstr ""
 
 #: configuration/settings.cfg:97
+msgid "Reject texts that contain a phrase from the spam phrase list."
+msgstr ""
+
+#: configuration/settings.cfg:102
 msgid "String used as a marker that referer was spam"
 msgstr ""
 
-#: configuration/settings.cfg:101
+#: configuration/settings.cfg:106
 msgid "Reject submissions whose user agent contains a quote."
 msgstr ""
 
-#: configuration/settings.cfg:106
+#: configuration/settings.cfg:111
 msgid "Check a public form for spam before it is saved."
 msgstr ""
 
-#: configuration/settings.cfg:111
+#: configuration/settings.cfg:116
 msgid "Minimum time real user should spend with feedback form before he/she can send it without having to re-send it."
 msgstr ""
 

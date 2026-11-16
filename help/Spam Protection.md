@@ -21,9 +21,9 @@ fails. The form is shown again with a notice, nothing is sent, and the
 attempt is logged as notice »Potential Spam Mail« together with the reason
 and the submitted data.
 
-The content checks (spam phrases, links, URL shorteners, user agent) live in
-`feedback/spam.inc.php` and can be used by other forms as well, see
-[Other forms](#other-forms).
+The content checks (spam phrases, links, URL shorteners, one word, user
+agent) live in `feedback/spam.inc.php` and can be used by other forms as
+well, see [Other forms](#other-forms).
 
 ## Content checks
 
@@ -41,6 +41,10 @@ the check).
 `configuration/url-shorteners.tsv`, e. g. `https://bit.ly/`. In the feedback
 form, only the message field is checked. Setting:
 `feedback_reject_url_shorteners` (default: on).
+- **One word only**: the message is a single word, without a space or line
+break. On the feedback form this is the message field. On other forms it is
+each memo field (`registrationtext`); empty memos are left alone. Setting:
+`feedback_spam_one_word` (default: on).
 - **User agent**: the browser’s user agent contains a double quote `"`,
 which normal browsers never send. Setting: `feedback_spam_user_agent`
 (default: on).
@@ -50,8 +54,6 @@ which normal browsers never send. Setting: `feedback_spam_user_agent`
 These checks rely on hidden fields and values of the feedback form itself.
 
 - **Array values**: a field was sent as an array instead of a single value.
-- **One word only**: the message consists of a single word, without space
-or line break.
 - **Referer**: the page with the form was not reached via a link. The
 referer is set to the marker from `feedback_spam_referer_marker` (default:
 `Hi!`) if
@@ -87,15 +89,20 @@ are applied in that order, so an event parameter wins. Example:
 `feedback_spamcheck=0` in the event parameters.
 
 The hook is skipped for logged-in users. It checks every text value of the
-new record for spam phrases, too many links and URL shorteners and marks the
-first field with a match with an explanation. A suspicious user agent stops
-the insert without a field notice. All matches are logged as described above.
+new record for spam phrases, too many links and URL shorteners, and each memo
+field for a single word. The first field with a match gets an explanation. A
+suspicious user agent stops the insert without a field notice. All matches
+are logged as described above. `feedback_spam_one_word=0` in the event
+parameters turns the one-word check off for that form; the other checks stay
+on.
 
 The single checks can also be called directly after
 `wrap_include('spam', 'feedback')`:
 
 - `mf_feedback_spam_text($text)`: spam phrases and links; returns the reason
 or an empty string
+- `mf_feedback_spam_one_word($text)`: returns the reason if the text is a
+single word, or an empty string
 - `mf_feedback_spam_url_shortener($text)`: returns `true` if a URL shortener
 is found
 - `mf_feedback_spam_user_agent()`: returns the reason or an empty string

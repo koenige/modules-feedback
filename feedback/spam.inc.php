@@ -107,7 +107,7 @@ function mf_feedback_spamcheck($ops) {
 	foreach ($ops['planned'] as $index => $table) {
 		foreach ($ops['record_new'][$index] ?? [] as $field_name => $value) {
 			if (!is_string($value)) continue;
-			$explanation = mf_feedback_spamcheck_value($value);
+			$explanation = mf_feedback_spamcheck_value($value, $field_name);
 			if (!$explanation) continue;
 			return [
 				'no_validation' => true,
@@ -124,9 +124,10 @@ function mf_feedback_spamcheck($ops) {
  * check a single value for spam, log if spam was found
  *
  * @param string $value
+ * @param string $field_name
  * @return string explanation for user, empty if no spam was found
  */
-function mf_feedback_spamcheck_value($value) {
+function mf_feedback_spamcheck_value($value, $field_name = '') {
 	if ($reason = mf_feedback_spam_text($value)) {
 		mf_feedback_spam_log($reason);
 		return wrap_text('Your message looks like bulk mail. We do not accept bulk mail via this form.');
@@ -136,5 +137,27 @@ function mf_feedback_spamcheck_value($value) {
 		mf_feedback_spam_log($explanation);
 		return $explanation;
 	}
+	if ($field_name === 'registrationtext' AND trim($value) !== '') {
+		if ($reason = mf_feedback_spam_one_word($value)) {
+			mf_feedback_spam_log($reason);
+			return wrap_text('Please write more than one word.');
+		}
+	}
 	return '';
+}
+
+/**
+ * check if a text is only one word
+ *
+ * an empty text counts as one word; skip the call for fields that may be empty
+ * @param string $text
+ * @return string reason why text is only one word, empty if it is not
+ */
+function mf_feedback_spam_one_word($text) {
+	if (!wrap_setting('feedback_spam_one_word')) return '';
+	if (!is_string($text)) return '';
+	$text = trim($text);
+	if (str_contains($text, ' ')) return '';
+	if (str_contains($text, "\n")) return '';
+	return wrap_text('Forms are accepted only with more than one word.');
 }
