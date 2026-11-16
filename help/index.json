@@ -1,0 +1,26 @@
+{
+    "spam-protection": [
+        {
+            "title": "Spam-Schutz",
+            "language": "de",
+            "package": "feedback",
+            "filename": "help/Spam Protection-de.md",
+            "identifier": "spam-protection",
+            "type": "md",
+            "audience": [
+                "programmer"
+            ]
+        },
+        {
+            "title": "Spam protection",
+            "language": "en",
+            "package": "feedback",
+            "filename": "help/Spam Protection.md",
+            "identifier": "spam-protection",
+            "type": "md",
+            "audience": [
+                "programmer"
+            ]
+        }
+    ]
+}
