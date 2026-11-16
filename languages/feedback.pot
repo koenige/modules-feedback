@@ -16,29 +16,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: feedback/spam.inc.php:29
+#: feedback/spam.inc.php:30
 msgid "Spam phrase `%s` found."
 msgstr ""
 
-#: feedback/spam.inc.php:35
+#: feedback/spam.inc.php:37
 msgid "Too many HTTP Links found (%d)."
 msgstr ""
 
-#: feedback/spam.inc.php:66
+#: feedback/spam.inc.php:69
 msgid "User Agent with quotes detected: %s."
 msgstr ""
 
-#: feedback/spam.inc.php:79
+#: feedback/spam.inc.php:82
 msgid "Reason"
 msgstr ""
 
-#: feedback/spam.inc.php:128
+#: feedback/spam.inc.php:131
 #: templates/feedback.template.txt:23
 #: templates/feedback.template.txt:27
 msgid "Your message looks like bulk mail. We do not accept bulk mail via this form."
 msgstr ""
 
-#: feedback/spam.inc.php:131
+#: feedback/spam.inc.php:134
 #: templates/feedback.template.txt:32
 msgid "Please use simple links instead of URL shorteners so we know what we are clicking on."
 msgstr ""

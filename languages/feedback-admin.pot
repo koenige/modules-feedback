@@ -73,13 +73,21 @@ msgid "Reject URL shorteners in URLs, used for tracking etc."
 msgstr ""
 
 #: configuration/settings.cfg:92
+msgid "Reject texts that contain a phrase from the spam phrase list."
+msgstr ""
+
+#: configuration/settings.cfg:97
 msgid "String used as a marker that referer was spam"
 msgstr ""
 
-#: configuration/settings.cfg:96
+#: configuration/settings.cfg:101
+msgid "Reject submissions whose user agent contains a quote."
+msgstr ""
+
+#: configuration/settings.cfg:106
 msgid "Minimum time real user should spend with feedback form before he/she can send it without having to re-send it."
 msgstr ""
 
-#: feedback/spam.inc.php:84
+#: feedback/spam.inc.php:87
 msgid "Potential Spam Mail"
 msgstr ""

@@ -22,11 +22,13 @@
 function mf_feedback_spam_text($text) {
 	static $rejected = NULL;
 	if (!$text) return '';
-	if ($rejected === NULL) $rejected = wrap_tsv_parse('feedback-spam-phrases');
+	if (wrap_setting('feedback_spam_phrases')) {
+		if ($rejected === NULL) $rejected = wrap_tsv_parse('feedback-spam-phrases');
 
-	foreach ($rejected as $word) {
-		if (stripos($text, $word) === false) continue;
-		return wrap_text('Spam phrase `%s` found.', ['values' => [wrap_html_escape($word)]]);
+		foreach ($rejected as $word) {
+			if (stripos($text, $word) === false) continue;
+			return wrap_text('Spam phrase `%s` found.', ['values' => [wrap_html_escape($word)]]);
+		}
 	}
 
 	if (!wrap_setting('feedback_max_http_links')) return '';
@@ -60,6 +62,7 @@ function mf_feedback_spam_url_shortener($text) {
  * @return string reason why user agent looks like spam, empty if it does not
  */
 function mf_feedback_spam_user_agent() {
+	if (!wrap_setting('feedback_spam_user_agent')) return '';
 	$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 	// no normal user agent has " in it, some spammers have
 	if (!str_contains($user_agent, '"')) return '';
